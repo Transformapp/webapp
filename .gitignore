@@ -42,10 +42,6 @@ Thumbs.db
 ################
 node_modules/
 
-# BOWER LIBRARIES #
-###################
-public/lib/bower_components/
-
 # DESIGN FILES #
 ################
 design/
