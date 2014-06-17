@@ -1,9 +1,8 @@
 // initialize webapp module
-angular.module('transformApp', [])
+angular.module('transformApp', ['ngRoute'])
 
 // routing logic
-angular.module('transformApp')
-.config(function($routeProvider) {
+angular.module('transformApp').config(function($routeProvider) {
   $routeProvider
   .when('/', {
     controller: 'homeController',
@@ -41,7 +40,17 @@ angular.module('transformApp').controller('groupLogisticsController', function($
 });
 
 angular.module('transformApp').controller('prayerListController', function($scope){
-  // add code
+  // $scope.title = "Prayers List"
+  // $scope.prayers = [
+  //   {
+  //     summary: "first prayer",
+  //     type: "prayer" 
+  //   },
+  //   {
+  //     summary: "second praise",
+  //     type: "praise"
+  //   }
+  // ]
 });
 
 angular.module('transformApp').controller('prayerDetailController', function($scope){
