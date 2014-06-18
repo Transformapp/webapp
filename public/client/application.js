@@ -11,16 +11,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
   //   templateUrl: 'client/views/home.html',
   //   controller: 'homeController'
   // })
-  // .state('groupLogistics', {
-  //   url: '/groups/:id',
-  //   templateUrl: 'client/views/groupLogistics.html',
-  //   controller: 'groupLogisticsController'
-  // })
-  // .state('profile', {
-  //   url: '/profile',
-  //   templateUrl: 'client/views/profile.html',
-  //   controller: 'profileController'
-  // })
+  .state('groupLogistics', {
+    url: '/groups/:id',
+    templateUrl: 'client/views/groupLogistics.html',
+    controller: 'groupLogisticsController'
+  })
+  .state('profile', {
+    url: '/profile',
+    templateUrl: 'client/views/profile.html',
+    controller: 'profileController'
+  })
   .state('prayerList', {
     url: '/prayers',
     templateUrl: 'client/views/prayerList.html',
