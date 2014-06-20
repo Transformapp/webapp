@@ -43,13 +43,14 @@ function loadPreviousPrayers($scope) {
 	prayers = [];
 	console.log('loadPreviousPrayers');
 	var query = new Parse.Query(Prayer);
-	query.ascending('status');
+	// Only fetch fields that are needed
+	query.select('user_name', 'title');
 	query.find({
 		success: function(results) {
 			console.log('success with ' + results.length + ' results');
 			for (var i = 0; i < results.length; i++) {
-				console.log(results[i].get("user_name") + ": " + results[i].get("title")) + " " + results[i].id;
 				var prayer = {
+					id: results[i].id,
 					user_name: results[i].get("user_name"),
 					title: results[i].get("title"),
 					prayer_object: results[i]

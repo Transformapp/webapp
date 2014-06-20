@@ -51,7 +51,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'prayerListController'
   })
   .state('prayerDetail', {
-    url: '/prayers/:prayer',
+    url: '/prayers/:prayer_id',
     templateUrl: 'client/views/prayerDetail.html',
     controller: 'prayerDetailController'
   });
@@ -66,19 +66,18 @@ app.controller('homeController', function($scope){
 app.controller('groupLogisticsController', function($scope){
   // add code
 });
-app.controller('prayerListController', function($scope, currentPrayer, $location){
+app.controller('prayerListController', function($scope, currentPrayer){
   // query all prayers and asynchronously refresh the page when the requests
   // are retrieved from Parse backend.
   loadPreviousPrayers($scope);
   $scope.title = "Prayers List";
   $scope.setCurrentPrayer = function(current_prayer) {
-    console.log('setCurrentPrayer');
     currentPrayer.setPrayer(current_prayer);
   };
 });
-app.controller('prayerDetailController', function($scope, currentPrayer){
-  console.log('prayerDetailController');
-  $scope.prayer = currentPrayer.getPrayer();
+app.controller('prayerDetailController', function($scope, currentPrayer, $stateParams){
+  $scope.prayer_id = $stateParams.prayer_id;
+  //$scope.prayer = currentPrayer.getPrayer();
 });
 app.controller('profileController', function($scope){
   // add code
