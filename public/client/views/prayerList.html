@@ -1,5 +1,11 @@
+<script type="text/javascript" src="client/data_model/prayer.js"></script>
+
 <div> {{ title }} </div>
 
 <ul>
-  <li ng-repeat="prayer in prayers"> {{ prayer.summary }} </li>
+  <li ng-repeat="prayer in prayers">
+    <a href="#" data-ng-click="setCurrentPrayer(prayer);">
+      {{ prayer.user_name }}: {{ prayer.title }}
+    </a>
+  </li>
 </ul>
