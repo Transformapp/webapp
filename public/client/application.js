@@ -35,8 +35,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'client/views/home.html',
     controller: 'homeController'
   })
+  // .state('groupLogistics', {
+  //   url: '/groups/:id',
+  //   templateUrl: 'client/views/groupLogistics.html',
+  //   controller: 'groupLogisticsController'
+  // })
   .state('groupLogistics', {
-    url: '/groups/:id',
+    url: '/groups',
     templateUrl: 'client/views/groupLogistics.html',
     controller: 'groupLogisticsController'
   })
