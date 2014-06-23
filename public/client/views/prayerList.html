@@ -4,9 +4,6 @@
 
 <ul>
   <li ng-repeat="prayer in prayers">
-    <!--
-    <a data-ng-click="setCurrentPrayer(prayer);">
-    -->
     <a href="#prayers/{{prayer.id}}">
       {{ prayer.user_name }}: {{ prayer.title }}
     </a>
