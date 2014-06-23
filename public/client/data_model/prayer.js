@@ -39,30 +39,36 @@ function addPrayer($scope, user_id, user_name, user_profile, title, prayer_text,
 	});
 }
 
-function loadPreviousPrayers($scope) {
-	prayers = [];
-	console.log('loadPreviousPrayers');
-	var query = new Parse.Query(Prayer);
-	// Only fetch fields that are needed
-	query.select('user_name', 'title');
-	query.find({
-		success: function(results) {
-			console.log('success with ' + results.length + ' results');
-			for (var i = 0; i < results.length; i++) {
-				var prayer = {
-					id: results[i].id,
-					user_name: results[i].get("user_name"),
-					title: results[i].get("title"),
-					prayer_object: results[i]
-				};
-				prayers.push(prayer);
-			}
-			$scope.$apply(function () {
-				$scope.prayers = prayers;
-      });
-		},
-		error: function(error) {
-			alert("Error code: " + error.code + ", message: " + error.message);
+var parseModule = angular.module('parseModule', []);
+
+parseModule.factory('PrayerService', function($q) {
+	return {
+		loadPreviousPrayers: function () {
+			var deferred = $q.defer();
+			console.log('loadPreviousPrayers');
+			var query = new Parse.Query(Prayer);
+			// Only fetch fields that are needed
+			query.select('user_name', 'title');
+			query.find({
+				success: function(results) {
+					console.log('success with ' + results.length + ' results');
+					prayers = [];
+					for (var i = 0; i < results.length; i++) {
+						var prayer = {
+							id: results[i].id,
+							user_name: results[i].get("user_name"),
+							title: results[i].get("title"),
+						};
+						prayers.push(prayer);
+					}
+					deferred.resolve(prayers);
+				},
+				error: function(error) {
+					alert("Error code: " + error.code + ", message: " + error.message);
+					deferred.reject(error);
+				}
+			});
+			return deferred.promise;
 		}
-	});
-}
+	}
+})
