@@ -2,31 +2,39 @@
 <html>
 <head>
   <title>Transform</title>
+  <!--
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <meta name="mobile-web-app-capable" content="yes">
+  -->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+
 </head>
 <body>
   <div ng-app="transformApp">
-    <div class="flash-error" slide-down="isDesktop" ng-cloak class="ng-cloak"><strong>Hi, desktop user!</strong> <br /> This app is designed for portrait mobile phone browsers. For the best experience, make sure your browser window is roughly 9 units wide x 16 units tall, and refresh the page.</div>
-    <div ng-view="">
-    </div>
+    <ul class="menu">
+    <li><a href="#/groups">Group Logistics</a></li>
+    <li><a href="#/prayers">Prayer List</a></li>
+  </ul>
+    <div ui-view></div>
   </div>
 
   <!-- Libraries -->
-  <script src="lib/bower_components/angular/angular.min.js"></script>
+  <script src="lib/bower_components/angular/angular.min.js"></script> 
   <script src="lib/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="lib/bower_components/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+  <!--
   <script src="lib/bower_components/angular-ui-utils/ui-utils.min.js"></script>
   <script src="lib/bower_components/angular-touch/angular-touch.min.js"></script>
   <script src="lib/bower_components/fastclick/lib/fastclick.js"></script>
+  -->
   <!-- <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
   <!-- <script src="lib/bower_components/angular-ui-map/ui-map.js"></script> -->
-  <script src="lib/angular-cookie.js"></script>
+  <!-- <script src="lib/angular-cookie.js"></script> -->
   <!-- <script src="lib/bower_components/angular-ui-utils/mask.min.js"></script> -->
 
-
   <script src="client/application.js"></script>
-
-
+  <script src="client/data_model/prayer.js"></script>
 </body>
 </html>

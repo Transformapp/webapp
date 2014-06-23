@@ -1,0 +1,11 @@
+<script type="text/javascript" src="client/data_model/prayer.js"></script>
+
+<div> {{ title }} </div>
+
+<ul>
+  <li ng-repeat="prayer in prayers">
+    <a href="#prayers/{{prayer.id}}">
+      {{ prayer.user_name }}: {{ prayer.title }}
+    </a>
+  </li>
+</ul>
