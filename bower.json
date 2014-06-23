@@ -1,0 +1,27 @@
+{
+  "name": "TransformApp",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Transformapp/webapp",
+  "authors": [
+    "Kevin Liang <keviekev23@gmail.com>",
+    "Kevin Tu <kevinbtu@gmail.com>",
+    "June Wang <junewang@gmail.com>",
+    "Caleb Lin <kkmlin@gmail.com>",
+    "Jean Tang <jeantangerine@gmail.com>"
+  ],
+  "scripts": {
+  },
+  "license": "",
+  "ignore": [
+  ],
+  "dependencies": {
+    "angular" : "~1.2.18",
+    "angular-ui-router" : "~0.2.10",
+    "jquery" : "~2.1.1",
+    "angular-ui-utils" : "~0.1.0",
+    "angular-ui-map" : "~0.5.0",
+    "fastclick" : "~0.6.10",
+    "angular-touch" : "~1.2.8",
+    "angular-cookies" : ""
+  }
+}
