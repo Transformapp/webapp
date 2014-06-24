@@ -18,6 +18,7 @@
     "angular" : "~1.2.18",
     "angular-ui-router" : "~0.2.10",
     "jquery" : "~2.1.1",
+    "ng-mobile-menu" : "~0.2.0",
     "angular-ui-utils" : "~0.1.0",
     "angular-ui-map" : "~0.5.0",
     "fastclick" : "~0.6.10",

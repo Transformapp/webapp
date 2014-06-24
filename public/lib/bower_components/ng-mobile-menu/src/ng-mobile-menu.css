@@ -33,9 +33,6 @@
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-#sp-page > p {
-    padding: 10px;
-}
 #sp-nav.show,
 #sp-nav.show.wide {
   left: 0px;
