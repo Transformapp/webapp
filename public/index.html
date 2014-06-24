@@ -8,7 +8,7 @@
   -->
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="client/css/index.css" />
   <!--Resources for slide out menu-->
   <link rel="stylesheet" href="lib/bower_components/ng-mobile-menu/src/ng-mobile-menu.css" />
 </head>
@@ -24,12 +24,12 @@
       </ul>
     </div>
 
-    <div id="sp-page">
-    <!-- page content -->
-    <div id="navbar">
-      <button ng-click="$spMenu.toggle()">Menu</button>
-    </div>
-    <div ui-view></div>
+    <div id="sp-page" ng-click="$spMenu.hide()">
+      <!-- page content -->
+      <div id="navbar">
+        <button id="menuButton" ng-click="$spMenu.toggle()"></button>
+      </div>
+      <div ui-view></div>
     </div>
 
 
@@ -56,7 +56,8 @@
   <!--Resources for slide out menu. This import must be after angular.min.js but before application.js--> 
   <script type="text/javascript" src="lib/bower_components/ng-mobile-menu/src/ng-mobile-menu.js"></script>
 
-  <script type="text/javascript" src="client/application.js"></script>
+  <script type="text/javascript" src="client/js/application.js"></script>
+  <script type="text/javascript" src="client/js/utils.js"></script>
   <script type="text/javascript" src="client/data_model/prayer.js"></script>
 </body>
 </html>
