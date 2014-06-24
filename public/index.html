@@ -8,15 +8,31 @@
   -->
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
-
+  <!--Resources for slide out menu-->
+  <link rel="stylesheet" href="lib/ng-mobile-menu-master/src/ng-mobile-menu.css" />
 </head>
 <body>
   <div ng-app="transformApp">
-    <ul class="menu">
-    <li><a href="#/groups">Group Logistics</a></li>
-    <li><a href="#/prayers">Prayer List</a></li>
-  </ul>
+
+    <div id="sp-nav">
+      <!-- menu content -->
+      <ul class="menu">
+        <li><a href="#/groups">Group Logistics</a></li>
+        <li><a href="#/prayers">Prayer List</a></li>
+        <li><a href="#/profile">Profile</a></li>
+      </ul>
+    </div>
+
+    <div id="sp-page">
+    <!-- page content -->
+    <button ng-click="$spMenu.toggle()">Menu</button>
     <div ui-view></div>
+    </div>
+
+
+
+
+
   </div>
 
   <!-- Libraries -->
@@ -33,6 +49,7 @@
   <!-- <script src="lib/bower_components/angular-ui-map/ui-map.js"></script> -->
   <!-- <script src="lib/angular-cookie.js"></script> -->
   <!-- <script src="lib/bower_components/angular-ui-utils/mask.min.js"></script> -->
+  <script type="text/javascript" src="lib/ng-mobile-menu-master/src/ng-mobile-menu.js"></script>
 
   <script src="client/application.js"></script>
   <script src="client/data_model/prayer.js"></script>

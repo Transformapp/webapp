@@ -11,7 +11,7 @@ window.onload = function() {
 };
 
 // initialize webapp module
-var app = angular.module('transformApp', ['ui.router', 'parseModule']);
+var app = angular.module('transformApp', ['ui.router', 'parseModule', 'shoppinpal.mobile-menu']);
 
 app.service('currentPrayer', function () {
   var prayer = null;
