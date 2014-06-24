@@ -3,6 +3,12 @@ body{
   margin: 0px;
   font-family: "Arial", Arial, sans-serif;
 }
+#navbar{
+  height:75px;
+  width: 100%;
+  background-color: #B40404;
+  color:white;
+}
 #sp-nav{
   background-color: grey;
   color: white;
