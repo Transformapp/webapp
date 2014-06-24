@@ -1,7 +1,9 @@
 <script type="text/javascript" src="client/data_model/prayer.js"></script>
+<link rel="stylesheet" href="client/css/prayerList.css" />
 
 <div> {{ title }} </div>
-
+<!-- change this to a loading scroll wheel gif later --> 
+<div id="loadingPrayers">Loading Prayers...</div> 
 <ul>
   <li ng-repeat="prayer in prayers">
     <a href="#prayers/{{prayer.id}}">
