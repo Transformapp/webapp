@@ -1,8 +1,7 @@
-var User = Parse.Object.extend("User", {
-  initialize: function(name, profile_url, is_leader) {
-    this.set("name", name);
-    this.set("profile_url", profile_url);
-    this.set("is_leader", is_leader);
-    this.set("prayers", []);
+var UserParseObj = Parse.Object.extend("User", {
+  initialize: function(user) {
+    this.set("name", user.name);
+    this.set("profile_url", user.profile_url);
+    this.set("groups", user.groups); // array of group IDs that the user belongs to.
   }
 });
