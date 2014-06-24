@@ -33,10 +33,6 @@
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
-#sp-page {
-    background-color: darkgray;
-    color: whitesmoke;
-}
 #sp-page > p {
     padding: 10px;
 }
