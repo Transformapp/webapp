@@ -1,11 +1,35 @@
 body{
   padding: 0px;
   margin: 0px;
+  font-family: "Arial", Arial, sans-serif;
 }
 #sp-nav{
-
+  background-color: grey;
+  color: white;
+}
+#sp-nav li{
+  text-decoration: none;
+  list-style-type: none;
+  padding:10px;
+  color: white;
+}
+#sp-nav a:link {
+  text-decoration: none;
+  color: white;
+}
+#sp-nav a:visited {
+  text-decoration: none;
+  color: white;
+}
+#sp-nav a:hover {
+  text-decoration: underline;
+  color: white;
+}
+#sp-nav a:active {
+  text-decoration: underline;
+  color: white;
 }
 #sp-page{
-  background-color: darkgray;
-  color: whitesmoke;
+  background-color: white;
+  color: black;
 }
