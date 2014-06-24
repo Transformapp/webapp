@@ -74,8 +74,10 @@ app.controller('groupLogisticsController', function($scope){
 app.controller('prayerListController', function($scope, PrayerService){
   // query all prayers and asynchronously refresh the page when the requests
   // are retrieved from Parse backend.
+  $("#loadingPrayers").show();
   var promise = PrayerService.loadPreviousPrayers();
   promise.then(function(data) {
+    $("#loadingPrayers").hide();
     console.log('success');
     $scope.prayers = data;
   }, function(error) {
