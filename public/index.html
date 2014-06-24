@@ -8,20 +8,39 @@
   -->
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
-
+    <link rel="stylesheet" href="index.css" />
+  <!--Resources for slide out menu-->
+  <link rel="stylesheet" href="lib/bower_components/ng-mobile-menu/src/ng-mobile-menu.css" />
 </head>
 <body>
   <div ng-app="transformApp">
-    <ul class="menu">
-    <li><a href="#/groups">Group Logistics</a></li>
-    <li><a href="#/prayers">Prayer List</a></li>
-  </ul>
+
+    <div id="sp-nav">
+      <!-- menu content -->
+      <ul class="menu">
+        <li><a href="#/profile">Profile</a></li>
+        <li><a href="#/groups">Group Logistics</a></li>
+        <li><a href="#/prayers">Prayer List</a></li>
+      </ul>
+    </div>
+
+    <div id="sp-page">
+    <!-- page content -->
+    <div id="navbar">
+      <button ng-click="$spMenu.toggle()">Menu</button>
+    </div>
     <div ui-view></div>
+    </div>
+
+
+
+
+
   </div>
 
   <!-- Libraries -->
-  <script src="lib/bower_components/angular/angular.min.js"></script> 
-  <script src="lib/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="lib/bower_components/angular/angular.min.js"></script> 
+  <script type="text/javascript" src="lib/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
   <!--
@@ -34,7 +53,10 @@
   <!-- <script src="lib/angular-cookie.js"></script> -->
   <!-- <script src="lib/bower_components/angular-ui-utils/mask.min.js"></script> -->
 
-  <script src="client/application.js"></script>
-  <script src="client/data_model/prayer.js"></script>
+  <!--Resources for slide out menu. This import must be after angular.min.js but before application.js--> 
+  <script type="text/javascript" src="lib/bower_components/ng-mobile-menu/src/ng-mobile-menu.js"></script>
+
+  <script type="text/javascript" src="client/application.js"></script>
+  <script type="text/javascript" src="client/data_model/prayer.js"></script>
 </body>
 </html>

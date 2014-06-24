@@ -1,0 +1,14 @@
+{
+  "name": "ng-mobile-menu",
+  "homepage": "https://github.com/ShoppinPal/ng-mobile-menu",
+  "version": "0.2.0",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.0",
+    "commit": "e9e39209bfd4d5e05b04d6f5801d9947cbf81944"
+  },
+  "_source": "git://github.com/ShoppinPal/ng-mobile-menu.git",
+  "_target": "~0.2.0",
+  "_originalSource": "ng-mobile-menu"
+}
