@@ -22,7 +22,6 @@
     "angular-ui-utils" : "~0.1.0",
     "angular-ui-map" : "~0.5.0",
     "fastclick" : "~0.6.10",
-    "angular-touch" : "~1.2.8",
-    "angular-cookies" : ""
+    "angular-touch" : "~1.2.8"
   }
 }
