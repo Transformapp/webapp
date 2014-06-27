@@ -21,23 +21,15 @@ parseModule.factory('UserService', function($q) {
     loadProfile: function(id) {
       var deferred = $q.defer();
       var query = new Parse.Query(UserParseObj);
-      // return query.get(id);
       user = {};
       query.get(id).then(function(result) {
         user.id = result.id;
         user.name = result.get("name");
         user.profileUrl = result.get("profileUrl");
         user.groups = result.get("groups");
-
-        console.log('user: ', user);
-        console.log('user.id: ', user.id);
-        console.log('user.name: ', user.name);
-        console.log('user.profileUrl: ', user.profileUrl);
-        console.log('user.groups: ', user.groups);
         deferred.resolve(user);
       });
       return deferred.promise;
-
     }
   };
 })

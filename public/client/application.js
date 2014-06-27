@@ -97,12 +97,10 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
 });
 app.controller('profileController', function($scope, UserService){
     $(".loading").show();
-    var u_id = 'Ddw8VGKsZ1';
+    var u_id = 'Ddw8VGKsZ1'; // set user ID here! 
     var promise = UserService.loadProfile(u_id);
-    console.log('promise: ', promise);
     promise.then(function(data) {
         $(".loading").hide();
-        console.log('success: ', data);
         $scope.user = data;
     }, function(error) {
         alert('Failed to load profile: ' + error);
