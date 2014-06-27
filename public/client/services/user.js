@@ -19,6 +19,7 @@ parseModule.factory('UserService', function($q) {
       return query.find();
     },
     loadProfile: function(id) {
+      var deferred = $q.defer();
       var query = new Parse.Query(UserParseObj);
       // return query.get(id);
       user = {};
@@ -33,9 +34,10 @@ parseModule.factory('UserService', function($q) {
         console.log('user.name: ', user.name);
         console.log('user.profile_url: ', user.profile_url);
         console.log('user.groups: ', user.groups);
-
-        return user;
+        //return user;
       });
+      return deferred.promise;
+
     }
   };
 })
