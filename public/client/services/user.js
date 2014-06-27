@@ -34,7 +34,7 @@ parseModule.factory('UserService', function($q) {
         console.log('user.name: ', user.name);
         console.log('user.profile_url: ', user.profile_url);
         console.log('user.groups: ', user.groups);
-        //return user;
+        deferred.resolve(user);
       });
       return deferred.promise;
 
