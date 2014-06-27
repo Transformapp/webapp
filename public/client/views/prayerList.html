@@ -1,10 +1,12 @@
 <script type="text/javascript" src="client/services/prayer.js"></script>
 <script type="text/javascript" src="client/services/user.js"></script>
 <link rel="stylesheet" href="stylesheets/prayerList.css" />
+<link rel="stylesheet" href="stylesheets/application.css" />
+
 
 <div> {{ title }} </div>
 <!-- change this to a loading scroll wheel gif later --> 
-<div id="loadingPrayers">Loading Prayers...</div> 
+<div class="loading">Loading Prayers...</div> 
 <ul>
   <li ng-repeat="prayer in prayers">
     <a href="#prayers/{{prayer.id}}">

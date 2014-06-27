@@ -1,1 +1,14 @@
-<p> this is the profile page </p>
+<script type="text/javascript" src="client/services/application.js"></script>
+<script type="text/javascript" src="client/services/user.js"></script>
+<link rel="stylesheet" href="stylesheets/application.css" />
+<link rel="stylesheet" href="stylesheets/profile.css" />
+
+<div> {{ title }} </div>
+<!-- change this to a loading scroll wheel gif later --> 
+<div class="loading">Loading Profile...</div> 
+<div>
+  <br>Profile for Prayer ID: {{user.id}} <br>
+  name: {{user.name}} <br>
+  profile: {{user.profileUrl}} <br>
+  groups: {{user.groups}}
+</div>

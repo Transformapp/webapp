@@ -48,3 +48,8 @@ body{
   background: url(../assets/images/menuButton1.png) no-repeat center;
   background-size: 25px 25px;
 }
+.loading{
+  position: relative;
+  width: 100%;
+  text-align: center;
+}

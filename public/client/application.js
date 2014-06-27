@@ -75,11 +75,11 @@ app.controller('groupLogisticsController', function($scope){
 app.controller('prayerListController', function($scope, PrayerService, UserService){
   // query all prayers and asynchronously refresh the page when the requests
   // are retrieved from Parse backend.
-  $("#loadingPrayers").show();
+  $(".loading").show();
   var promise = PrayerService.loadAllPrayers();
   
   promise.then(function(data) {
-    $("#loadingPrayers").hide();
+    $(".loading").hide();
     console.log('success');
     $scope.prayers = data;
   }, function(error) {
@@ -95,8 +95,19 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
     alert('Failed to load prayer: ' + error);
   });
 });
-app.controller('profileController', function($scope){
-  // add code
+app.controller('profileController', function($scope, UserService){
+    $(".loading").show();
+    var u_id = 'Ddw8VGKsZ1';
+    var promise = UserService.loadProfile(u_id);
+    console.log('promise: ', promise);
+    promise.then(function(data) {
+        $(".loading").hide();
+        console.log('success: ', data);
+        $scope.user = data;
+    }, function(error) {
+        alert('Failed to load profile: ' + error);
+    });
+  $scope.title = "Profile Page";
 });
 
 
