@@ -1,70 +1,83 @@
-var Prayer = Parse.Object.extend("Prayer", {
-  initialize: function(user_id, user_name, user_profile, title, prayer_text, type) {
+// Definition for Prayer database on parse.
+var PrayerParseObj = Parse.Object.extend("Prayer", {
+  initialize: function(user_id, title, content, type) {
     this.set("user", user_id);
-    this.set("user_name", user_name);
-    this.set("user_profile", user_profile);
     this.set("title", title);
-    this.set("content", prayer_text);
+    this.set("content", content);
     this.set("type", type);
     this.set("status", type == "Prayer Request" ? "Open" : "Praise");
-    this.set("responses", []);
+    this.set("comments", []);
+		this.set("likes", []);
   },
 });
 
-function addPrayer($scope, user_id, user_name, user_profile, title, prayer_text, type) {
-	var prayer = new Prayer();
-	prayer.initialize(user_id, user_name, user_profile, title, prayer_text, type);
-	prayer.save(null, {
-		success: function(prayer) {
-			var newly_added_prayer = {
-				user_name: prayer.get("user_name"),
-				title: prayer.get("title")
-			};
-			$scope.prayers.push(newly_added_prayer);
-			$scope.$apply();
-		},
-		error: function(prayer, error) {
-			console.log(error);
-		}
-	});
-	
-	// Now update the individual member's prayer list.
-	var query = new Parse.Query(Member);
-	query.get(user_id, {
-		success: function(member) {
-			console.log('retrieved ' + member.get("name"));
-			member.addUnique("prayers", prayer);
-			member.save();
-		}
-	});
-}
-
-var parseModule = angular.module('parseModule', []);
-
-parseModule.factory('PrayerService', function($q) {
+parseModule.factory('PrayerService', function($q, UserService) {
 	return {
-		loadPreviousPrayers: function () {
+		loadPrayer: function(id) {
 			var deferred = $q.defer();
-			console.log('loadPreviousPrayers');
-			var query = new Parse.Query(Prayer);
+			var query = new Parse.Query(PrayerParseObj);
+			var prayer = {};
+			query.get(id).then(function(result) {
+				prayer.id = result.id;
+				prayer.title = result.get("title");
+				prayer.content = result.get("content");
+				return UserService.loadUser(result.get("user"))
+			}).then(function(user) {
+				prayer.user_name = user.get("name");
+				prayer.user_profile = user.get("profileUrl");
+				deferred.resolve(prayer);
+			}, function(error) {
+				deferred.reject(error);
+			});
+			return deferred.promise;
+		},
+		loadAllPrayers: function () {
+			var deferred = $q.defer();
+			var query = new Parse.Query(PrayerParseObj);
+			var prayers = [];
 			// Only fetch fields that are needed
-			query.select('user_name', 'title');
-			query.find({
-				success: function(results) {
-					console.log('success with ' + results.length + ' results');
-					prayers = [];
-					for (var i = 0; i < results.length; i++) {
-						var prayer = {
-							id: results[i].id,
-							user_name: results[i].get("user_name"),
-							title: results[i].get("title"),
-						};
-						prayers.push(prayer);
-					}
-					deferred.resolve(prayers);
+			query.select('user', 'title');
+			query.find().then(function(results) {
+				console.log('success with ' + results.length + ' results');
+				prayers = results;
+				var users = [];
+				for (var i = 0; i < results.length; i++) {
+					users.push(results[i].get("user"));
+				};
+				return UserService.loadUsers(users);
+			}).then(function(users) {
+				var user_array = {};
+				for (var i = 0; i < users.length; i++) {
+					user_array[users[i].id] = users[i];
+				}
+				var results = [];
+				for (var i = 0; i < prayers.length; i++) {
+					var prayer = prayers[i];
+					results.push({
+						id: prayer.id,
+						user_name: user_array[prayer.get("user")].get("name"),
+						title: prayer.get("title")
+					});
+				};
+				deferred.resolve(results);
+			}, function(error) {
+				deferred.reject(error);
+			});
+			return deferred.promise;
+		},
+
+		/**
+		 * Function to add a new prayer to parse backend
+		 */
+		addPrayer: function(prayer) {
+			var deferred = $q.defer();
+			var prayerParseObj = new PrayerParseObj();
+			prayerParseObj.initialize(prayer.user_id, prayer.title, prayer.content, prayer.type);
+			prayerParseObj.save(null, {
+				success: function(prayerParseObj) {
+					deferred.resolve(prayerParseObj);
 				},
-				error: function(error) {
-					alert("Error code: " + error.code + ", message: " + error.message);
+				error: function(prayerParseObj, error) {
 					deferred.reject(error);
 				}
 			});

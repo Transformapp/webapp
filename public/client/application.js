@@ -11,6 +11,7 @@ window.onload = function() {
 };
 
 // initialize webapp module
+var parseModule = angular.module('parseModule', []);
 var app = angular.module('transformApp', ['ui.router', 'parseModule', 'shoppinpal.mobile-menu']);
 
 app.service('currentPrayer', function () {
@@ -71,11 +72,12 @@ app.controller('homeController', function($scope){
 app.controller('groupLogisticsController', function($scope){
   // add code
 });
-app.controller('prayerListController', function($scope, PrayerService){
+app.controller('prayerListController', function($scope, PrayerService, UserService){
   // query all prayers and asynchronously refresh the page when the requests
   // are retrieved from Parse backend.
   $("#loadingPrayers").show();
-  var promise = PrayerService.loadPreviousPrayers();
+  var promise = PrayerService.loadAllPrayers();
+  
   promise.then(function(data) {
     $("#loadingPrayers").hide();
     console.log('success');
@@ -85,8 +87,13 @@ app.controller('prayerListController', function($scope, PrayerService){
   });
   $scope.title = "Prayers List";
 });
-app.controller('prayerDetailController', function($scope, $stateParams){
-  $scope.prayer_id = $stateParams.prayer_id;
+app.controller('prayerDetailController', function($scope, $stateParams, PrayerService){  
+  var promise = PrayerService.loadPrayer($stateParams.prayer_id);
+  promise.then(function(prayer) {
+    $scope.prayer = prayer;
+  }, function (error) {
+    alert('Failed to load prayer: ' + error);
+  });
 });
 app.controller('profileController', function($scope){
   // add code
