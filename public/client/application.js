@@ -88,8 +88,10 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   $scope.title = "Prayers List";
 });
 app.controller('prayerDetailController', function($scope, $stateParams, PrayerService){  
+  $(".loading").show();
   var promise = PrayerService.loadPrayer($stateParams.prayer_id);
   promise.then(function(prayer) {
+    $(".loading").hide();
     $scope.prayer = prayer;
   }, function (error) {
     alert('Failed to load prayer: ' + error);
@@ -97,7 +99,7 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
 });
 app.controller('profileController', function($scope, UserService){
     $(".loading").show();
-    var u_id = 'Ddw8VGKsZ1'; // set user ID here! 
+    var u_id = 'Ddw8VGKsZ1'; // TEMP!! set user ID here! 
     var promise = UserService.loadProfile(u_id);
     promise.then(function(data) {
         $(".loading").hide();
@@ -107,7 +109,6 @@ app.controller('profileController', function($scope, UserService){
     });
   $scope.title = "Profile Page";
 });
-
 
 // models
 
