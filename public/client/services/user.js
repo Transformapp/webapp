@@ -19,7 +19,7 @@ parseModule.factory('UserService', function($q) {
       return query.find();
     },
     currentLoggedInUser: function() {
-      // todo: login logic here
+      // todo: login logic here.  We should do this: http://stackoverflow.com/questions/21355673/defer-angular-ui-router-statechangestart-until-server-authorization-response-re
       return true;
     }
   };
