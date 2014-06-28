@@ -88,7 +88,7 @@ app.run(function($rootScope, $state, UserService, $spMenu) {
     }
   });
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-    $spMenu.hide();
+    //$spMenu.hide();
   });
 });
 
@@ -108,6 +108,7 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   // are retrieved from Parse backend.
   $(".loading").show();
   var promise = PrayerService.loadAllPrayers();
+
   promise.then(function(prayers) {
     $(".loading").hide();
     console.log('success');
