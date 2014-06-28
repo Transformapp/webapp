@@ -1,0 +1,7 @@
+#addPrayer{
+	width: 15em;
+	height: 2em;
+}
+#addPrayer:hover{
+	cursor: pointer;
+}
