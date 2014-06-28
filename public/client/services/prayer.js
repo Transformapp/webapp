@@ -11,26 +11,70 @@ var PrayerParseObj = Parse.Object.extend("Prayer", {
   },
 });
 
+// This is the class of prayer that HTML files can use to display.
+// It has no IDs in it and only raw information.
+function Prayer() {
+	this.id = null;
+	this.user = new User(); // And this is a User object.
+	this.title = null;
+	this.content = null;
+	this.type = null;
+	this.status = null;
+	this.comments = [];
+	this.numberOfLikes = 0;
+}
+
+function Prayer(id,
+								user,
+								title,
+								content,
+								type,
+								status,
+								comments,
+								number_of_likes) {
+	this.id = id;
+	this.user = user; // And this is a User object.
+	this.title = title;
+	this.content = content;
+	this.type = type;
+	this.status = status;
+	this.comments = comments;
+	this.numberOfLikes = number_of_likes;
+};
+
+function Comment() {
+	this.id = null;
+	this.user = null;
+	this.content = null;
+}
+
+function Comment(id, user, content) {
+	this.id = id;
+	this.user = user;
+	this.content = content;
+}
+
 parseModule.factory('PrayerService', function($q, UserService) {
 	return {
 		loadPrayer: function(id) {
 			var deferred = $q.defer();
 			var query = new Parse.Query(PrayerParseObj);
-			var prayer = {};
+			prayer = new Prayer();
 			query.get(id).then(function(result) {
 				prayer.id = result.id;
 				prayer.title = result.get("title");
 				prayer.content = result.get("content");
-				return UserService.loadUser(result.get("user"))
+	      var queryForUser = new Parse.Query(UserParseObj);
+				return queryForUser.get(result.get("user"));
 			}).then(function(user) {
-				prayer.user_name = user.get("name");
-				prayer.user_profile = user.get("profileUrl");
+				prayer.user = new User(user.id, user.get("name"), user.get("profileUrl"));
 				deferred.resolve(prayer);
 			}, function(error) {
 				deferred.reject(error);
 			});
 			return deferred.promise;
 		},
+
 		loadAllPrayers: function () {
 			var deferred = $q.defer();
 			var query = new Parse.Query(PrayerParseObj);
@@ -38,13 +82,14 @@ parseModule.factory('PrayerService', function($q, UserService) {
 			// Only fetch fields that are needed
 			query.select('user', 'title');
 			query.find().then(function(results) {
-				console.log('success with ' + results.length + ' results');
 				prayers = results;
-				var users = [];
+				var user_ids = [];
 				for (var i = 0; i < results.length; i++) {
-					users.push(results[i].get("user"));
+					user_ids.push(results[i].get("user"));
 				};
-				return UserService.loadUsers(users);
+				var query = new Parse.Query(UserParseObj);
+				query.containedIn("objectId", user_ids);
+				return query.find();
 			}).then(function(users) {
 				var user_array = {};
 				for (var i = 0; i < users.length; i++) {
@@ -53,11 +98,18 @@ parseModule.factory('PrayerService', function($q, UserService) {
 				var results = [];
 				for (var i = 0; i < prayers.length; i++) {
 					var prayer = prayers[i];
-					results.push({
-						id: prayer.id,
-						user_name: user_array[prayer.get("user")].get("name"),
-						title: prayer.get("title")
-					});
+					results.push(new Prayer(
+						prayer.id,
+						new User(user_array[prayer.get("user")].id,
+										 user_array[prayer.get("user")].get("name"),
+										 user_array[prayer.get("user")].get("profileUrl")),
+						prayer.get("title"),
+						prayer.get("content"),
+						prayer.get("type"),
+						prayer.get("status"),
+						[], // We are not loading any comments when we load all prayers.
+						0   // 
+					));
 				};
 				deferred.resolve(results);
 			}, function(error) {
@@ -72,10 +124,19 @@ parseModule.factory('PrayerService', function($q, UserService) {
 		addPrayer: function(prayer) {
 			var deferred = $q.defer();
 			var prayerParseObj = new PrayerParseObj();
-			prayerParseObj.initialize(prayer.user_id, prayer.title, prayer.content, prayer.type);
+			prayerParseObj.initialize(prayer.user.id, prayer.title, prayer.content, prayer.type);
 			prayerParseObj.save(null, {
 				success: function(prayerParseObj) {
-					deferred.resolve(prayerParseObj);
+					deferred.resolve(new Prayer(
+						prayerParseObj.id,
+						prayer.user,
+						prayer.title,
+						prayer.content,
+						prayer.type,
+						prayerParseObj.get("status"),
+						[],
+						0
+					));
 				},
 				error: function(prayerParseObj, error) {
 					deferred.reject(error);

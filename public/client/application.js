@@ -109,7 +109,6 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   
   promise.then(function(data) {
     $("#loadingPrayers").hide();
-    console.log('success');
     $scope.prayers = data;
   }, function(error) {
     alert('Failed to load prayers: ' + error);
