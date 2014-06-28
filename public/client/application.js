@@ -98,15 +98,18 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
 });
 app.controller('addPrayerController', function($scope, PrayerService){
   $scope.title = "Add A New Prayer/Praise";
-
-  // save prayer in backend
-  var promise = PrayerService.addPrayer();
-  promise.then(function(prayer) {
-    $scope.prayer = prayer;
-    alert('added prayer to backend');
-  }, function (error) {
-    alert('Failed to load prayer: ' + error);
+  // clicked submit
+  $("#submit").click(function() {
+    // save prayer in backend
+    var promise = PrayerService.addPrayer();
+    promise.then(function(prayer) {
+      $scope.prayer = prayer;
+      alert('added prayer to backend');
+    }, function (error) {
+      alert('Failed to load prayer: ' + error);
+    });
   });
+
 
 });
 app.controller('prayerDetailController', function($scope, $stateParams, PrayerService){  
