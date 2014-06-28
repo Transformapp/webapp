@@ -17,6 +17,10 @@ parseModule.factory('UserService', function($q) {
       var query = new Parse.Query(UserParseObj);
       query.containedIn("objectId", ids);
       return query.find();
+    },
+    currentLoggedInUser: function() {
+      // todo: login logic here
+      return true;
     }
   };
 })

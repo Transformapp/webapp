@@ -28,7 +28,7 @@ app.service('currentPrayer', function () {
 
 // routing logic
 app.config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/prayers'); // default
+  $urlRouterProvider.otherwise('/'); // default
 
   $stateProvider
   .state('home', {
@@ -36,37 +36,63 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'client/views/home.html',
     controller: 'homeController'
   })
-  // .state('groupLogistics', {
-  //   url: '/groups/:id',
-  //   templateUrl: 'client/views/groupLogistics.html',
-  //   controller: 'groupLogisticsController'
-  // })
+  .state('login', {
+    url: '/login',
+    templateUrl: 'client/views/login.html',
+    controller: 'loginController'
+  })
   .state('groupLogistics', {
     url: '/groups',
     templateUrl: 'client/views/groupLogistics.html',
-    controller: 'groupLogisticsController'
+    controller: 'groupLogisticsController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('profile', {
     url: '/profile',
     templateUrl: 'client/views/profile.html',
-    controller: 'profileController'
+    controller: 'profileController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('prayerList', {
     url: '/prayers',
     templateUrl: 'client/views/prayerList.html',
-    controller: 'prayerListController'
+    controller: 'prayerListController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('prayerDetail', {
     url: '/prayers/:prayer_id',
     templateUrl: 'client/views/prayerDetail.html',
-    controller: 'prayerDetailController'
+    controller: 'prayerDetailController',
+    restrict: {
+      type: 'User'
+    }
   });
 })
 
+app.run(function($rootScope, $state, UserService) {
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    if (toState.restrict) {
+      var currentUser = UserService.currentLoggedInUser();
+      if (!currentUser) {
+        event.preventDefault();
+        $state.go("home");
+      }
+    }
+  });
+});
 
 
 // controllers
 app.controller('homeController', function($scope){
+  // add code
+});
+app.controller('loginController', function($scope){
   // add code
 });
 app.controller('groupLogisticsController', function($scope){
