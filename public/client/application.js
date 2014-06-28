@@ -86,7 +86,7 @@ app.run(function($rootScope, $state, UserService, $spMenu) {
     }
   });
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-    $spMenu.hide();
+    //$spMenu.hide();
   });
 });
 
