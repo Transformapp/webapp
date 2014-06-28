@@ -75,15 +75,18 @@ app.config(function($stateProvider, $urlRouterProvider) {
   });
 })
 
-app.run(function($rootScope, $state, UserService) {
+app.run(function($rootScope, $state, UserService, $spMenu) {
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     if (toState.restrict) {
-      var currentUser = UserService.currentLoggedInUser();
-      if (!currentUser) {
+      $rootScope.currentUser = UserService.currentLoggedInUser();
+      if (!$rootScope.currentUser) {
         event.preventDefault();
         $state.go("home");
       }
     }
+  });
+  $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+    $spMenu.hide();
   });
 });
 
