@@ -10,7 +10,7 @@
 <ul>
   <li ng-repeat="prayer in prayers">
     <a href="#prayers/{{prayer.id}}">
-      {{ prayer.user_name }}: {{ prayer.title }}
+      {{ prayer.user.name }}: {{ prayer.title }}
     </a>
   </li>
 </ul>

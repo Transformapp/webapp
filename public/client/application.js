@@ -30,7 +30,7 @@ app.service('currentPrayer', function () {
 
 // routing logic
 app.config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/prayers'); // default
+  $urlRouterProvider.otherwise('/'); // default
 
   $stateProvider
   .state('home', {
@@ -38,37 +38,66 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'client/views/home.html',
     controller: 'homeController'
   })
-  // .state('groupLogistics', {
-  //   url: '/groups/:id',
-  //   templateUrl: 'client/views/groupLogistics.html',
-  //   controller: 'groupLogisticsController'
-  // })
+  .state('login', {
+    url: '/login',
+    templateUrl: 'client/views/login.html',
+    controller: 'loginController'
+  })
   .state('groupLogistics', {
     url: '/groups',
     templateUrl: 'client/views/groupLogistics.html',
-    controller: 'groupLogisticsController'
+    controller: 'groupLogisticsController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('profile', {
     url: '/profile',
     templateUrl: 'client/views/profile.html',
-    controller: 'profileController'
+    controller: 'profileController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('prayerList', {
     url: '/prayers',
     templateUrl: 'client/views/prayerList.html',
-    controller: 'prayerListController'
+    controller: 'prayerListController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('prayerDetail', {
     url: '/prayers/:prayer_id',
     templateUrl: 'client/views/prayerDetail.html',
-    controller: 'prayerDetailController'
+    controller: 'prayerDetailController',
+    restrict: {
+      type: 'User'
+    }
   });
 })
 
+app.run(function($rootScope, $state, UserService, $spMenu) {
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    if (toState.restrict) {
+      $rootScope.currentUser = UserService.currentLoggedInUser();
+      if (!$rootScope.currentUser) {
+        event.preventDefault();
+        $state.go("home");
+      }
+    }
+  });
+  $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+    $spMenu.hide();
+  });
+});
 
 
 // controllers
 app.controller('homeController', function($scope){
+  // add code
+});
+app.controller('loginController', function($scope){
   // add code
 });
 app.controller('groupLogisticsController', function($scope){
@@ -79,11 +108,10 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   // are retrieved from Parse backend.
   $(".loading").show();
   var promise = PrayerService.loadAllPrayers();
-  
-  promise.then(function(data) {
+  promise.then(function(prayers) {
     $(".loading").hide();
     console.log('success');
-    $scope.prayers = data;
+    $scope.prayers = prayers;
   }, function(error) {
     alert('Failed to load prayers: ' + error);
   });
