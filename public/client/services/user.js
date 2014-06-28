@@ -6,6 +6,19 @@ var UserParseObj = Parse.Object.extend("Member", {
   }
 });
 
+function User() {
+  this.id = null;
+  this.name = null;
+  this.profileUrl = null;
+}
+
+function User(id, name, profile_url, groups) {
+  this.id = id;
+  this.name = name;
+  this.profileUrl = profile_url;
+  this.groups = groups;
+}
+
 parseModule.factory('UserService', function($q) {
   return {
     loadUser: function(id) {
@@ -23,11 +36,8 @@ parseModule.factory('UserService', function($q) {
       var query = new Parse.Query(UserParseObj);
       user = {};
       query.get(id).then(function(result) {
-        user.id = result.id;
-        user.name = result.get("name");
-        user.profileUrl = result.get("profileUrl");
-        user.groups = result.get("groups");
-        deferred.resolve(user);
+        newUser = new User(result.id, result.get("name"), result.get("profileUrl"), result.get("groups"))
+        deferred.resolve(newUser);
       });
       return deferred.promise;
     }
