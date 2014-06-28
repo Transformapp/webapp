@@ -11,8 +11,43 @@ var PrayerParseObj = Parse.Object.extend("Prayer", {
   },
 });
 
+var CommentParseObj = Parse.Object.extend("Comment", {
+	initialize: function(user_id, text) {
+		this.set("user", user_id);
+		this.set("text", text);
+	},
+});
+
 parseModule.factory('PrayerService', function($q, UserService) {
 	return {
+		loadComments: function(comment_ids) {
+      var query = new Parse.Query(CommentParseObj);
+      query.containedIn("objectId", ids);
+      return query.find();
+		},
+
+		addCommentToPrayer: function(prayer_id, comment) {
+			var deferred = $q.defer();
+			queryForPrayer = new Parse.Query(PrayerParseObj);
+			queryForPrayer.get(prayer_id).then(function(prayer) {
+				commentParseObj = new CommentParseObj();
+				commentParseObj.initialize(comment.user, comment.text);
+				commentParseObj.save().then(function(saved) {
+					console.log(prayer.id, saved.id);
+					prayer.add("comments", saved.id).then(function(updated_prayer) {
+						deferred.resolve(updated_prayer);
+					}, function (error) {
+						deferred.reject(error);
+					});
+				}, function(error) {
+					deferred.reject(error);
+				});
+			}, function(error) {
+				deferred.reject(error);
+			});
+			return deferred.promise;
+		},
+
 		loadPrayer: function(id) {
 			var deferred = $q.defer();
 			var query = new Parse.Query(PrayerParseObj);
@@ -21,7 +56,7 @@ parseModule.factory('PrayerService', function($q, UserService) {
 				prayer.id = result.id;
 				prayer.title = result.get("title");
 				prayer.content = result.get("content");
-				return UserService.loadUser(result.get("user"))
+				return UserService.loadUser(result.get("user"));
 			}).then(function(user) {
 				prayer.user_name = user.get("name");
 				prayer.user_profile = user.get("profileUrl");
@@ -31,6 +66,7 @@ parseModule.factory('PrayerService', function($q, UserService) {
 			});
 			return deferred.promise;
 		},
+
 		loadAllPrayers: function () {
 			var deferred = $q.defer();
 			var query = new Parse.Query(PrayerParseObj);

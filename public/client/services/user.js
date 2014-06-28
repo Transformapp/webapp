@@ -1,7 +1,7 @@
 var UserParseObj = Parse.Object.extend("Member", {
   initialize: function(name, profile_url) {
     this.set("name", name);
-    this.set("profile_url", profile_url);
+    this.set("profileUrl", profile_url);
     this.set("groups", []); // array of group IDs that the user belongs to.
   }
 });
