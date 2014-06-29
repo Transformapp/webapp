@@ -52,7 +52,8 @@ parseModule.factory('UserService', function($q, localStorageService) {
     },
     currentLoggedInUser: function() {
       // todo: login logic here.  We should do this: http://stackoverflow.com/questions/21355673/defer-angular-ui-router-statechangestart-until-server-authorization-response-re
-      return true;
+      var u_id = 'Ddw8VGKsZ1'; // TEMP!! set user ID here!
+      return localStorageService.get(u_id);
     }
   };
 })

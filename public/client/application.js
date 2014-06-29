@@ -1,5 +1,3 @@
-var u_id = 'Ddw8VGKsZ1'; // TEMP!! set user ID here!
-
 function parseInit() {
   Parse.$ = jQuery;
     
@@ -122,8 +120,7 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   });
   $scope.title = "Prayers List";
 });
-app.controller('prayerDetailController', function($scope, $stateParams, PrayerService){
-  $scope.current_user_id = u_id;
+app.controller('prayerDetailController', function($scope, $stateParams, PrayerService, UserService){
   $(".loading").show();
   var promise = PrayerService.loadPrayer($stateParams.prayer_id);
   promise.then(function(prayer) {
@@ -133,7 +130,9 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
     alert('Failed to load prayer: ' + error);
   });
   $scope.addCommentToPrayer = function() {
-    comment = new Comment(null, $scope.current_user_id, $scope.new_comment);
+    comment = new Comment(null,
+                          UserService.currentLoggedInUser(),
+                          $scope.new_comment);
     prayer = new Prayer($stateParams.prayer_id);
     var promise =
       PrayerService.addCommentToPrayer(prayer, comment);
@@ -146,14 +145,8 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
   };
 });
 app.controller('profileController', function($scope, UserService){
-    $(".loading").show();
-    var promise = UserService.loadProfile(u_id);
-    promise.then(function(data) {
-        $(".loading").hide();
-        $scope.user = data;
-    }, function(error) {
-        alert('Failed to load profile: ' + error);
-    });
+  $(".loading").hide();
+  $scope.user = UserService.currentLoggedInUser();
   $scope.title = "Profile Page";
 });
 

@@ -62,13 +62,18 @@ function Comment(id, user, text) {
 };
 
 parseModule.factory('PrayerService', function($q, localStorageService) {
-	prayerServiceFunctions =
+	// One of the functions in this service needs to call another function
+	// in this service. Declaing this local var so that the caller can refer to
+	// the callee.
+	var prayerServiceFunctions =
 	{
 		loadComments: function(comment_ids) {
 			var deferred = $q.defer();
       var query = new Parse.Query(CommentParseObj);
       query.containedIn("objectId", comment_ids);
+			// First fetch all the comments specified by comment_ids.
       query.find().then(function(parseComments) {
+				// Now find the author info for each comment to form the final output.
 				var comments = [];
 				parseComments.forEach(function(parseComment) {
 					user = localStorageService.get(parseComment.get("user"));
@@ -89,7 +94,7 @@ parseModule.factory('PrayerService', function($q, localStorageService) {
 			queryForPrayer = new Parse.Query(PrayerParseObj);
 			queryForPrayer.get(prayer.id).then(function(prayer) {
 				commentParseObj = new CommentParseObj();
-				commentParseObj.initialize(comment.user, comment.text);
+				commentParseObj.initialize(comment.user.id, comment.text);
 				commentParseObj.save().then(function(saved_comment) {
 					comment.id = saved_comment.id;
 					prayer.add("comments", saved_comment.id).save().then(function(updated_prayer) {
@@ -107,6 +112,7 @@ parseModule.factory('PrayerService', function($q, localStorageService) {
 			return deferred.promise;
 		},
 
+		// Returns a Prayer object (via promise) specified by an ID.
 		loadPrayer: function(id) {
 			var deferred = $q.defer();
 			var query = new Parse.Query(PrayerParseObj);
