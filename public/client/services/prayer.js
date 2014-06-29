@@ -11,6 +11,13 @@ var PrayerParseObj = Parse.Object.extend("Prayer", {
   },
 });
 
+var CommentParseObj = Parse.Object.extend("Comment", {
+	initialize: function(user_id, text) {
+		this.set("user", user_id);
+		this.set("text", text);
+	},
+});
+
 // This is the class of prayer that HTML files can use to display.
 // It has no IDs in it and only raw information.
 function Prayer() {
@@ -22,7 +29,7 @@ function Prayer() {
 	this.status = null;
 	this.comments = [];
 	this.numberOfLikes = 0;
-}
+};
 
 function Prayer(id,
 								user,
@@ -45,29 +52,80 @@ function Prayer(id,
 function Comment() {
 	this.id = null;
 	this.user = null;
-	this.content = null;
-}
+	this.text = null;
+};
 
-function Comment(id, user, content) {
+function Comment(id, user, text) {
 	this.id = id;
 	this.user = user;
-	this.content = content;
-}
+	this.text = text;
+};
 
-parseModule.factory('PrayerService', function($q, UserService) {
-	return {
+parseModule.factory('PrayerService', function($q, localStorageService) {
+	// One of the functions in this service needs to call another function
+	// in this service. Declaing this local var so that the caller can refer to
+	// the callee.
+	var prayerServiceFunctions =
+	{
+		loadComments: function(comment_ids) {
+			var deferred = $q.defer();
+      var query = new Parse.Query(CommentParseObj);
+      query.containedIn("objectId", comment_ids);
+			// First fetch all the comments specified by comment_ids.
+      query.find().then(function(parseComments) {
+				// Now find the author info for each comment to form the final output.
+				var comments = [];
+				parseComments.forEach(function(parseComment) {
+					user = localStorageService.get(parseComment.get("user"));
+					comments.push(
+						new Comment(parseComment.id, user, parseComment.get("text"))
+					);
+				});
+				deferred.resolve(comments);
+			}, function(error) {
+				deferred.reject(error);
+			});
+			return deferred.promise;
+		},
+
+		// Returns a Comment object with newly assigned objectID
+		addCommentToPrayer: function(prayer, comment) {
+			var deferred = $q.defer();
+			queryForPrayer = new Parse.Query(PrayerParseObj);
+			queryForPrayer.get(prayer.id).then(function(prayer) {
+				commentParseObj = new CommentParseObj();
+				commentParseObj.initialize(comment.user.id, comment.text);
+				commentParseObj.save().then(function(saved_comment) {
+					comment.id = saved_comment.id;
+					prayer.add("comments", saved_comment.id).save().then(function(updated_prayer) {
+						prayer.comments = updated_prayer.get("comments");
+						deferred.resolve(comment);
+					}, function (error) {
+						deferred.reject(error);
+					});
+				}, function(error) {
+					deferred.reject(error);
+				});
+			}, function(error) {
+				deferred.reject(error);
+			});
+			return deferred.promise;
+		},
+
+		// Returns a Prayer object (via promise) specified by an ID.
 		loadPrayer: function(id) {
 			var deferred = $q.defer();
 			var query = new Parse.Query(PrayerParseObj);
 			prayer = new Prayer();
 			query.get(id).then(function(result) {
 				prayer.id = result.id;
+				prayer.user = localStorageService.get(result.get("user"));
 				prayer.title = result.get("title");
 				prayer.content = result.get("content");
-	      var queryForUser = new Parse.Query(UserParseObj);
-				return queryForUser.get(result.get("user"));
-			}).then(function(user) {
-				prayer.user = new User(user.id, user.get("name"), user.get("profileUrl"));
+				var comment_ids = result.get("comments");
+				return prayerServiceFunctions.loadComments(comment_ids);
+			}).then(function(comments) {
+				prayer.comments = comments;
 				deferred.resolve(prayer);
 			}, function(error) {
 				deferred.reject(error);
@@ -81,37 +139,18 @@ parseModule.factory('PrayerService', function($q, UserService) {
 			var prayers = [];
 			// Only fetch fields that are needed
 			query.select('user', 'title');
-			query.find().then(function(results) {
-				prayers = results;
-				var user_ids = [];
-				for (var i = 0; i < results.length; i++) {
-					user_ids.push(results[i].get("user"));
-				};
-				var query = new Parse.Query(UserParseObj);
-				query.containedIn("objectId", user_ids);
-				return query.find();
-			}).then(function(users) {
-				var user_array = {};
-				for (var i = 0; i < users.length; i++) {
-					user_array[users[i].id] = users[i];
-				}
-				var results = [];
-				for (var i = 0; i < prayers.length; i++) {
-					var prayer = prayers[i];
-					results.push(new Prayer(
-						prayer.id,
-						new User(user_array[prayer.get("user")].id,
-										 user_array[prayer.get("user")].get("name"),
-										 user_array[prayer.get("user")].get("profileUrl")),
-						prayer.get("title"),
-						prayer.get("content"),
-						prayer.get("type"),
-						prayer.get("status"),
-						[], // We are not loading any comments when we load all prayers.
-						0   // 
-					));
-				};
-				deferred.resolve(results);
+			query.find().then(function(parsePrayers) {
+				parsePrayers.forEach(function(parsePrayer) {
+					user_id = parsePrayer.get("user");
+					user = localStorageService.get(user_id);
+					new_prayer = new Prayer(
+						parsePrayer.id,
+						user,
+						parsePrayer.get("title")
+					);
+					prayers.push(new_prayer);
+				});
+				deferred.resolve(prayers);
 			}, function(error) {
 				deferred.reject(error);
 			});
@@ -144,5 +183,6 @@ parseModule.factory('PrayerService', function($q, UserService) {
 			});
 			return deferred.promise;
 		}
-	}
+	};
+	return prayerServiceFunctions;
 })

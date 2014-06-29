@@ -6,5 +6,11 @@
   {{prayer.user.name}} <br>
   <img src="{{prayer.user.profileUrl}}"> <br>
   {{prayer.title}} <br>
-  {{prayer.content}}
+  {{prayer.content}} <br>
+  Comments:
+  <ul>
+    <li ng-repeat="comment in prayer.comments"> {{comment.user.name}}: {{comment.text}}</li>
+  </ul>
+  <input type="text" ng-model="new_comment" />
+  <button ng-click="addCommentToPrayer()"> Submit </button>
 </div>
