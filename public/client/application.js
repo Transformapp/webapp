@@ -119,9 +119,6 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
     alert('Failed to load prayers: ' + error);
   });
   $scope.title = "Prayers List";
-  // $( "#addPrayer" ).click(function() {
-  //     alert( "Add Prayer button clicked" );
-  // });
 });
 app.controller('addPrayerController', function($scope, PrayerService){
   $scope.title = "Add A New Prayer/Praise";
