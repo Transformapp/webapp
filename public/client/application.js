@@ -137,7 +137,6 @@ app.controller('addPrayerController', function($scope, PrayerService){
     }
     var p_title = document.getElementById("form_title").value;
     var p_description = document.getElementById("form_description").value;
-    console.log(p_type, p_title, p_description);
     // create prayer 
     var newprayer = new Prayer(null, currentUser, p_title, p_description, p_type, null,[],[]);
     // save prayer in backend
