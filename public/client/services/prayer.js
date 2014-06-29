@@ -21,7 +21,7 @@ function Prayer() {
 	this.type = null;
 	this.status = null;
 	this.comments = [];
-	this.numberOfLikes = 0;
+	this.numberOfLikes = [];
 }
 
 function Prayer(id,
@@ -146,26 +146,3 @@ parseModule.factory('PrayerService', function($q, UserService) {
 		}
 	}
 })
-
-// Add a new prayer/praise
-function addPrayer(){
-	// create prayer object
-	// feed into add prayer factory function
-	// update UI
-
-	alert('added a new prayer!');
-}
-// Create Add Prayer popup
-function prayerPopup(){
-	// create popup
-	// call addPrayer()
-	addPrayer();
-}
-// Add a new comment to a prayer/praise
-function addComment(){
-	alert('added a new comment!');
-}
-// Like clicked!
-function likeButton(){
-	alert('liked a comment!');
-}

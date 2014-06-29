@@ -126,12 +126,25 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
 app.controller('addPrayerController', function($scope, PrayerService){
   $scope.title = "Add A New Prayer/Praise";
   // clicked submit
-  $("#submit").click(function() {
+  $("#addPrayerSubmit").click(function() {
+    // DUMMY USER RIGHT NOW -- Currently set to Kevin Tu
+    var currentUser = new User('Ddw8VGKsZ1', null,null,null);
+    // Get contents from form
+    if (document.getElementById("form_praise").checked){
+      var p_type = document.getElementById("form_praise").value;
+    } else{
+      var p_type = document.getElementById("form_prayer").value;
+    }
+    var p_title = document.getElementById("form_title").value;
+    var p_description = document.getElementById("form_description").value;
+    console.log(p_type, p_title, p_description);
+    // create prayer 
+    var newprayer = new Prayer(null, currentUser, p_title, p_description, p_type, null,[],[]);
     // save prayer in backend
-    var promise = PrayerService.addPrayer();
+    var promise = PrayerService.addPrayer(newprayer);
     promise.then(function(prayer) {
-      $scope.prayer = prayer;
-      alert('added prayer to backend');
+      // navigate back home when done adding
+      window.location = $("#addPrayerSubmit").attr('href');
     }, function (error) {
       alert('Failed to load prayer: ' + error);
     });

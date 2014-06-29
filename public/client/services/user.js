@@ -36,7 +36,7 @@ parseModule.factory('UserService', function($q) {
       var query = new Parse.Query(UserParseObj);
       user = {};
       query.get(id).then(function(result) {
-        newUser = new User(result.id, result.get("name"), result.get("profileUrl"), result.get("groups"))
+        var newUser = new User(result.id, result.get("name"), result.get("profileUrl"), result.get("groups"))
         deferred.resolve(newUser);
       });
       return deferred.promise;
