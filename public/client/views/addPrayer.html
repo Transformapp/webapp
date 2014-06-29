@@ -4,14 +4,12 @@
 
 <div> {{ title }} </div>
 
-<form id="addPrayerForm" onSubmit="$('#addPrayerSubmit').click();">  
+<form id="addPrayerForm">  
 	Prayer or Praise? <br>
-	<input type="radio" name="type" value="prayer" id="form_prayer">Prayer<br>
-	<input type="radio" name="type" value="praise" id="form_praise">Praise<br><br>
+	<input type="radio" name="type" value="prayer" id="form_prayer" ng-model="p.type">Prayer<br>
+	<input type="radio" name="type" value="praise" id="form_praise" ng-model="p.type">Praise<br><br>
 
-	Title: <input type="text" name="title" id="form_title"><br>
-	Description: <textarea name="description" form="addPrayerForm" id="form_description"></textarea><br><br>
-	<input name="Submit" type="submit" value="Add"/>
+	Title: <input type="text" name="title" id="form_title" ng-model="p.title"><br>
+	Description: <textarea name="description" form="addPrayerForm" id="form_description" ng-model="p.description"></textarea><br><br>
+	<input name="Submit" type="submit" value="Add" ng-click="save(p)"/>
 </form>
-
-<a id="addPrayerSubmit" href="#/prayers"></a>

@@ -34,7 +34,6 @@ parseModule.factory('UserService', function($q, localStorageService) {
     loadProfile: function(id) {
       var deferred = $q.defer();
       var query = new Parse.Query(UserParseObj);
-      user = {};
       query.get(id).then(function(result) {
         var newUser = new User(result.id, result.get("name"), result.get("profileUrl"), result.get("groups"))
         deferred.resolve(newUser);
