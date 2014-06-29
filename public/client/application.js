@@ -107,8 +107,13 @@ app.controller('groupLogisticsController', function($scope){
   // add code
 });
 app.controller('prayerListController', function($scope, PrayerService, UserService){
-  // query all prayers and asynchronously refresh the page when the requests
-  // are retrieved from Parse backend.
+  // determine position/height of list and set it dynamically.
+  var top = $("#prayer-list-container").offset().top;
+  var fontSize = $("#add-prayer").css('font-size');
+  var lineHeight = Math.floor(parseInt(fontSize.replace('px','')) * 7.4);
+  var bottom = $(window).height() - lineHeight;
+  $("#prayer-list-container").css("height",(bottom - top).toString()+ "px");
+  // query all prayers and asynchronously refresh the page when the requests are retrieved from Parse backend.
   $(".loading").show();
   var promise = PrayerService.loadAllPrayers();
   

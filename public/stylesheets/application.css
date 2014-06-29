@@ -4,7 +4,7 @@ body{
   font-family: "Arial", Arial, sans-serif;
 }
 #navbar{
-  height:75px;
+  height:4em;
   width: 100%;
   background-color: #B40404;
   color:white;
@@ -42,14 +42,15 @@ body{
 #menuButton{
   position: relative;
   border:none;
-  height: 25px;
-  width: 25px;
-  margin:25px;
+  height: 2em;
+  width: 2em;
+  margin:2em;
   background: url(../assets/images/menuButton1.png) no-repeat center;
-  background-size: 25px 25px;
+  background-size: 2em 2em;
 }
 .loading{
   position: relative;
   width: 100%;
   text-align: center;
+  margin-top: 2em;
 }

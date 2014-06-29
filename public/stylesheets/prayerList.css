@@ -1,7 +1,98 @@
-#addPrayer{
-	width: 15em;
-	height: 2em;
+body{
+	overflow: hidden;
 }
-#addPrayer:hover{
-	cursor: pointer;
+#add-prayer{
+	background-color: black;
+	width: 100%;
+	height: 4em;
+	line-height: 4em;
+	position: absolute;
+	bottom: 0em;
+	text-align: center;
+	color:white;
+	text-decoration: none;
+}
+#verse-container{
+	width: 100%;
+	border-top: 0.25em solid black;
+	border-bottom: 0.25em solid black;
+}
+#verse-content-container{
+	height: 100%;
+	width: 100%;
+	padding-top:1.5em;
+	padding-bottom:1.5em;
+	text-align: center;
+}
+#verse-title{
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-bottom: 0.25em;
+	font-size: 1.25em;
+}
+#verse-text{
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-bottom: 0.25em;
+	font-size: 1em;
+}
+#verse-footer{
+	padding-left: 2em;
+	padding-right: 2em;
+	font-size: 1em;
+}
+#prayer-list-container{
+	overflow:scroll;
+	position: absolute;
+	width: 100%;
+	height: 5em;
+}
+#prayer-list{
+	list-style-type: none;
+	padding:0em;
+	margin:0em;
+}
+#prayer-list li{
+	padding-top:1em; 
+	padding-bottom: 1em;
+	width: 100%;
+	/* 1px is the smallest unit value that can be rendered */
+	border-top: 1px solid #F2F2F2; 
+	border-bottom: 1px solid #F2F2F2;
+}
+#prayer-list li a{
+	text-decoration: none;
+	color:black;
+}
+.prayer-container{
+	display: table-cell;
+}
+.prayer-picture{
+	float: left;
+	margin-left: 1em;
+	margin-right: 1em;
+}
+.prayer-image{
+	height: 3em;
+	width: 3em;
+	-moz-border-radius:1.5em;
+	-webkit-border-radius:1.5em;
+	border-radius:1.5em;
+}
+.prayer-content{
+	float: left;
+	margin-top: 0.5em;
+}
+.prayer-name{
+	font-weight:900;
+}
+.prayer-caption{
+}
+.arrow{
+	position: absolute;
+	height: 1em;
+	width: 0.5em;
+	line-height: 4em;
+	margin-top: 1.25em;
+	right: 1em;
 }
