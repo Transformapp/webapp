@@ -22,16 +22,22 @@ function User(id, name, profile_url, groups) {
 
 parseModule.factory('UserService', function($q, localStorageService) {
   return {
-    loadUser: function(id) {
+    loadAllUsers: function() {
+      var deferred = $q.defer();
       var query = new Parse.Query(UserParseObj);
-      return query.get(id);
-    },
-
-    // Input is an array of user IDs
-    loadUsers: function(ids) {
-      var query = new Parse.Query(UserParseObj);
-      query.containedIn("objectId", ids);
-      return query.find();
+      var users = [];
+      query.find().then(function(parseUsers) {
+        parseUsers.forEach(function(parseUser) {
+          new_user = new User(parseUser.id,
+                              parseUser.get("name"),
+                              parseUser.get("profileUrl"));
+          users.push(new_user);
+        });
+        deferred.resolve(users);
+      }, function(error){
+        deferred.reject(error);
+      });
+      return deferred.promise;
     },
 
     loadProfile: function(id) {

@@ -8,10 +8,6 @@ function parseInit() {
                    "ZiGuizOBCP3JK8TKqHhnWzzQLhO6Ym9iJOFJWP2F");
 }
 
-window.onload = function() {
-  parseInit();
-};
-
 // initialize webapp module
 var parseModule = angular.module('parseModule', []);
 var app = angular.module('transformApp', ['ui.router', 'parseModule', 'shoppinpal.mobile-menu', 'LocalStorageModule']);
@@ -77,7 +73,8 @@ app.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvi
   });
 })
 
-app.run(function($rootScope, $state, UserService, $spMenu) {
+app.run(function($rootScope, $state, UserService, $spMenu, localStorageService) {
+  parseInit();
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     if (toState.restrict) {
       $rootScope.currentUser = UserService.currentLoggedInUser();
@@ -87,6 +84,14 @@ app.run(function($rootScope, $state, UserService, $spMenu) {
       }
     }
   });
+  UserService.loadAllUsers().then(function(users) {
+    users.forEach(function(user) {
+      localStorageService.set(user.id, user);
+    })
+  }, function(error) {
+    alert('Failed to load all users: ' + error);
+  });
+
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
     //$spMenu.hide();
   });
@@ -111,7 +116,6 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
 
   promise.then(function(prayers) {
     $(".loading").hide();
-    console.log('success');
     $scope.prayers = prayers;
   }, function(error) {
     alert('Failed to load prayers: ' + error);
@@ -129,13 +133,13 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
     alert('Failed to load prayer: ' + error);
   });
   $scope.addCommentToPrayer = function() {
-    var comment = {};
-    comment.user = $scope.current_user_id;
-    comment.text = $scope.new_comment;
+    comment = new Comment(null, $scope.current_user_id, $scope.new_comment);
+    prayer = new Prayer($stateParams.prayer_id);
     var promise =
-      PrayerService.addCommentToPrayer($stateParams.prayer_id, comment);
-    promise.then(function(udpated_prayer) {
-      $scope.prayer = updated_prayer;
+      PrayerService.addCommentToPrayer(prayer, comment);
+    promise.then(function(newly_added_comment) {
+      $scope.prayer.comments.push(newly_added_comment);
+      $scope.new_comment = null; // reset the text box
     }, function(error) {
       alert('Failed to add comment to prayer: ' + error);
     });
