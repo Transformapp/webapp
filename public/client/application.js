@@ -12,7 +12,7 @@ window.onload = function() {
 
 // initialize webapp module
 var parseModule = angular.module('parseModule', []);
-var app = angular.module('transformApp', ['ui.router', 'parseModule', 'shoppinpal.mobile-menu']);
+var app = angular.module('transformApp', ['ui.router', 'parseModule', 'shoppinpal.mobile-menu', 'LocalStorageModule']);
 
 app.service('currentPrayer', function () {
   var prayer = null;
@@ -27,7 +27,7 @@ app.service('currentPrayer', function () {
 }) 
 
 // routing logic
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
   $urlRouterProvider.otherwise('/'); // default
 
   $stateProvider

@@ -19,7 +19,7 @@ function User(id, name, profile_url, groups) {
   this.groups = groups;
 }
 
-parseModule.factory('UserService', function($q) {
+parseModule.factory('UserService', function($q, localStorageService) {
   return {
     loadUser: function(id) {
       var query = new Parse.Query(UserParseObj);
