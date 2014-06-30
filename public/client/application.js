@@ -120,7 +120,7 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   });
   $scope.title = "Prayers List";
 });
-app.controller('addPrayerController', function($scope, PrayerService){
+app.controller('addPrayerController', function($scope, PrayerService, $state){
   var currentUser = new User('Ddw8VGKsZ1', null,null,null); // TEMP PLEASE CHANGE!
   $scope.title = "Add A New Prayer/Praise";
   $scope.master = {};
@@ -131,7 +131,7 @@ app.controller('addPrayerController', function($scope, PrayerService){
     var promise = PrayerService.addPrayer(newprayer);
     promise.then(function(prayer) {
       // navigate back home when done adding
-      window.location = "#/prayers";
+      $state.go("prayerList");
     }, function (error) {
       alert('Failed to load prayer: ' + error);
     });
