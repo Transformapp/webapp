@@ -64,7 +64,10 @@ app.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvi
   .state('addPrayer', {
     url: '/addprayer',
     templateUrl: 'client/views/addPrayer.html',
-    controller: 'addPrayerController'
+    controller: 'addPrayerController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('prayerDetail', {
     url: '/prayers/:prayer_id',
@@ -81,6 +84,13 @@ app.run(function($rootScope, $state, UserService, $spMenu, localStorageService) 
   $spMenu.hide();
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     if (toState.restrict) {
+      // set previous state
+      if( fromState.name == "" ){
+        $rootScope.previousState = "home"
+      }
+      else{
+        $rootScope.previousState = fromState.name;
+      }
       $rootScope.currentUser = UserService.currentLoggedInUser();
       if (!$rootScope.currentUser) {
         event.preventDefault();
@@ -98,7 +108,7 @@ app.run(function($rootScope, $state, UserService, $spMenu, localStorageService) 
   // check if menuButton is a menu or a back button
   $("#menuButton").click(function() { 
     if ($("#menuButton").hasClass("backButton")){
-      $state.go("prayerList");
+      $state.go($rootScope.previousState);
       $("#menuButton").attr('class', 'menuButton');
     }
     else{
@@ -107,7 +117,7 @@ app.run(function($rootScope, $state, UserService, $spMenu, localStorageService) 
   });
 
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-    //$spMenu.hide();
+    $("#menuButton").attr('class', 'menuButton');
   });
 });
 
