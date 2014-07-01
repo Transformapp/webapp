@@ -125,8 +125,8 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   });
   $scope.title = "Prayers List";
 });
-app.controller('addPrayerController', function($scope, PrayerService, $state){
-  var currentUser = new User('Ddw8VGKsZ1', null,null,null); // TEMP PLEASE CHANGE!
+app.controller('addPrayerController', function($scope, PrayerService, UserService, $state){
+  var currentUser = UserService.currentLoggedInUser();
   $scope.title = "Add A New Prayer/Praise";
   $scope.master = {};
   $scope.save = function(p) {
