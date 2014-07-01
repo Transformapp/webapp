@@ -64,7 +64,10 @@ app.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvi
   .state('addPrayer', {
     url: '/addprayer',
     templateUrl: 'client/views/addPrayer.html',
-    controller: 'addPrayerController'
+    controller: 'addPrayerController',
+    restrict: {
+      type: 'User'
+    }
   })
   .state('prayerDetail', {
     url: '/prayers/:prayer_id',
@@ -78,8 +81,16 @@ app.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvi
 
 app.run(function($rootScope, $state, UserService, $spMenu, localStorageService) {
   parseInit();
+  $spMenu.hide();
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     if (toState.restrict) {
+      // set previous state
+      if( fromState.name == "" ){
+        $rootScope.previousState = "home"
+      }
+      else{
+        $rootScope.previousState = fromState.name;
+      }
       $rootScope.currentUser = UserService.currentLoggedInUser();
       if (!$rootScope.currentUser) {
         event.preventDefault();
@@ -94,9 +105,19 @@ app.run(function($rootScope, $state, UserService, $spMenu, localStorageService) 
   }, function(error) {
     alert('Failed to load all users: ' + error);
   });
+  // check if menuButton is a menu or a back button
+  $("#menuButton").click(function() { 
+    if ($("#menuButton").hasClass("backButton")){
+      $state.go($rootScope.previousState);
+      $("#menuButton").attr('class', 'menuButton');
+    }
+    else{
+      $spMenu.toggle();
+    }
+  });
 
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-    //$spMenu.hide();
+    $("#menuButton").attr('class', 'menuButton');
   });
 });
 
@@ -112,8 +133,13 @@ app.controller('groupLogisticsController', function($scope){
   // add code
 });
 app.controller('prayerListController', function($scope, PrayerService, UserService){
-  // query all prayers and asynchronously refresh the page when the requests
-  // are retrieved from Parse backend.
+  // determine position/height of list and set it dynamically.
+  var top = $("#prayer-list-container").offset().top;
+  var fontSize = $("#add-prayer").css('font-size');
+  var lineHeight = Math.floor(parseInt(fontSize.replace('px','')) * 7.4);
+  var bottom = $(window).height() - lineHeight;
+  $("#prayer-list-container").css("height",(bottom - top).toString()+ "px");
+  // query all prayers and asynchronously refresh the page when the requests are retrieved from Parse backend.
   $(".loading").show();
   var promise = PrayerService.loadAllPrayers();
 
@@ -126,6 +152,8 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   $scope.title = "Prayers List";
 });
 app.controller('addPrayerController', function($scope, PrayerService, UserService, $state){
+  $("#menuButton").attr('class', 'backButton'); 
+  // save prayer
   var currentUser = UserService.currentLoggedInUser();
   $scope.title = "Add A New Prayer/Praise";
   $scope.master = {};
@@ -144,6 +172,7 @@ app.controller('addPrayerController', function($scope, PrayerService, UserServic
 
 });
 app.controller('prayerDetailController', function($scope, $stateParams, PrayerService, UserService){
+  $("#menuButton").attr('class', 'backButton'); 
   $(".loading").show();
   var promise = PrayerService.loadPrayer($stateParams.prayer_id);
   promise.then(function(prayer) {

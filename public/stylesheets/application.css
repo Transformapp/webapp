@@ -1,10 +1,10 @@
 body{
   padding: 0px;
   margin: 0px;
-  font-family: "Arial", Arial, sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 }
 #navbar{
-  height:75px;
+  height:4em;
   width: 100%;
   background-color: #B40404;
   color:white;
@@ -42,14 +42,25 @@ body{
 #menuButton{
   position: relative;
   border:none;
-  height: 25px;
-  width: 25px;
-  margin:25px;
+  height: 2em;
+  width: 2em;
+  padding:2em;
+  margin:1em;
+  margin-left: 1em;
+  background-size: 2em 2em;
+}
+.menuButton{
   background: url(../assets/images/menuButton1.png) no-repeat center;
-  background-size: 25px 25px;
+}
+.backButton{
+  background: url(../assets/images/black-arrow.png) no-repeat center;
+  transform:rotate(180deg);
+  -ms-transform:rotate(180deg); /* IE 9 */
+  -webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
 }
 .loading{
   position: relative;
   width: 100%;
   text-align: center;
+  margin-top: 2em;
 }

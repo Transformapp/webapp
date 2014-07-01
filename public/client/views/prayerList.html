@@ -1,19 +1,53 @@
-<script type="text/javascript" src="client/services/prayer.js"></script>
-<script type="text/javascript" src="client/services/user.js"></script>
-<link rel="stylesheet" href="stylesheets/prayerList.css" />
-<link rel="stylesheet" href="stylesheets/application.css" />
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="client/services/prayer.js"></script>
+	<script type="text/javascript" src="client/services/user.js"></script>
+	<link rel="stylesheet" href="stylesheets/prayerList.css" />
+	<link rel="stylesheet" href="stylesheets/application.css" />
 
-<script src="lib/jquery/src/jquery.js"></script>
-<script src="lib/jquery-ui/ui/datepicker.js"></script>
+	<script src="lib/jquery/src/jquery.js"></script>
+</head>
+<body>
+	<div id="verse-container">
+		<div id="verse-content-container">
+			<div id="verse-title">
+				Verse of the Week - June 16
+			</div>
+			<div id="verse-text">
+				Do not conform any longer to the patterns of this world, but be transformed by the renewing of your mind.
+			</div>
+			<div id="verse-footer">
+				- Romans 2:12 (ESV)
+			</div>
+		</div>
+	</div>
+	<div id="prayer-list-container">
+		<ul id="prayer-list">
+			<li ng-repeat="prayer in prayers">
+				<a href="#prayers/{{prayer.id}}">
+					<div class="prayer-container">
+						<div class="prayer-picture">
+							<img src="{{prayer.user.profileUrl}}" class="prayer-image">
+						</div>
+						<div class="prayer-content">
+							<div class="prayer-name">
+								{{ prayer.user.name }}
+							</div>
+							<div class="prayer-caption">
+								{{ prayer.title }}
+							</div>
+						</div>
+						<img src="assets/images/black-arrow.png" class="arrow">
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
 
-<div> {{ title }} </div>
-<div class="loading"><img src="assets/images/loading_wheel.gif" height="25" width="25"></div> 
-<ul>
-  <li ng-repeat="prayer in prayers">
-    <a href="#prayers/{{prayer.id}}">
-      {{ prayer.user.name }}: {{ prayer.title }}
-    </a>
-  </li>
-</ul>
-<!-- style this link into a button later --> 
-<div id="addPrayer"><a href="#/addprayer">addPrayer</a></div>
+	<div class="loading"><img src="assets/images/loading_wheel.gif" height="25" width="25"></div> 
+
+	<!-- style this link into a button later --> 
+	<a href="#/addprayer" id="add-prayer">+Prayer/Praise</a>
+</body>
+</html>
