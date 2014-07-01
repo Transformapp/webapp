@@ -44,9 +44,9 @@ body{
   border:none;
   height: 2em;
   width: 2em;
-  padding:1em;
-  margin:2em;
-  margin-left: 1.5em;
+  padding:2em;
+  margin:1em;
+  margin-left: 1em;
   background-size: 2em 2em;
 }
 .menuButton{
