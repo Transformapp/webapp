@@ -6,10 +6,6 @@ function parseInit() {
                    "ZiGuizOBCP3JK8TKqHhnWzzQLhO6Ym9iJOFJWP2F");
 }
 
-window.onload = function() {
-  parseInit();
-};
-
 // initialize webapp module
 var parseModule = angular.module('parseModule', []);
 var app = angular.module('transformApp', ['ui.router', 'parseModule', 'shoppinpal.mobile-menu', 'LocalStorageModule']);
@@ -80,7 +76,8 @@ app.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvi
   });
 })
 
-app.run(function($rootScope, $state, UserService, $spMenu) {
+app.run(function($rootScope, $state, UserService, $spMenu, localStorageService) {
+  parseInit();
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     if (toState.restrict) {
       $rootScope.currentUser = UserService.currentLoggedInUser();
@@ -90,6 +87,14 @@ app.run(function($rootScope, $state, UserService, $spMenu) {
       }
     }
   });
+  UserService.loadAllUsers().then(function(users) {
+    users.forEach(function(user) {
+      localStorageService.set(user.id, user);
+    })
+  }, function(error) {
+    alert('Failed to load all users: ' + error);
+  });
+
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
     //$spMenu.hide();
   });
@@ -116,17 +121,17 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
   // query all prayers and asynchronously refresh the page when the requests are retrieved from Parse backend.
   $(".loading").show();
   var promise = PrayerService.loadAllPrayers();
-  
-  promise.then(function(data) {
+
+  promise.then(function(prayers) {
     $(".loading").hide();
-    $scope.prayers = data;
+    $scope.prayers = prayers;
   }, function(error) {
     alert('Failed to load prayers: ' + error);
   });
   $scope.title = "Prayers List";
 });
-app.controller('addPrayerController', function($scope, PrayerService){
-  var currentUser = new User('Ddw8VGKsZ1', null,null,null); // TEMP PLEASE CHANGE!
+app.controller('addPrayerController', function($scope, PrayerService, UserService, $state){
+  var currentUser = UserService.currentLoggedInUser();
   $scope.title = "Add A New Prayer/Praise";
   $scope.master = {};
   $scope.save = function(p) {
@@ -136,14 +141,14 @@ app.controller('addPrayerController', function($scope, PrayerService){
     var promise = PrayerService.addPrayer(newprayer);
     promise.then(function(prayer) {
       // navigate back home when done adding
-      window.location = "#/prayers";
+      $state.go("prayerList");
     }, function (error) {
       alert('Failed to load prayer: ' + error);
     });
   };
 
 });
-app.controller('prayerDetailController', function($scope, $stateParams, PrayerService){  
+app.controller('prayerDetailController', function($scope, $stateParams, PrayerService, UserService){
   $(".loading").show();
   var promise = PrayerService.loadPrayer($stateParams.prayer_id);
   promise.then(function(prayer) {
@@ -152,17 +157,24 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
   }, function (error) {
     alert('Failed to load prayer: ' + error);
   });
+  $scope.addCommentToPrayer = function() {
+    comment = new Comment(null,
+                          UserService.currentLoggedInUser(),
+                          $scope.new_comment);
+    prayer = new Prayer($stateParams.prayer_id);
+    var promise =
+      PrayerService.addCommentToPrayer(prayer, comment);
+    promise.then(function(newly_added_comment) {
+      $scope.prayer.comments.push(newly_added_comment);
+      $scope.new_comment = null; // reset the text box
+    }, function(error) {
+      alert('Failed to add comment to prayer: ' + error);
+    });
+  };
 });
 app.controller('profileController', function($scope, UserService){
-    $(".loading").show();
-    var u_id = 'Ddw8VGKsZ1'; // TEMP!! set user ID here! 
-    var promise = UserService.loadProfile(u_id);
-    promise.then(function(data) {
-        $(".loading").hide();
-        $scope.user = data;
-    }, function(error) {
-        alert('Failed to load profile: ' + error);
-    });
+  $(".loading").hide();
+  $scope.user = UserService.currentLoggedInUser();
   $scope.title = "Profile Page";
 });
 
