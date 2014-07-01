@@ -1,7 +1,7 @@
 body{
   padding: 0px;
   margin: 0px;
-  font-family: "Arial", Arial, sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 }
 #navbar{
   height:4em;
