@@ -1,0 +1,15 @@
+<script type="text/javascript" src="client/services/prayer.js"></script>
+<link rel="stylesheet" href="stylesheets/addPrayer.css" />
+<link rel="stylesheet" href="stylesheets/application.css" />
+
+<div> {{ title }} </div>
+
+<form id="addPrayerForm" ng-submit="save(p)">  
+	Prayer or Praise? <br>
+	<input type="radio" name="type" value="prayer" id="form_prayer" ng-model="p.type" required>Prayer<br>
+	<input type="radio" name="type" value="praise" id="form_praise" ng-model="p.type" required>Praise<br><br>
+
+	Title: <input type="text" name="title" id="form_title" ng-model="p.title" required><br>
+	Description: <textarea name="description" form="addPrayerForm" id="form_description" ng-model="p.description" required></textarea><br><br>
+	<input name="Submit" type="submit" value="Add"/>
+</form>

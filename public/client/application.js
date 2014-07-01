@@ -61,6 +61,11 @@ app.config(function($stateProvider, $urlRouterProvider, localStorageServiceProvi
       type: 'User'
     }
   })
+  .state('addPrayer', {
+    url: '/addprayer',
+    templateUrl: 'client/views/addPrayer.html',
+    controller: 'addPrayerController'
+  })
   .state('prayerDetail', {
     url: '/prayers/:prayer_id',
     templateUrl: 'client/views/prayerDetail.html',
@@ -119,6 +124,24 @@ app.controller('prayerListController', function($scope, PrayerService, UserServi
     alert('Failed to load prayers: ' + error);
   });
   $scope.title = "Prayers List";
+});
+app.controller('addPrayerController', function($scope, PrayerService, UserService, $state){
+  var currentUser = UserService.currentLoggedInUser();
+  $scope.title = "Add A New Prayer/Praise";
+  $scope.master = {};
+  $scope.save = function(p) {
+    $scope.master = angular.copy(p);
+    var newprayer = new Prayer(null, currentUser, p.title, p.description, p.type, null,[],[]);
+    // save prayer in backend
+    var promise = PrayerService.addPrayer(newprayer);
+    promise.then(function(prayer) {
+      // navigate back home when done adding
+      $state.go("prayerList");
+    }, function (error) {
+      alert('Failed to load prayer: ' + error);
+    });
+  };
+
 });
 app.controller('prayerDetailController', function($scope, $stateParams, PrayerService, UserService){
   $(".loading").show();

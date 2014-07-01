@@ -28,8 +28,8 @@ function Prayer() {
 	this.type = null;
 	this.status = null;
 	this.comments = [];
-	this.numberOfLikes = 0;
-};
+	this.numberOfLikes = [];
+}
 
 function Prayer(id,
 								user,
