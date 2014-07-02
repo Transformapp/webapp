@@ -1,0 +1,38 @@
+body{
+	margin: 0px;
+	padding: 0px;
+}
+#pic_container{
+
+}
+#pic_img{
+	margin-top: 12.5%;
+	left:50%;
+	margin-left: -25%;
+	width: 50%;
+	height: 50%;
+	text-align: center;
+	position: relative;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
+	border-radius:50%;
+	margin-bottom: 7.5%;
+}
+#pic_img:hover{
+	opacity: 0.5;
+}
+#title_container{
+	margin: 0px;
+	position: relative;
+	text-align: center;
+	font-size: 2em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #BDBDBD;
+	border-top: 1px solid #BDBDBD;
+}
+#group_container{
+	font-size: 1em;
+	text-align: center;
+	margin-top: 1em;
+}

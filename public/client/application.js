@@ -197,10 +197,14 @@ app.controller('prayerDetailController', function($scope, $stateParams, PrayerSe
   };
 });
 app.controller('profileController', function($scope, UserService){
+  // var img_width = $('#pic_img').width();
+  // $('#pic_img').css({'height':img_width+'px'});
   $(".loading").hide();
   $scope.user = UserService.currentLoggedInUser();
   $scope.title = "Profile Page";
+
 });
+
 
 // models
 
