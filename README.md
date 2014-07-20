@@ -21,8 +21,8 @@ If you want to deploy the latest code to heroku, please do:
 
 
 In case you are wondering, here is how everything is setup:
-* we leverage yeoman as a generator: npm install -g yo@1.2.0
-* we then explicitly leverage angular fullstack generator
+* we leverage yeoman (http://yeoman.io/) scaffolding: npm install -g yo@1.2.0
+* we then explicitly leverage angular fullstack generator (https://github.com/DaftMonk/generator-angular-fullstack)
 	- install: npm install -g generator-angular-fullstack
 	- environment:
        	- Javascript
