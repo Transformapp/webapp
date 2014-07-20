@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('transformAppApp', [
+angular.module('transformApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',

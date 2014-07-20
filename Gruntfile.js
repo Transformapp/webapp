@@ -292,7 +292,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       options: {
         // This should be the name of your apps angular module
-        module: 'transformAppApp',
+        module: 'transformApp',
         htmlmin: {
           collapseBooleanAttributes: true,
           collapseWhitespace: true,
