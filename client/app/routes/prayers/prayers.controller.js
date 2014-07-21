@@ -27,14 +27,8 @@ angular.module('transformAppApp')
 	  promise.then(function(prayer) {
 	    $(".loading").hide();
 	    $scope.prayer = prayer;
-	    $scope.prayed_sentence = constructPraySentence(prayer.likes.length);
-	    $scope.has_not_prayed = true;
-	    var current_user_id = UserService.currentLoggedInUser().id;
-	    prayer.likes.forEach(function (id) {
-	      if (id == current_user_id) {
-	        $scope.has_not_prayed = false;
-	      }
-	    });
+	    //$scope.prayed_sentence = constructPraySentence(prayer.likes.length);
+	    $scope.has_not_prayed = prayer.hasLike(UserService.currentLoggedInUser());
 	  }, function (error) {
 	    alert('Failed to load prayer: ' + error);
 	  });
@@ -57,7 +51,7 @@ angular.module('transformAppApp')
 	    promise = PrayerService.likePrayer(prayer, UserService.currentLoggedInUser().id);
 	    promise.then(function(number_of_likes) {
 	      $scope.number_of_likes = number_of_likes;
-	      $scope.prayed_sentence = constructPraySentence(number_of_likes);
+	      //$scope.prayed_sentence = constructPraySentence(number_of_likes);
 	    });
 	  };
   })

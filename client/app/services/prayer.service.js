@@ -9,6 +9,17 @@ function Prayer() {
 	this.content = "";
 	this.comments = [];
 	this.likes = [];
+
+	this.hasLike = function(user) {
+		if (user && user.id) {
+			this.likes.forEach(function(user_id) {
+				if (user_id == user.id) {
+					return true;
+				}
+			});
+		}
+		return false;
+	};
 };
 
 function Comment() {
