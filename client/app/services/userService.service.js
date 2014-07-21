@@ -18,7 +18,7 @@ var UserParseObj = Parse.Object.extend("Member", {
 });
 
 angular.module('transformAppApp')
-  .service('Userservice', function Userservice($q, localStorageService) {
+  .service('UserService', function Userservice($q, localStorageService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
   	var userServiceFunctions = {
     	loadProfile: function(id) {
