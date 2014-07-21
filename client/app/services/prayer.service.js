@@ -112,7 +112,7 @@ angular.module('transformAppApp')
 			var query = new Parse.Query(PrayerParseObj);
 			var prayer = null;
 			query.get(id).then(function(parsePrayerObj) {
-				prayer = parsePrayer.toObject();
+				prayer = parsePrayerObj.toObject();
 				prayer.user = UserService.userById(parsePrayerObj.get("user"));						
 				return prayerServiceFunctions.loadComments(parsePrayerObj.get("comments"));
 			}).then(function(comments) {
@@ -128,11 +128,9 @@ angular.module('transformAppApp')
 			var deferred = $q.defer();
 			var query = new Parse.Query(PrayerParseObj);
 			var prayers = [];
-			// Only fetch fields that are needed
-			query.select('user', 'title');
 			query.find().then(function(parsePrayers) {
 				parsePrayers.forEach(function(parsePrayerObj) {
-					var prayer = parsePrayer.toObject();
+					var prayer = parsePrayerObj.toObject();
 					prayer.user = UserService.userById(parsePrayerObj.get("user"));					
 					prayers.push(prayer);
 				});
