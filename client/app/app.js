@@ -29,14 +29,14 @@ angular.module('transformAppApp', [
     parseInit();
     $spMenu.hide();
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+      // set previous state if it doesn't exist
+      if( fromState.name == "" ){
+        $rootScope.previousState = "auth"
+      }
+      else{
+        $rootScope.previousState = fromState.name;
+      }
       if (toState.restrict) {
-        // set previous state
-        if( fromState.name == "" ){
-          $rootScope.previousState = "auth"
-        }
-        else{
-          $rootScope.previousState = fromState.name;
-        }
         $rootScope.currentUser = UserService.currentLoggedInUser();
         if (!$rootScope.currentUser) {
           event.preventDefault();

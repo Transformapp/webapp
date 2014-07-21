@@ -6,6 +6,9 @@ angular.module('transformAppApp')
       .state('profile', {
         url: '/profile',
         templateUrl: 'app/routes/profile/profile.html',
-        controller: 'ProfileCtrl'
+        controller: 'ProfileCtrl',
+	    restrict: {
+	      type: 'User'
+	    }
       });
   });

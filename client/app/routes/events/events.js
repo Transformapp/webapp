@@ -6,6 +6,9 @@ angular.module('transformAppApp')
       .state('events', {
         url: '/events',
         templateUrl: 'app/routes/events/events.html',
-        controller: 'EventsCtrl'
+        controller: 'EventsCtrl',
+        restrict: {
+          type: 'User'
+        }
       });
   });
