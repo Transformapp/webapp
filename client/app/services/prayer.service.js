@@ -55,7 +55,7 @@ var CommentParseObj = Parse.Object.extend("Comment", {
 // It has no IDs in it and only raw information.
 
 angular.module('transformAppApp')
-  .service('PrayerService', function Prayerservice($q, UserService) {
+  .service('PrayerService', function Prayerservice($q, UserService, $sanitize) {
     // AngularJS will instantiate a singleton by calling "new" on this function	
     var prayerServiceFunctions = {
 		loadComments: function(comment_ids) {
@@ -97,9 +97,9 @@ angular.module('transformAppApp')
 			var deferred = $q.defer();
 			var queryForPrayer = new Parse.Query(PrayerParseObj);
 			queryForPrayer.get(prayer.id).then(function(prayer) {
-				commentParseObj = new CommentParseObj();
+				var commentParseObj = new CommentParseObj();
 				commentParseObj.set("user", comment.user.id);
-				commentParseObj.set("text", comment.text);
+				commentParseObj.set("text", $sanitize(comment.text));
 				commentParseObj.save().then(function(saved_comment) {
 					comment.id = saved_comment.id;
 					prayer.add("comments", saved_comment.id).save().then(function(updated_prayer) {
@@ -157,8 +157,8 @@ angular.module('transformAppApp')
 			var deferred = $q.defer();
 			var prayerParseObj = new PrayerParseObj();
 			prayerParseObj.set("user", prayer.user.id); 
-			prayerParseObj.set("title", prayer.title);
-			prayerParseObj.set("content", prayer.content);
+			prayerParseObj.set("title", $sanitize(prayer.title));
+			prayerParseObj.set("content", $sanitize(prayer.content));
 			prayerParseObj.set("type", prayer.type);
 			prayerParseObj.save(null, {
 				success: function(prayerParseObj) {

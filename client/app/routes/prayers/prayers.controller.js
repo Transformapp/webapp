@@ -33,12 +33,11 @@ angular.module('transformAppApp')
 	    alert('Failed to load prayer: ' + error);
 	  });
 	  $scope.addCommentToPrayer = function() {
-	    comment = new Comment(null,
-	                          UserService.currentLoggedInUser(),
-	                          $scope.new_comment);
-	    prayer = new Prayer($stateParams.prayer_id);
-	    var promise =
-	      PrayerService.addCommentToPrayer(prayer, comment);
+	    var comment = new Comment(); 
+	    comment.user = UserService.currentLoggedInUser();
+	    comment.text = $scope.new_comment;
+	    var prayer = new Prayer($stateParams.prayer_id);
+	    var promise = PrayerService.addCommentToPrayer(prayer, comment);
 	    promise.then(function(newly_added_comment) {
 	      $scope.prayer.comments.push(newly_added_comment);
 	      $scope.new_comment = null; // reset the text box
