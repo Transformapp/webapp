@@ -1,6 +1,14 @@
 {
   "name": "transform-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Transformapp/webapp",
+  "authors": [
+    "Kevin Liang <keviekev23@gmail.com>",
+    "Kevin Tu <kevinbtu@gmail.com>",
+    "June Wang <junewang@gmail.com>",
+    "Caleb Lin <kkmlin@gmail.com>",
+    "Jean Tang <jeantangerine@gmail.com>"
+  ],
   "dependencies": {
     "angular": ">=1.2.*",
     "json3": "~3.3.1",
@@ -14,7 +22,9 @@
     "angular-bootstrap": "~0.11.0",
     "font-awesome": ">=4.1.0",
     "lodash": "~2.4.1",
-    "angular-ui-router": "~0.2.10"
+    "angular-ui-router": "~0.2.10",
+    "angular-touch" : "~1.2.8",
+    "angular-local-storage" : "~0.0.5"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
