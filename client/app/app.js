@@ -9,7 +9,7 @@ angular.module('transformAppApp', [
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
-      .otherwise('/');
+      .otherwise('/auth');
 
     $locationProvider.html5Mode(true);
   });
