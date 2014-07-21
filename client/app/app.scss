@@ -22,6 +22,76 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     }
 }
 
+body{
+  padding: 0px;
+  margin: 0px;  
+  font-family: 'HelveticaNeue-Light', 'Helvetica Neue', Arial, Helvetica, sans-serif; 
+  font-weight: 100; 
+  letter-spacing: 0px;
+}
+#navbar{
+  height:4em;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  width: 100%;
+  background-color: #B40404;
+  color:white;
+}
+#sp-nav{
+  background-color: grey;
+  color: white;
+}
+#sp-nav li{
+  text-decoration: none;
+  list-style-type: none;
+  padding:10px;
+  color: white;
+}
+#sp-nav a:link {
+  text-decoration: none;
+  color: white;
+}
+#sp-nav a:visited {
+  text-decoration: none;
+  color: white;
+}
+#sp-nav a:hover {
+  text-decoration: underline;
+  color: white;
+}
+#sp-nav a:active {
+  text-decoration: underline;
+  color: white;
+}
+#sp-page{
+  background-color: white;
+  color: black;
+}
+#menuButton{
+  position: relative;
+  border:none;
+  height: 2em;
+  width: 2em;
+  padding:2em;
+  margin:1em;
+  margin-left: 1em;
+  background-size: 2em 2em;
+}
+.menuButton{
+  background: url(../assets/images/menuButton1.png) no-repeat center;
+}
+.backButton{
+  background: url(../assets/images/black-arrow.png) no-repeat center;
+  transform:rotate(180deg);
+  -ms-transform:rotate(180deg); /* IE 9 */
+  -webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
+}
+.loading{
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 2em;
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'auth/auth.scss';
