@@ -23,9 +23,15 @@ If you want to deploy the latest code to heroku, please do:
 4. heroku open (optional, will launch website)
 
 
+Here are all the cool 3rd party tools we are using:
+* angular/bootstrap (UI): http://angular-ui.github.io/bootstrap/
+* snap (drawer): https://github.com/jtrussell/angular-snap.js
+* angular fullstack generator: https://github.com/DaftMonk/generator-angular-fullstack
+
+
 In case you are wondering, here is how everything is setup:
 * we leverage yeoman (http://yeoman.io/) scaffolding
-* we then explicitly use angular fullstack generator (https://github.com/DaftMonk/generator-angular-fullstack) to setup
+* we then explicitly use angular fullstack generator to setup
 	- command: yo angular-fullstack
 	- environment:
        	- Javascript
