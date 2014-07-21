@@ -5,7 +5,7 @@ angular.module('transformAppApp')
     $stateProvider
       .state('auth', {
         url: '/auth',
-        templateUrl: 'app/auth/auth.html',
+        templateUrl: 'app/routes/auth/auth.html',
         controller: 'AuthCtrl'
       });
   });
