@@ -19,4 +19,64 @@ angular.module('transformAppApp')
 	    alert('Failed to load prayers: ' + error);
 	  });
 	  $scope.title = "Prayers List";
+  })
+  .controller('PrayerCtrl', function ($scope, $stateParams, PrayerService, UserService) {
+	  $("#menuButton").attr('class', 'backButton'); 
+	  $(".loading").show();
+	  var promise = PrayerService.loadPrayer($stateParams.prayer_id);
+	  promise.then(function(prayer) {
+	    $(".loading").hide();
+	    $scope.prayer = prayer;
+	    $scope.prayed_sentence = constructPraySentence(prayer.likes.length);
+	    $scope.has_not_prayed = true;
+	    var current_user_id = UserService.currentLoggedInUser().id;
+	    prayer.likes.forEach(function (id) {
+	      if (id == current_user_id) {
+	        $scope.has_not_prayed = false;
+	      }
+	    });
+	  }, function (error) {
+	    alert('Failed to load prayer: ' + error);
+	  });
+	  $scope.addCommentToPrayer = function() {
+	    comment = new Comment(null,
+	                          UserService.currentLoggedInUser(),
+	                          $scope.new_comment);
+	    prayer = new Prayer($stateParams.prayer_id);
+	    var promise =
+	      PrayerService.addCommentToPrayer(prayer, comment);
+	    promise.then(function(newly_added_comment) {
+	      $scope.prayer.comments.push(newly_added_comment);
+	      $scope.new_comment = null; // reset the text box
+	    }, function(error) {
+	      alert('Failed to add comment to prayer: ' + error);
+	    });
+	  };
+	  $scope.likePrayer = function() {
+	    prayer = new Prayer($stateParams.prayer_id);
+	    promise = PrayerService.likePrayer(prayer, UserService.currentLoggedInUser().id);
+	    promise.then(function(number_of_likes) {
+	      $scope.number_of_likes = number_of_likes;
+	      $scope.prayed_sentence = constructPraySentence(number_of_likes);
+	    });
+	  };
+  })
+  .controller('AddPrayerCtrl', function($scope, $state, PrayerService, UserService){
+	  $("#menuButton").attr('class', 'backButton'); 
+	  // save prayer
+	  var currentUser = UserService.currentLoggedInUser();
+	  $scope.title = "Add A New Prayer/Praise";
+	  $scope.master = {};
+	  $scope.save = function(p) {
+	    $scope.master = angular.copy(p);
+	    var newprayer = new Prayer(null, currentUser, p.title, p.description, p.type, null,[],[]);
+	    // save prayer in backend
+	    var promise = PrayerService.addPrayer(newprayer);
+	    promise.then(function(prayer) {
+	      // navigate back home when done adding
+	      $state.go("prayerList");
+	    }, function (error) {
+	      alert('Failed to load prayer: ' + error);
+	    });
+	  };
   });

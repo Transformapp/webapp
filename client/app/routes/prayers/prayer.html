@@ -1,0 +1,18 @@
+<div class="col-md-12">
+  <div class="loading"><img src="assets/images/loading_wheel.gif" height="25" width="25"></div> 
+  <div>
+    Details for Prayer ID: {{prayer.id}} <br>
+    {{prayer.user.name}} <br>
+    <img src="{{prayer.user.profileUrl}}" height="200" width="200"> <br>
+    {{prayer.title}} <br>
+    {{prayer.content}} <br>
+    Comments:
+    <ul>
+      <li ng-repeat="comment in prayer.comments"> {{comment.user.name}}: {{comment.text}}</li>
+    </ul>
+    {{prayed_sentence}}<br>
+    <input type="text" ng-model="new_comment" />
+    <button ng-click="addCommentToPrayer()"> Comment </button>
+    <button ng-click="likePrayer()" ng-show="has_not_prayed"> Pray! </button>
+  </div>
+</div>
