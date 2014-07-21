@@ -13,13 +13,12 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/angular-snap/angular-snap.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
-        <!--Resources for slide out menu-->
-        <link rel="stylesheet" href="bower_components/ng-mobile-menu/src/ng-mobile-menu.css" />
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -29,22 +28,22 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div id="sp-nav">
+    <snap-drawer id="sp-nav">
       <!-- menu content -->
       <ul class="menu">
-        <li><a href="#/profile" ng-click="$spMenu.hide()">Profile</a></li>
-        <li><a href="#/groups" ng-click="$spMenu.hide()">Group Logistics</a></li>
-        <li><a href="#/prayers" ng-click="$spMenu.hide()">Prayer List</a></li>
+        <li><a href="#/profile" snap-close>Profile</a></li>
+        <li><a href="#/groups" snap-close>Group Logistics</a></li>
+        <li><a href="#/prayers" snap-close>Prayer List</a></li>
       </ul>
-    </div>
+    </snap-drawer>
 
-    <div id="sp-page" ng-click="$spMenu.hide()">
+    <snap-content id="sp-page">
       <!-- page content -->
       <div id="navbar">
-        <button id="menuButton" ng-click="" class="menuButton"></button>
+        <button id="menuButton" snap-toggle class="menuButton"></button>
       </div>
       <div ui-view></div>
-    </div>
+    </snap-content>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -74,13 +73,14 @@
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/angular-touch/angular-touch.js"></script>
       <script src="bower_components/angular-local-storage/angular-local-storage.js"></script>
+      <script src="bower_components/snapjs/snap.js"></script>
+      <script src="bower_components/angular-snap/angular-snap.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
         <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
-        <script src="bower_components/ng-mobile-menu/src/ng-mobile-menu.js"></script>
           <!-- injector:js -->
           <script src="app/filters/languageFormatter.filter.js"></script>
           <script src="app/routes/auth/auth.controller.js"></script>
