@@ -10,7 +10,7 @@
     <ul>
       <li ng-repeat="comment in prayer.comments"> {{comment.user.name}}: {{comment.text}}</li>
     </ul>
-    {{prayed_sentence}}<br>
+    {{prayer.likes.length | languageFormatter:"people"}} prayed for you<br>
     <input type="text" ng-model="new_comment" />
     <button ng-click="addCommentToPrayer()"> Comment </button>
     <button ng-click="likePrayer()" ng-show="has_not_prayed"> Pray! </button>
