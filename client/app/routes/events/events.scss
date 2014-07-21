@@ -1,0 +1,158 @@
+.logisticsContainer {
+  height: 508pt;
+  overflow: hidden;
+  color: #5D5D5D;
+  font-size: 12pt;
+}
+
+.attendeeBox {
+  height: 11em;
+  border-bottom: solid;
+  border-bottom-width: 1pt;
+  border-color: #D4D4D4;
+  text-align: center;
+  overflow: hidden;
+}
+
+#attendingheader {
+  display: inline-block;
+  margin: 0;
+  padding: 0.5em;
+  width: auto;
+  color: #373737;
+  font-family: 'Helvetica';
+  font-size: 1.4em;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.scrollbox {
+  height: 6.5em;
+  overflow-y: hidden;
+}
+
+.scrollarea {
+  background-color: transparent;
+  height: 10em;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.userBox {
+  display: inline-block;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  width: auto;
+  height: auto;
+  float: center;
+}
+
+.mask {
+  margin-right: 0.9em;
+  height: 5em;
+  width: 5em;
+  border-radius: 10em;
+  overflow: hidden;
+}
+
+img {
+  position: relative;
+  width: 100%;
+}
+
+.attendingfooter {
+  float: center;
+}
+
+.headerBox {
+  padding-top: 0.6em;
+  display: inline-block;
+  width: 45%;
+  text-align: right;
+}
+
+.infoBox {
+  display: inline-block;
+  width: 45%;
+}
+
+#infoHeader {
+  margin-top: 0;
+  font-family: 'Helvetica';
+  color: #373737;
+  padding: 0.7em;
+  font-size: 1.2em;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+#infoDetails {
+  padding: 0.55em;
+  height: 3em;
+  padding-left: 0.2em;
+}
+
+#commentHeader {
+  font-family: 'Helvetica';
+  margin-top: 0;
+  color: #373737;
+  padding-left: 1em;
+  font-size: 1.2em;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.commentBox {
+  height: 11em;
+  display: inline-block;
+  width: 100%;
+  padding: 0.5em;
+  border-top: solid;
+  border-top-width: 1pt;
+  border-color: #D4D4D4;
+  overflow: auto;
+  max-height: 100%;
+}
+
+.rsvpButtonYes {
+  position: absolute;
+  left: 5%;
+  display: inline-block;
+  height: 3.5em;
+  width: 40%;
+  background-color: #1C1C1C;
+  color: white;
+  padding: 0.2em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.rsvpButtonNo {
+  position: absolute;
+  right: 5%;
+  display: inline-block;
+  height: 3.5em;
+  width: 45%;
+  background-color: #1C1C1C;
+  color: white;
+  padding: 0.2em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.rsvpButtonTextUnselected {
+  color: white;
+  font-size: 1.2em;
+  font-weight: 100;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
+
+.rsvpButtonTextSelected {
+  color: green;
+  font-size: 1.2em;
+  font-weight: 100;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
