@@ -30,6 +30,9 @@ angular.module('transformAppApp')
 	      	});
 	      	return deferred.promise;
     	},
+      userById: function(id) {
+        return localStorageService.get(id);
+      },
     	currentLoggedInUser: function() {
       	// todo: login logic here.  We should do this: http://stackoverflow.com/questions/21355673/defer-angular-ui-router-statechangestart-until-server-authorization-response-re
 	      	var u_id = 'Ddw8VGKsZ1'; // TEMP!! set user ID here!
