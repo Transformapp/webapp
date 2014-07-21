@@ -25,7 +25,7 @@ angular.module('transformAppApp', [
 
     $locationProvider.html5Mode(true);
   })
-  .run(function($rootScope, $state, $spMenu, localStorageService, UserService) {
+  .run(function($rootScope, $state, $spMenu, localStorageService, UserService, GroupService) {
     parseInit();
     $spMenu.hide();
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -44,24 +44,24 @@ angular.module('transformAppApp', [
         }
       }
     });
-    // GroupService.loadGroup(currentGroupId).then(function(group) {
-    //   localStorageService.set(currentGroupId, group);
-    //   group.users.forEach(function(user) {
-    //     localStorageService.set(user.id, user);
-    //   });
-    // }, function(error) {
-    //   alert('Failed to load all users: ' + error);
-    // });
-    // // check if menuButton is a menu or a back button
-    // $("#menuButton").click(function() { 
-    //   if ($("#menuButton").hasClass("backButton")){
-    //     $state.go($rootScope.previousState);
-    //     $("#menuButton").attr('class', 'menuButton');
-    //   }
-    //   else{
-    //     $spMenu.toggle();
-    //   }
-    // });
+    GroupService.loadGroup(currentGroupId).then(function(group) {
+      localStorageService.set(currentGroupId, group);
+      group.users.forEach(function(user) {
+        localStorageService.set(user.id, user);
+      });
+    }, function(error) {
+      alert('Failed to load all users: ' + error);
+    });
+    // check if menuButton is a menu or a back button
+    $("#menuButton").click(function() { 
+      if ($("#menuButton").hasClass("backButton")){
+        $state.go($rootScope.previousState);
+        $("#menuButton").attr('class', 'menuButton');
+      }
+      else{
+        $spMenu.toggle();
+      }
+    });
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
       $("#menuButton").attr('class', 'menuButton');

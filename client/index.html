@@ -72,7 +72,7 @@
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script src="bower_components/ng-mobile-menu/src/ng-mobile-menu.js"></script> 
+      <script src="bower_components/angular-touch/angular-touch.js"></script>
       <script src="bower_components/angular-local-storage/angular-local-storage.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
@@ -80,21 +80,20 @@
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
         <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+        <script src="bower_components/ng-mobile-menu/src/ng-mobile-menu.js"></script>
           <!-- injector:js -->
+          <script src="app/filters/languageFormatter.filter.js"></script>
           <script src="app/routes/auth/auth.controller.js"></script>
           <script src="app/routes/auth/auth.js"></script>
-          <script src="app/routes/profile/profile.controller.js"></script>
-          <script src="app/routes/profile/profile.js"></script>
           <script src="app/routes/prayers/prayers.controller.js"></script>
           <script src="app/routes/prayers/prayers.js"></script>
-
-          <script src="app/services/user.service.js"></script>
+          <script src="app/routes/profile/profile.controller.js"></script>
+          <script src="app/routes/profile/profile.js"></script>
+          <script src="app/services/group.service.js"></script>
           <script src="app/services/prayer.service.js"></script>
-
-          <script src="app/filters/languageFormatter.filter.js"></script>
-
-          <!-- <script src="components/navbar/navbar.controller.js"></script> -->
+          <script src="app/services/user.service.js"></script>
           <script src="components/common/util.js"></script>
+          <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
 </body>
