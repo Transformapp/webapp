@@ -57,17 +57,20 @@ angular.module('transformAppApp')
   .controller('AddPrayerCtrl', function($scope, $state, PrayerService, UserService){
 	  $("#menuButton").attr('class', 'backButton'); 
 	  // save prayer
-	  var currentUser = UserService.currentLoggedInUser();
 	  $scope.title = "Add A New Prayer/Praise";
 	  $scope.master = {};
 	  $scope.save = function(p) {
 	    $scope.master = angular.copy(p);
-	    var newprayer = new Prayer(null, currentUser, p.title, p.description, p.type, null,[],[]);
+	    var newprayer = new Prayer(); 
+	    newprayer.user = UserService.currentLoggedInUser(); 
+	    newprayer.title = p.title;
+	    newprayer.description = p.description;
+	    newprayer.type = p.type;
 	    // save prayer in backend
 	    var promise = PrayerService.addPrayer(newprayer);
 	    promise.then(function(prayer) {
 	      // navigate back home when done adding
-	      $state.go("prayerList");
+	      $state.go("prayers");
 	    }, function (error) {
 	      alert('Failed to load prayer: ' + error);
 	    });
