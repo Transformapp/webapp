@@ -17,7 +17,7 @@ angular.module('transformAppApp', [
   'ui.router',
   'ui.bootstrap',
   'LocalStorageModule',
-  'shoppinpal.mobile-menu'
+  'snap'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
@@ -25,15 +25,14 @@ angular.module('transformAppApp', [
 
     $locationProvider.html5Mode(true);
   })
-  .run(function($rootScope, $state, $spMenu, localStorageService, UserService, GroupService) {
+  .run(function($rootScope, $state, localStorageService, UserService, GroupService) {
     parseInit();
-    $spMenu.hide();
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      // set previous state if it doesn't exist
-      if( fromState.name == "" ){
+      // set previous state
+      if(fromState.name == "" ) {
         $rootScope.previousState = "auth"
       }
-      else{
+      else {
         $rootScope.previousState = fromState.name;
       }
       if (toState.restrict) {
@@ -53,13 +52,10 @@ angular.module('transformAppApp', [
       alert('Failed to load all users: ' + error);
     });
     // check if menuButton is a menu or a back button
-    $("#menuButton").click(function() { 
+    $("#menuButton").click(function() {
       if ($("#menuButton").hasClass("backButton")){
         $state.go($rootScope.previousState);
         $("#menuButton").attr('class', 'menuButton');
-      }
-      else{
-        $spMenu.toggle();
       }
     });
 
