@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('transformApp')
+angular.module('transformAppApp')
   .controller('NavbarCtrl', function ($scope, $location) {
     $scope.menu = [{
       'title': 'Home',
