@@ -11,7 +11,7 @@ Here is what you need to setup your environment:
 * Install brew (mac package manager): http://brew.sh/
 * Install node (javascript server): 'brew install node' (after you've installed brew)
 
-Once you have pulled the code, run this to serve up your code locally: 
+Once you have pulled the code, run this to serve up your code locally: grunt serve
 
 If you want to deploy the latest code to heroku, please do:
 * deploy new build: grunt build
