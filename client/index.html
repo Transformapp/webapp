@@ -18,6 +18,8 @@
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
+        <!--Resources for slide out menu-->
+        <link rel="stylesheet" href="bower_components/ng-mobile-menu/src/ng-mobile-menu.css" />
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -27,7 +29,22 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ui-view=""></div>
+    <div id="sp-nav">
+      <!-- menu content -->
+      <ul class="menu">
+        <li><a href="#/profile" ng-click="$spMenu.hide()">Profile</a></li>
+        <li><a href="#/groups" ng-click="$spMenu.hide()">Group Logistics</a></li>
+        <li><a href="#/prayers" ng-click="$spMenu.hide()">Prayer List</a></li>
+      </ul>
+    </div>
+
+    <div id="sp-page" ng-click="$spMenu.hide()">
+      <!-- page content -->
+      <div id="navbar">
+        <button id="menuButton" ng-click="" class="menuButton"></button>
+      </div>
+      <div ui-view></div>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -55,14 +72,18 @@
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/ng-mobile-menu/src/ng-mobile-menu.js"></script> 
+      <script src="bower_components/angular-local-storage/angular-local-storage.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
+        <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
           <!-- injector:js -->
           <script src="app/auth/auth.controller.js"></script>
           <script src="app/auth/auth.js"></script>
+          <script src="app/services/userService.service.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
