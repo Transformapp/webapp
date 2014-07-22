@@ -13,6 +13,7 @@ Here is what you need to install to setup your environment:
 4. sass: sudo gem install sass
 5. pull the source code
 6. everything else: npm install
+7. create an empty file here, this is used for grunt: <root_dir>/server/config/local.env.js
 
 Once you have done all of the above, run this to serve up your code locally: grunt serve
 
