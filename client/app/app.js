@@ -2,10 +2,27 @@
 
 function parseInit() {
   Parse.$ = jQuery;
-    
-  // Initialize Parse with your Parse application javascript keys
   Parse.initialize("tK9bW3HzysojL4fxbjjj2H1zCT81JuyW1s6x02Vr",
                    "ZiGuizOBCP3JK8TKqHhnWzzQLhO6Ym9iJOFJWP2F");
+}
+
+function facebookInit() {
+  window.fbAsyncInit = function() {
+    Parse.FacebookUtils.init({
+      appId      : '1439344516345455', // Facebook App ID
+      channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
+      cookie     : true, // enable cookies to allow Parse to access the session
+      xfbml      : true  // parse XFBML
+    });
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 }
 
 var currentGroupId = 'ONaVZYN95k';
@@ -27,6 +44,8 @@ angular.module('transformAppApp', [
   })
   .run(function($rootScope, $state, localStorageService, UserService, GroupService) {
     parseInit();
+    facebookInit();
+
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // set previous state
       if(fromState.name == "" ) {
