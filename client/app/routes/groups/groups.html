@@ -1,3 +1,31 @@
 <div class="col-md-12">
-This is the groups view.
+    <div id="details-container">
+        <div id="group-name">
+            {{groupName}}
+        </div>
+        <div id="group-description">
+            <i>{{groupDescription}}</i>
+        </div>
+        <div id="group-leaders">
+            Leaders:
+        </div>
+        <div id="group-members">
+            Members:
+            <div class="scrollbox">
+                <div class="scrollarea">
+                    <div id= "{{$index}}" class="userBox" ng-repeat="user in users">
+                         <div class="mask"><img src="{{user.profileUrl}}"></div>
+                         {{user.name}}
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div id="leader-update-container">
+        <form id="addGroup" ng-submit="updateGroup(groupDetails)">  
+            Group Name: <input type="text" name="group-name" class="input-text" ng-model="groupDetails.groupName"><br>
+            Group Description: <input type="text" name="group-description" class="input-text" ng-model="groupDetails.groupDescription"><br>
+            <input name="Submit" type="submit" value="Update"/>              
+        </form>
+    </div>
 </div>

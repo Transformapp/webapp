@@ -6,6 +6,8 @@ function Group() {
   this.startTime = null;
   this.durationMins = 0;
   this.users = [];
+  this.description = "";
+  this.admins = [];
 };
 
 var GroupParseObj = Parse.Object.extend("Group", {
@@ -16,8 +18,14 @@ var GroupParseObj = Parse.Object.extend("Group", {
     obj.startTime = this.get("startTime");
     obj.durationMins = this.get("durationMins");
     obj.location = this.get("location");
+    obj.description = this.get("description");
     this.get("users").forEach(function(parseUser) {
+      console.log(parseUser);
       obj.users.push(parseUser.toObject());
+    });
+    this.get("admins").forEach(function(parseUser) {
+      console.log(parseUser);
+      obj.admins.push(parseUser.toObject());
     });
     return obj;
   }
@@ -33,6 +41,24 @@ angular.module('transformAppApp')
           var group = parseGroup.toObject();
           deferred.resolve(group);
         }, function(error){
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
+      updateGroup: function(id, newGroup){
+        var deferred = $q.defer();
+        var queryForGroup = new Parse.Query(GroupParseObj);
+        queryForGroup.get(id).then(function(group) {
+          group.set('id', newGroup['id']);
+          group.set('name', newGroup['name']);
+          group.set('startTime', newGroup['startTime']);
+          group.set('durationMins', newGroup['durationMins']);
+          group.set('description', newGroup['description']);
+          group.save().then(function(updated_group){
+          }, function (error) {
+            deferred.reject(error);
+          });
+        }, function(error) {
           deferred.reject(error);
         });
         return deferred.promise;
