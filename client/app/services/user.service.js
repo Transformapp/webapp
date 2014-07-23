@@ -7,7 +7,7 @@ function User() {
   this.groups = [];
 };
 
-var UserParseObj = Parse.Object.extend("Member", {
+var UserParseObj = Parse.Object.extend("User", {
   toObject: function() {
     var obj = new User();
     obj.id = this.id;
@@ -40,7 +40,7 @@ angular.module('transformAppApp')
         var deferred = $q.defer();
         Parse.FacebookUtils.logIn("email,public_profile", {
           success: function(user) {   
-            localStorageService.set('mainUser', user);
+            localStorageService.set('mainUser', user.toObject());
             deferred.resolve(true);
           },
           error: function(user, error) {
