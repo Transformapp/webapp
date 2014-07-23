@@ -20,11 +20,9 @@ var GroupParseObj = Parse.Object.extend("Group", {
     obj.location = this.get("location");
     obj.description = this.get("description");
     this.get("users").forEach(function(parseUser) {
-      console.log(parseUser);
       obj.users.push(parseUser.toObject());
     });
     this.get("admins").forEach(function(parseUser) {
-      console.log(parseUser);
       obj.admins.push(parseUser.toObject());
     });
     return obj;
@@ -37,7 +35,7 @@ angular.module('transformAppApp')
       loadGroup: function(id) {
         var deferred = $q.defer();
         var query = new Parse.Query(GroupParseObj);      
-        query.include("users").get(id).then(function(parseGroup) {
+        query.include("users").include("admins").get(id).then(function(parseGroup) {
           var group = parseGroup.toObject();
           deferred.resolve(group);
         }, function(error){
