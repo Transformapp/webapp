@@ -1,11 +1,14 @@
 <div class="col-md-12">
-	<div> {{ title }} </div>
-	<div class="loading"><img src="assets/images/loading_wheel.gif" height="25" width="25"></div> 
+    <div class="loading"><img src="assets/images/loading_wheel.gif" height="25" width="25"></div> 
+
+    <img id="profile-img" src="{{user.profileUrl}}"> <br>
+    <div id="profile-name">{{user.name}}</div>
+
+    <br><br><br>
 	<div>
 	  <br>Profile for Prayer ID: {{user.id}} <br>
 	  name: {{user.name}} <br>
 	  profile: {{user.profileUrl}} <br>
-	  <img src="{{user.profileUrl}}"> <br>
 	  groups: {{user.groups}}
 	</div>
 </div>
