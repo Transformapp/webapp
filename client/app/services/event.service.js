@@ -49,7 +49,7 @@ angular.module('transformAppApp')
         var query = new Parse.Query(EventParseObj);
         var user_pointer = {
           __type:"Pointer",
-          className: "Member",
+          className: "_User",
           objectId: user_id
         };
         // Every time a user responds, we need to do three things in sequence:
