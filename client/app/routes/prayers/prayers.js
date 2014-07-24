@@ -4,27 +4,21 @@ angular.module('transformAppApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('prayers', {
-        url: '/prayers',
+        url: '^/prayers',
         templateUrl: 'app/routes/prayers/prayers.html',
-        controller: 'PrayersCtrl',
-        restrict: {
-          type: 'User'
-        }
+        controller: 'PrayersCtrl', 
+        parent: 'home'
       })
       .state('prayer', {
-        url: '/prayer/:prayerId',
+        url: '^/prayer/:prayerId',
         templateUrl: 'app/routes/prayers/prayer.html',
-        controller: 'PrayerCtrl',
-        restrict: {
-          type: 'User'
-        }
+        controller: 'PrayerCtrl', 
+        parent: 'home'
       })
-      .state('addPrayer', {
-        url: '/addPrayer',
+      .state('prayersAdd', {
+        url: '^/prayers/add',
         templateUrl: 'app/routes/prayers/addPrayer.html',
-        controller: 'AddPrayerCtrl',
-        restrict: {
-          type: 'User'
-        }
+        controller: 'AddPrayerCtrl', 
+        parent: 'home'
       });
   });

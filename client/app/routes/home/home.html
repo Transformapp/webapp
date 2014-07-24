@@ -1,0 +1,16 @@
+<snap-drawer id="sp-nav">
+  <!-- menu content -->
+  <ul class="menu">
+    <li><a href="#/profile" snap-close>Profile</a></li>
+    <li><a href="#/events" snap-close>Group Logistics</a></li>
+    <li><a href="#/prayers" snap-close>Prayer List</a></li>
+  </ul>
+</snap-drawer>
+
+<snap-content id="sp-page">
+  <!-- page content -->
+  <div id="navbar">
+    <button id="menuButton" snap-toggle class="menuButton"></button>
+  </div>
+  <div ui-view></div>
+</snap-content>

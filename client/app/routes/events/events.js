@@ -4,11 +4,9 @@ angular.module('transformAppApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('events', {
-        url: '/events',
+        url: '^/events',
         templateUrl: 'app/routes/events/events.html',
-        controller: 'EventsCtrl',
-        restrict: {
-          type: 'User'
-        }
+        controller: 'EventsCtrl', 
+        parent: 'home'
       });
   });

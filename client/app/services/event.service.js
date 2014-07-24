@@ -9,25 +9,39 @@ function Event() {
   this.notes = "";
   this.attendees = [];
   this.absentees = [];
+
+  this.setAttendees = function(attendees) {
+    if (attendees instanceof Array) {
+      var index;
+      for (index = 0; index < attendees.length; index++) {
+        this.attendees.push(attendees[index].toObject());
+      };
+    }
+  };
+
+  this.setAbsentees = function(absentees) {
+    if (absentees instanceof Array) {
+      absentees.forEach(function(parse_user) {
+        this.absentees.push(parse_user.toObject());
+      });
+    }
+  };
+
+  this.setLeader = function(leader) {
+    if (leader) {
+      this.leader = leader.toObject();
+    }
+  };
 };
 
 var EventParseObj = Parse.Object.extend("Event", {
   toObject: function() {
     var event = new Event();
     event.id = this.id;
-    event.leader = this.get("leader").toObject();
     event.location = this.get("location");
     event.time = this.get("time");
     event.duration = this.get("duration");
     event.notes = this.get("notes");
-    event.attendees = [];
-    event.absentees = [];
-    this.get("attendees").forEach(function(parse_user) {
-      event.attendees.push(parse_user.toObject());
-    });
-    this.get("absentees").forEach(function(parse_user) {
-      event.absentees.push(parse_user.toObject());
-    });
     return event;
   }
 });
@@ -64,7 +78,9 @@ angular.module('transformAppApp')
             parseEvent.save().then(function(parseEvent) {
               query = new Parse.Query(EventParseObj);
               query.include('attendees').get(event_id).then(function(parseEvent) {
-                deferred.resolve(parseEvent.toObject());
+                var currentEvent = parseEvent.toObject();
+                currentEvent.setAttendees(parseEvent.get("attendees"));                
+                deferred.resolve(currentEvent);
               }, function(error){
                 deferred.reject(error);
               })
@@ -95,8 +111,10 @@ angular.module('transformAppApp')
             if (!parseEvent) {
               deferred.resolve(null);
             } else {
-              // Successfully retrieved the object.
-              deferred.resolve(parseEvent.toObject());
+                var currentEvent = parseEvent.toObject();
+                currentEvent.setAttendees(parseEvent.get("attendees"));   
+                currentEvent.setLeader(parseEvent.get("leader"));             
+                deferred.resolve(currentEvent);
             }
           },
           error: function(error) {

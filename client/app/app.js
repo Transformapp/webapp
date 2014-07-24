@@ -10,7 +10,7 @@ function facebookInit() {
   window.fbAsyncInit = function() {
     Parse.FacebookUtils.init({
       appId      : '1439344516345455', // Facebook App ID
-      channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
+      channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File (todo: need to update this later)
       cookie     : true, // enable cookies to allow Parse to access the session
       xfbml      : true  // parse XFBML
     });
