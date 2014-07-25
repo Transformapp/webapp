@@ -5,12 +5,13 @@
         </div>
         <div id="group-description">
             <i>{{groupDescription}}</i>
-        </div>
-        <div id="group-leaders">
-            Leaders:
+            <div id="group-leaders">
+                <div class="admin-leader-text">Leader(s):&nbsp;</div>
+                <div class="admins-list" ng-repeat="admin in admins">{{admin.name}}&nbsp;</div>
+            </div>
         </div>
         <div id="group-members">
-            Members:
+            <u>Members</u>
             <div class="scrollbox">
                 <div class="scrollarea">
                     <div id= "{{$index}}" class="userBox" ng-repeat="user in users">
@@ -21,7 +22,7 @@
             </div> 
         </div>
     </div>
-    <div id="leader-update-container">
+    <div id="leader-update-container" ng-show="isAdmin">
         <form id="addGroup" ng-submit="updateGroup(groupDetails)">  
             Group Name: <input type="text" name="group-name" class="input-text" ng-model="groupDetails.groupName"><br>
             Group Description: <input type="text" name="group-description" class="input-text" ng-model="groupDetails.groupDescription"><br>

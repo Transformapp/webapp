@@ -1,3 +1,8 @@
+
+
+#details-container{
+  text-align:center;
+}
 #group-name{
   font-size:3em;
   text-align: center;
@@ -5,15 +10,28 @@
 
 #group-description{
   text-align:center;
+  font-size:1.25em;
 }
 
 #leader-update-container{
   margin-top:2em;
 }
+#group-leaders{
+  text-align:center;
+  font-size:0.75em;
+}
+.admin-leader-text{
 
+}
+.admins-list{
+}
 .scrollbox {
   height: 6.5em;
   overflow-y: hidden;
+}
+
+#group-members{
+  margin-top:1em;
 }
 
 .scrollarea {

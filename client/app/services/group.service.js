@@ -60,7 +60,16 @@ angular.module('transformAppApp')
           deferred.reject(error);
         });
         return deferred.promise;
+      },
+      isAdmin: function(id, admins){
+        for (var index in admins){
+          if(id.id == admins[index].id){
+            return true;
+          }
+        }
+        return false;
       }
+
     };
     return groupServiceFunctions;
   });

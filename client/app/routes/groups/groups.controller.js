@@ -7,9 +7,9 @@ angular.module('transformAppApp')
     $scope.users = group['users'];
     $scope.groupName = group['name'];
     $scope.groupDescription = group['description'];
-    console.log(group['users']);
-    console.log(group['admins']);
-   
+    $scope.admins = group['admins'];
+    $scope.isAdmin = GroupService.isAdmin(current_user, $scope.admins);
+
     $scope.updateGroup = function() {
       group['description'] = $scope.groupDetails.groupDescription;
       group['name'] = $scope.groupDetails.groupName;
@@ -23,6 +23,7 @@ angular.module('transformAppApp')
       $scope.groupDetails.groupName = '';
       $scope.groupDetails.groupDescription = '';
     };
+
   });
 
 
