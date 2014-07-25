@@ -5,7 +5,7 @@ angular.module('transformAppApp')
     return function (input, languageType) {
     	var formattedString = "";
     	if (languageType == "people") {
-    		if (input == 1) {
+    		if (input == 1 || input == 0) {
     			formattedString += input + " person";
     		}
     		else {

@@ -12,11 +12,11 @@ function Prayer() {
 
 	this.hasLike = function(user) {
 		if (user && user.id) {
-			this.likes.forEach(function(user_id) {
-				if (user_id == user.id) {
+			for(var i = 0; i < this.likes.length; i ++) {
+				if (user.id == this.likes[i]) {
 					return true;
 				}
-			});
+			}
 		}
 		return false;
 	};
@@ -79,12 +79,12 @@ angular.module('transformAppApp')
 		},
 
 		// Returns the new number of likes for the prayer
-		likePrayer: function(prayer, user_id) {
+		likePrayer: function(prayer_id, user_id) {
 			var deferred = $q.defer();
 			var queryForPrayer = new Parse.Query(PrayerParseObj);
-			queryForPrayer.get(prayer.id).then(function(prayer) {
+			queryForPrayer.get(prayer_id).then(function(prayer) {
 				prayer.addUnique("likes", user_id).save().then(function(updated_prayer) {
-					deferred.resolve(updated_prayer.get("likes").length);
+					deferred.resolve(updated_prayer.toObject());
 				}, function(error) {
 					deferred.reject(error);
 				})
@@ -160,6 +160,7 @@ angular.module('transformAppApp')
 			prayerParseObj.set("title", $sanitize(prayer.title));
 			prayerParseObj.set("content", $sanitize(prayer.content));
 			prayerParseObj.set("type", prayer.type);
+			prayerParseObj.set("likes", []);
 			prayerParseObj.save(null, {
 				success: function(prayerParseObj) {
 					var prayer = prayerParseObj.toObject();
