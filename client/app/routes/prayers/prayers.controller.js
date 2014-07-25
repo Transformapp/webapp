@@ -48,8 +48,8 @@ angular.module('transformAppApp')
 	  $scope.likePrayer = function() {
 	    promise = PrayerService.likePrayer($stateParams.prayerId, UserService.currentLoggedInUser().id);
 	    promise.then(function(updated_prayer) {
-				// Only update the likes here. The updated_prayer object doesn't contain
-				// the info about the person who created the prayer, only an ID.
+        // Only update the likes here. The updated_prayer object doesn't contain
+        // the info about the person who created the prayer, only an ID.
 	      $scope.prayer.likes = updated_prayer.likes;
 	    });
 	  };
