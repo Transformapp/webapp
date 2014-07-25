@@ -74,36 +74,55 @@ body {
     }
   }
 }
+/* SCSS FOR PRAYER DETAIL PAGE */
+.prayer-detail-container {
+  position:relative;
+  display: table-cell;
+  width:100%;
+  padding-top:1em;
+}
+.prayer-image {
+ float:left;
+  height: 4em;
+  width: 4em;
+  -moz-border-radius: 2em;
+  -webkit-border-radius: 2em;
+  border-radius: 2em;
+}
+.prayer-detail-content {
+  margin-top:0.5em;
+  float: right;
+  margin-left:1em;
+}
+.prayer-detail-name {
+  font-weight: 900;
+  float:left;
+}
+.prayer-details{
+  margin-top:1em;
+}
+/* SCSS FOR PRAYER LIST PAGE */
+.prayer-picture{
+  float:left;
+  margin-left:1em;
+}
+.prayer-content{
+  margin-top:0.5em;
+  margin-left:1em;
+  float:right;
+}
+.prayer-comment-list{
+  margin-top:4em;
+}
 
 .prayer-container {
   display: table-cell;
-}
-
-.prayer-picture {
-  float: left;
-  margin-left: 1em;
-  margin-right: 1em;
-}
-
-.prayer-image {
-  height: 3em;
-  width: 3em;
-  -moz-border-radius: 1.5em;
-  -webkit-border-radius: 1.5em;
-  border-radius: 1.5em;
-}
-
-.prayer-content {
-  float: left;
-  margin-top: 0.5em;
+  width:100%;
 }
 
 .prayer-name {
   font-weight: 900;
 }
-
-.prayer-caption! {}
-
 .arrow {
   position: absolute;
   height: 1em;

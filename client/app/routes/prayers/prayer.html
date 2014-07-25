@@ -1,10 +1,26 @@
 <div class="col-md-12">
   <div class="loading"><img src="assets/images/loading_wheel.gif" height="25" width="25"></div> 
-  <div>
-    {{prayer.user.name}} <br>
-    <img src="{{prayer.user.profileUrl}}" height="200" width="200"> <br>
-    {{prayer.title}} <br>
-    {{prayer.content}} <br>
+
+  <div class="prayer-detail-container">
+    <img class="prayer-image" src="{{prayer.user.profileUrl}}" height="200" width="200">
+    <div class="prayer-detail-content">
+      <div class="prayer-detail-name">
+        {{prayer.user.name}}
+      </div> 
+      <div class="prayer-caption">
+        {{prayer.title}}
+      </div> 
+    </div>
+  </div>
+  <div class="prayer-details">
+    <i>{{prayer.content}}</i>
+</div>
+
+
+
+
+
+  <div class="prayer-comment-list">
     Comments:
     <ul>
       <li ng-repeat="comment in prayer.comments"> {{comment.user.name}}: {{comment.text}}</li>
