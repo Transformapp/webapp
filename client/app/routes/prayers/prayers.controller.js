@@ -23,7 +23,7 @@ angular.module('transformAppApp')
   .controller('PrayerCtrl', function ($scope, $stateParams, PrayerService, UserService) {
 	  $("#menuButton").attr('class', 'backButton'); 
 	  $(".loading").show();
-		$scope.number_of_likes = 0;
+    $scope.number_of_likes = 0;
 	  var promise = PrayerService.loadPrayer($stateParams.prayerId);
 	  promise.then(function(prayer) {
 	    $(".loading").hide();
