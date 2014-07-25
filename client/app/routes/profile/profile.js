@@ -4,11 +4,9 @@ angular.module('transformAppApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('profile', {
-        url: '/profile',
+        url: '^/profile',
         templateUrl: 'app/routes/profile/profile.html',
-        controller: 'ProfileCtrl',
-	    restrict: {
-	      type: 'User'
-	    }
+        controller: 'ProfileCtrl', 
+        parent: 'home'
       });
   });

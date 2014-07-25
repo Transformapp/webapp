@@ -20,7 +20,9 @@ var GroupParseObj = Parse.Object.extend("Group", {
     obj.location = this.get("location");
     obj.description = this.get("description");
     this.get("users").forEach(function(parseUser) {
-      obj.users.push(parseUser.toObject());
+      if (parseUser) {
+        obj.users.push(parseUser.toObject());
+      }
     });
     this.get("admins").forEach(function(parseUser) {
       obj.admins.push(parseUser.toObject());

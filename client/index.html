@@ -28,24 +28,8 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <snap-drawer id="sp-nav">
-      <!-- menu content -->
-      <ul class="menu">
-        <li><a href="#/profile" snap-close>Profile</a></li>
-        <li><a href="#/events" snap-close>Group Logistics</a></li>
-        <li><a href="#/prayers" snap-close>Prayer List</a></li>
-        <li><a href="#/groups" snap-close>Group Details</a></li>
-      </ul>
-    </snap-drawer>
-
-    <snap-content id="sp-page">
-      <!-- page content -->
-      <div id="navbar">
-        <button id="menuButton" snap-toggle class="menuButton"></button>
-      </div>
-      <div ui-view></div>
-    </snap-content>
-
+    <div ui-view></div>
+    
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -90,6 +74,8 @@
           <script src="app/routes/events/events.js"></script>
           <script src="app/routes/groups/groups.controller.js"></script>
           <script src="app/routes/groups/groups.js"></script>
+          <script src="app/routes/home/home.controller.js"></script>
+          <script src="app/routes/home/home.js"></script>
           <script src="app/routes/prayers/prayers.controller.js"></script>
           <script src="app/routes/prayers/prayers.js"></script>
           <script src="app/routes/profile/profile.controller.js"></script>

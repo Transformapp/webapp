@@ -1,0 +1,57 @@
+#sp-nav {
+  background-color: grey;
+  color: white;
+  li {
+    text-decoration: none;
+    list-style-type: none;
+    padding: 10px;
+    color: white;
+  }
+  a {
+    &:link, &:visited {
+      text-decoration: none;
+      color: white;
+    }
+    &:hover, &:active {
+      text-decoration: underline;
+      color: white;
+    }
+  }
+}
+
+#sp-page {
+  background-color: white;
+  color: black;
+}
+
+#menuButton {
+  position: relative;
+  border: none;
+  height: 2em;
+  width: 2em;
+  padding: 2em;
+  margin: 0em;
+  margin-left: 0em;
+  background-size: 2em 2em;
+}
+
+.menuButton {
+  background: url(../assets/images/menuButton1.png) no-repeat center;
+}
+
+.backButton {
+  background: url(../assets/images/black-arrow.png) no-repeat center;
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  /* IE 9 */
+  -webkit-transform: rotate(180deg);
+  /* Opera, Chrome, and Safari */
+}
+
+#navbar {
+  height: 4em;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  width: 100%;
+  background-color: #B40404;
+  color: white;
+}
