@@ -7,14 +7,14 @@ Here is the stack that we are using:
 * server: parse
 
 Here is what you need to install to setup your environment:
-1. brew (mac package manager): http://brew.sh/
-2. npm (>1.4.20): curl https://www.npmjs.org/install.sh | sh
-3. node (javascript server): 'brew install node' (after you've installed brew)
-4. sass: sudo gem install sass
-5. pull the source code
-6. everything server side: npm install
-7. angular dependencies: bower install
-8. create an empty file here, this is used for grunt: <root_dir>/server/config/local.env.js
+* brew (mac package manager): http://brew.sh/
+* node (javascript server): 'brew install node' (after you've installed brew)
+* npm (>1.4.20): curl https://www.npmjs.org/install.sh | sh
+* sass: sudo gem install sass
+* pull the source code
+* everything server side: npm install
+* angular dependencies: bower install
+* create an empty file here, this is used for grunt: root_dir/server/config/local.env.js
 
 Once you have done all of the above, run this to serve up your code locally: grunt serve
 
