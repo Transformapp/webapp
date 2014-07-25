@@ -30,19 +30,15 @@ body {
   letter-spacing: 0px;
 }
 
-#navbar {
-  height: 4em;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  width: 100%;
-  background-color: #B40404;
-  color: white;
-}
-
 .loading {
   position: relative;
   width: 100%;
   text-align: center;
   margin-top: 2em;
+  left:50%;
+  margin-left:-1em;
+  width:2em;
+  height:2em;
 }
 // Component styles are injected through grunt
 // injector
