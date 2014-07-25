@@ -21,9 +21,10 @@ function Event() {
 
   this.setAbsentees = function(absentees) {
     if (absentees instanceof Array) {
-      absentees.forEach(function(parse_user) {
-        this.absentees.push(parse_user.toObject());
-      });
+      var index;
+      for (index = 0; index < absentees.length; index++) {
+        this.absentees.push(absentees[i].toObject());
+      };
     }
   };
 

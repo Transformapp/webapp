@@ -23,12 +23,12 @@ angular.module('transformAppApp')
   .controller('PrayerCtrl', function ($scope, $stateParams, PrayerService, UserService) {
 	  $("#menuButton").attr('class', 'backButton'); 
 	  $(".loading").show();
+    $scope.number_of_likes = 0;
 	  var promise = PrayerService.loadPrayer($stateParams.prayerId);
 	  promise.then(function(prayer) {
 	    $(".loading").hide();
 	    $scope.prayer = prayer;
-	    //$scope.prayed_sentence = constructPraySentence(prayer.likes.length);
-	    $scope.has_not_prayed = prayer.hasLike(UserService.currentLoggedInUser());
+	    $scope.has_not_prayed = !(prayer.hasLike(UserService.currentLoggedInUser()));
 	  }, function (error) {
 	    alert('Failed to load prayer: ' + error);
 	  });
@@ -46,11 +46,11 @@ angular.module('transformAppApp')
 	    });
 	  };
 	  $scope.likePrayer = function() {
-	    prayer = new Prayer($stateParams.prayer_id);
-	    promise = PrayerService.likePrayer(prayer, UserService.currentLoggedInUser().id);
-	    promise.then(function(number_of_likes) {
-	      $scope.number_of_likes = number_of_likes;
-	      //$scope.prayed_sentence = constructPraySentence(number_of_likes);
+	    promise = PrayerService.likePrayer($stateParams.prayerId, UserService.currentLoggedInUser().id);
+	    promise.then(function(updated_prayer) {
+        // Only update the likes here. The updated_prayer object doesn't contain
+        // the info about the person who created the prayer, only an ID.
+	      $scope.prayer.likes = updated_prayer.likes;
 	    });
 	  };
   })
