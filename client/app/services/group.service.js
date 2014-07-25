@@ -47,11 +47,11 @@ angular.module('transformAppApp')
         var deferred = $q.defer();
         var queryForGroup = new Parse.Query(GroupParseObj);
         queryForGroup.get(id).then(function(group) {
-          group.set('id', newGroup['id']);
-          group.set('name', newGroup['name']);
-          group.set('startTime', newGroup['startTime']);
-          group.set('durationMins', newGroup['durationMins']);
-          group.set('description', newGroup['description']);
+          group.set('id', newGroup.id);
+          group.set('name', newGroup.name);
+          group.set('startTime', newGroup.startTime);
+          group.set('durationMins', newGroup.durationMins);
+          group.set('description', newGroup.description);
           group.save().then(function(updated_group){
           }, function (error) {
             deferred.reject(error);
@@ -61,9 +61,9 @@ angular.module('transformAppApp')
         });
         return deferred.promise;
       },
-      isAdmin: function(id, admins){
-        for (var index in admins){
-          if(id.id == admins[index].id){
+      isAdmin: function(id, group){
+        for (var index in group.admins){
+          if(id.id == group.admins[index].id){
             return true;
           }
         }

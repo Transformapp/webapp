@@ -4,11 +4,8 @@ angular.module('transformAppApp')
   .controller('GroupsCtrl', function ($scope, localStorageService, UserService, GroupService) {
     var group = localStorageService.get(currentGroupId);
     var current_user = UserService.currentLoggedInUser();
-    $scope.users = group['users'];
-    $scope.groupName = group['name'];
-    $scope.groupDescription = group['description'];
-    $scope.admins = group['admins'];
-    $scope.isAdmin = GroupService.isAdmin(current_user, $scope.admins);
+    $scope.group = group;
+    $scope.isAdmin = GroupService.isAdmin(current_user, group);
 
     $scope.updateGroup = function() {
       group['description'] = $scope.groupDetails.groupDescription;

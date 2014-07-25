@@ -1,20 +1,20 @@
 <div class="col-md-12">
     <div id="details-container">
         <div id="group-name">
-            {{groupName}}
+            {{group.name}}
         </div>
         <div id="group-description">
-            <i>{{groupDescription}}</i>
+            <i>{{group.description}}</i>
             <div id="group-leaders">
                 <div class="admin-leader-text">Leader(s):&nbsp;</div>
-                <div class="admins-list" ng-repeat="admin in admins">{{admin.name}}&nbsp;</div>
+                <div class="admins-list" ng-repeat="admin in group.admins">{{admin.name}}&nbsp;</div>
             </div>
         </div>
         <div id="group-members">
             <u>Members</u>
             <div class="scrollbox">
                 <div class="scrollarea">
-                    <div id= "{{$index}}" class="userBox" ng-repeat="user in users">
+                    <div id= "{{$index}}" class="userBox" ng-repeat="user in group.users">
                          <div class="mask"><img src="{{user.profileUrl}}"></div>
                          {{user.name}}
                     </div>
