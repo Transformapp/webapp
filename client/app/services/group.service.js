@@ -61,9 +61,9 @@ angular.module('transformAppApp')
         });
         return deferred.promise;
       },
-      isAdmin: function(id, group){
+      isAdmin: function(user, group){
         for (var index in group.admins){
-          if(id.id == group.admins[index].id){
+          if(user.id == group.admins[index].id){
             return true;
           }
         }
