@@ -70,15 +70,21 @@ angular.module('transformAppApp', [
     }, function(error) {
       alert('Failed to load all users: ' + error);
     });
-    // check if menuButton is a menu or a back button
-    $("#menuButton").click(function() {
-      if ($("#menuButton").hasClass("backButton")){
-        $state.go($rootScope.previousState);
-        $("#menuButton").attr('class', 'menuButton');
-      }
-    });
-
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
       $("#menuButton").attr('class', 'menuButton');
+      if(toState.name == "prayer" || toState.name == "prayersAdd"){
+        console.log('disabling snap', $rootScope.snapOptions);
+        $rootScope.snapOptions = {
+            touchToDrag:false,
+            disable: 'left'
+        };
+      }
+      else{
+        console.log('enabling snap', $rootScope.snapOptions);
+        $rootScope.snapOptions = {
+            touchToDrag:false,
+            disable: 'none'
+        };
+      }
     });
   });

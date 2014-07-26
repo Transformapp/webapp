@@ -40,6 +40,7 @@
 }
 
 .backButton {
+  z-index:100;
   background: url(../assets/images/black-arrow.png) no-repeat center;
   transform: rotate(180deg);
   -ms-transform: rotate(180deg);
