@@ -57,6 +57,8 @@ angular.module('transformAppApp')
         var query = new Parse.Query(GroupParseObj);      
         query.include("users").include("admins").get(id).then(function(parseGroup) {
           var group = parseGroup.toObject();
+          group.users = [];
+          group.admins = [];
           group.setUsers(parseGroup.get("users"));
           group.setAdmins(parseGroup.get("admins"));
           deferred.resolve(group);
