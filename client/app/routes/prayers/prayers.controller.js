@@ -20,19 +20,30 @@ angular.module('transformAppApp')
 	  });
 	  $scope.title = "Prayers List";
   })
-  .controller('PrayerCtrl', function ($scope, $stateParams, PrayerService, UserService) {
-	  $("#menuButton").attr('class', 'backButton'); 
-	  $(".loading").show();
+  .controller('PrayerCtrl', function ($scope, $state, $stateParams, PrayerService, UserService) {
+  	// add back button as necessary
+  	if ($scope.previousState == "prayers") {
+  		var $menuButton = $("#menuButton");
+		$menuButton.attr('class', 'backButton'); 
+	    $menuButton.click(function() {
+	      if ($menuButton.hasClass("backButton")){
+	        $state.go($scope.previousState);
+	        $menuButton.attr('class', 'menuButton');
+	      }
+	  	});
+  	}
+	
+	$(".loading").show();
     $scope.number_of_likes = 0;
-	  var promise = PrayerService.loadPrayer($stateParams.prayerId);
-	  promise.then(function(prayer) {
+	var promise = PrayerService.loadPrayer($stateParams.id);
+	promise.then(function(prayer) {
 	    $(".loading").hide();
 	    $scope.prayer = prayer;
 	    $scope.has_not_prayed = !(prayer.hasLike(UserService.currentLoggedInUser()));
-	  }, function (error) {
+	}, function (error) {
 	    alert('Failed to load prayer: ' + error);
-	  });
-	  $scope.addCommentToPrayer = function() {
+	});
+	$scope.addCommentToPrayer = function() {
 	    var comment = new Comment(); 
 	    comment.user = UserService.currentLoggedInUser();
 	    comment.text = $scope.new_comment;
@@ -44,22 +55,32 @@ angular.module('transformAppApp')
 	    }, function(error) {
 	      alert('Failed to add comment to prayer: ' + error);
 	    });
-	  };
-	  $scope.likePrayer = function() {
-	    promise = PrayerService.likePrayer($stateParams.prayerId, UserService.currentLoggedInUser().id);
+	};
+	$scope.likePrayer = function() {
+	    promise = PrayerService.likePrayer($stateParams.id, UserService.currentLoggedInUser().id);
 	    promise.then(function(updated_prayer) {
         // Only update the likes here. The updated_prayer object doesn't contain
         // the info about the person who created the prayer, only an ID.
 	      $scope.prayer.likes = updated_prayer.likes;
 	    });
-	  };
+	};
   })
   .controller('AddPrayerCtrl', function($scope, $state, PrayerService, UserService){
-	  $("#menuButton").attr('class', 'backButton'); 
-	  // save prayer
-	  $scope.title = "Add A New Prayer/Praise";
-	  $scope.master = {};
-	  $scope.save = function(p) {
+  	// add back button as necessary
+  	if ($scope.previousState == "prayers") {
+  		var $menuButton = $("#menuButton");
+		$menuButton.attr('class', 'backButton'); 
+	    $menuButton.click(function() {
+	      if ($menuButton.hasClass("backButton")){
+	        $state.go($scope.previousState);
+	        $menuButton.attr('class', 'menuButton');
+	      }
+	  	});
+  	} 
+	// save prayer
+	$scope.title = "Add A New Prayer/Praise";
+	$scope.master = {};
+	$scope.save = function(p) {
 	    $scope.master = angular.copy(p);
 	    var newprayer = new Prayer(); 
 	    newprayer.user = UserService.currentLoggedInUser(); 
@@ -74,5 +95,5 @@ angular.module('transformAppApp')
 	    }, function (error) {
 	      alert('Failed to load prayer: ' + error);
 	    });
-	  };
+	};
   });

@@ -47,7 +47,7 @@ angular.module('transformAppApp', [
     facebookInit();
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      // set previous state
+      // always default previous state to auth
       if(fromState.name == "" ) {
         $rootScope.previousState = "auth"
       }
@@ -55,6 +55,8 @@ angular.module('transformAppApp', [
         $rootScope.previousState = fromState.name;
       }
     });
+
+    // optimistically load and cache group information on load
     GroupService.loadGroup(currentGroupId).then(function(group) {
       localStorageService.set(currentGroupId, group);
       group.users.forEach(function(user) {
@@ -63,17 +65,15 @@ angular.module('transformAppApp', [
     }, function(error) {
       alert('Failed to load all users: ' + error);
     });
+
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-      $("#menuButton").attr('class', 'menuButton');
       if(toState.name == "prayer" || toState.name == "prayersAdd"){
-        console.log('disabling snap', $rootScope.snapOptions);
         $rootScope.snapOptions = {
             touchToDrag:false,
             disable: 'left'
         };
       }
       else{
-        console.log('enabling snap', $rootScope.snapOptions);
         $rootScope.snapOptions = {
             touchToDrag:false,
             disable: 'none'
