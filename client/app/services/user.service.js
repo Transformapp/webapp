@@ -39,9 +39,21 @@ angular.module('transformAppApp')
       authenticate: function() {
         var deferred = $q.defer();
         Parse.FacebookUtils.logIn("email,public_profile", {
-          success: function(user) {   
-            localStorageService.set('mainUser', user.toObject());
-            deferred.resolve(true);
+          success: function(parseUserObj) {
+						var fbid = parseUserObj.get("authData").facebook.id;
+						FB.api('/' + fbid + '?fields=name,picture', function(response) {
+							if (!response || !response.name || !response.picture) {
+								deferred.reject('Failed to acquire user name and profile picture');
+							} else {
+								var user = parseUserObj.toObject();
+								user.name = response.name;
+								user.profileUrl = response.picture.data.url;
+								parseUserObj.set('name', user.name);
+								parseUserObj.set('profileUrl', user.profileUrl).save();
+								localStorageService.set('mainUser', user);
+								deferred.resolve(true);
+							}
+						});
           },
           error: function(user, error) {
             deferred.reject(error);
