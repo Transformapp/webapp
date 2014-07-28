@@ -47,21 +47,16 @@ angular.module('transformAppApp', [
     facebookInit();
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      // set previous state
+      // always default previous state to auth
       if(fromState.name == "" ) {
         $rootScope.previousState = "auth"
       }
       else {
         $rootScope.previousState = fromState.name;
       }
-      if (toState.restrict) {
-        $rootScope.currentUser = UserService.currentLoggedInUser();
-        if (!$rootScope.currentUser) {
-          event.preventDefault();
-          $state.go("auth");
-        }
-      }
     });
+
+    // optimistically load and cache group information on load
     GroupService.loadGroup(currentGroupId).then(function(group) {
       localStorageService.set(currentGroupId, group);
       group.users.forEach(function(user) {
@@ -70,15 +65,19 @@ angular.module('transformAppApp', [
     }, function(error) {
       alert('Failed to load all users: ' + error);
     });
-    // check if menuButton is a menu or a back button
-    $("#menuButton").click(function() {
-      if ($("#menuButton").hasClass("backButton")){
-        $state.go($rootScope.previousState);
-        $("#menuButton").attr('class', 'menuButton');
-      }
-    });
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-      $("#menuButton").attr('class', 'menuButton');
+      if(toState.name == "prayer" || toState.name == "prayersAdd"){
+        $rootScope.snapOptions = {
+            touchToDrag:false,
+            disable: 'left'
+        };
+      }
+      else{
+        $rootScope.snapOptions = {
+            touchToDrag:false,
+            disable: 'none'
+        };
+      }
     });
   });
