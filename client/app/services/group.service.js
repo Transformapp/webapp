@@ -37,8 +37,6 @@ var GroupParseObj = Parse.Object.extend("Group", {
     obj.durationMins = this.get("durationMins");
     obj.location = this.get("location");
     obj.description = this.get("description");
-    obj.setUsers(this.get("users"));
-    obj.setAdmins(this.get("admins"));
     return obj;
   }
 });
@@ -51,6 +49,8 @@ angular.module('transformAppApp')
         var query = new Parse.Query(GroupParseObj);      
         query.include("users").include("admins").get(id).then(function(parseGroup) {
           var group = parseGroup.toObject();
+          group.setUsers(parseGroup.get("users"));
+          group.setAdmins(parseGroup.get("admins"));
           deferred.resolve(group);
         }, function(error){
           deferred.reject(error);
