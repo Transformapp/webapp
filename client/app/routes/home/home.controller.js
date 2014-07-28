@@ -2,6 +2,7 @@
 
 angular.module('transformAppApp')
   .controller('HomeCtrl', function ($scope, $rootScope, UserService, $state) {
+  	// check for user login
     $rootScope.currentUser = UserService.currentLoggedInUser();
    	event.preventDefault();
     if (!$rootScope.currentUser) {

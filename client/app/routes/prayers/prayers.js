@@ -10,7 +10,7 @@ angular.module('transformAppApp')
         parent: 'home'
       })
       .state('prayer', {
-        url: '^/prayer/:prayerId',
+        url: '^/prayer/:id',
         templateUrl: 'app/routes/prayers/prayer.html',
         controller: 'PrayerCtrl', 
         parent: 'home'

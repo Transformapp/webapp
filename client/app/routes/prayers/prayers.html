@@ -14,11 +14,11 @@
 	</div>
 	<div id="prayer-list-container">
 		<ul id="prayer-list">
-			<li ng-repeat="prayer in prayers">
-				<a href="prayer/{{prayer.id}}">
+			<li ng-repeat="existingPrayer in prayers">
+				<a ui-sref="prayer({id : existingPrayer.id})">
 					<div class="prayer-container">
 						<div class="prayer-picture">
-							<img src="{{prayer.user.profileUrl}}" class="prayer-image">
+							<img src="{{existingPrayer.user.profileUrl}}" class="prayer-image">
 						</div>
 						<div class="prayer-content">
 							<div class="prayer-name">
@@ -36,6 +36,6 @@
 	</div>
 	<!-- style this link into a button later --> 
 	<div>
-		<a href="#/prayers/add" id="add-prayer">+Prayer/Praise</a>
+		<a ui-sref="prayersAdd" id="add-prayer">+Prayer/Praise</a>
 	</div>
 </div>

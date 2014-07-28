@@ -1,14 +1,14 @@
 <snap-drawer id="sp-nav">
   <!-- menu content -->
   <ul class="menu">
-    <li><a href="#/profile" snap-close>Profile</a></li>
-    <li><a href="#/events" snap-close>Group Logistics</a></li>
-    <li><a href="#/prayers" snap-close>Prayer List</a></li>
-    <li><a href="#/groups" snap-close>Group Details</a></li>
+    <li><a ui-sref="profile" snap-close>Profile</a></li>
+    <li><a ui-sref="events" snap-close>Group Logistics</a></li>
+    <li><a ui-sref="prayers" snap-close>Prayer List</a></li>
+    <li><a ui-sref="groups" snap-close>Group Details</a></li>
   </ul>
 </snap-drawer>
 
-<snap-content id="sp-page">
+<snap-content id="sp-page" snap-options="snapOptions">
   <!-- page content -->
   <div id="navbar">
     <button id="menuButton" snap-toggle class="menuButton"></button>
