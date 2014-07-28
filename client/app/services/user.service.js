@@ -54,7 +54,7 @@ angular.module('transformAppApp')
         // todo: route user back to home
       },
     	isCurrentUser: function(user) {
-      		return user.id == userServiceFunctions.currentLoggedInUser().id;
+      		return user && (user.id == userServiceFunctions.currentLoggedInUser().id);
     	},
   	};
   	return userServiceFunctions;
