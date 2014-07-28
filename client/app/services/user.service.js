@@ -42,9 +42,7 @@ angular.module('transformAppApp')
           success: function(parseUserObj) {
 						var fbid = parseUserObj.get("authData").facebook.id;
 						FB.api('/' + fbid + '?fields=name,picture', function(response) {
-							if (!response || !response.name || !response.picture) {
-								deferred.reject('Failed to acquire user name and profile picture');
-							} else {
+							if (response && !response.error) {
 								var user = parseUserObj.toObject();
 								user.name = response.name;
 								user.profileUrl = response.picture.data.url;
@@ -52,6 +50,12 @@ angular.module('transformAppApp')
 								parseUserObj.set('profileUrl', user.profileUrl).save();
 								localStorageService.set('mainUser', user);
 								deferred.resolve(true);
+							} else {
+								if (!response) {
+								  deferred.reject("No response from Facebook graph API");
+								} else {
+									deferred.reject(response.error);
+								}
 							}
 						});
           },
