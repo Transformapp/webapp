@@ -6,9 +6,9 @@ angular.module('transformAppApp')
       .state('home', {
         url: '/',
         templateUrl: 'app/routes/home/home.html',
-        controller: 'HomeCtrl',
-        restrict: {
-          type: 'User'
-        }
+        controller: 'HomeCtrl'
+        // restrict: {
+        //   type: 'User'
+        // }
       });
   });

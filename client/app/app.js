@@ -54,13 +54,6 @@ angular.module('transformAppApp', [
       else {
         $rootScope.previousState = fromState.name;
       }
-      if (toState.restrict) {
-        $rootScope.currentUser = UserService.currentLoggedInUser();
-        if (!$rootScope.currentUser) {
-          event.preventDefault();
-          $state.go("auth");
-        }
-      }
     });
     GroupService.loadGroup(currentGroupId).then(function(group) {
       localStorageService.set(currentGroupId, group);
