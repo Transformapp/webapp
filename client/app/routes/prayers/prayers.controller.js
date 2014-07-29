@@ -23,19 +23,19 @@ angular.module('transformAppApp')
   .controller('PrayerCtrl', function ($scope, $state, $stateParams, PrayerService, UserService) {
   	// add back button as necessary
   	if ($scope.previousState == "prayers") {
-  		var $menuButton = $("#menuButton");
-		$menuButton.attr('class', 'backButton'); 
-	    $menuButton.click(function() {
-	      if ($menuButton.hasClass("backButton")){
-	        $state.go($scope.previousState);
-	        $menuButton.attr('class', 'menuButton');
-	      }
-	  	});
-  	}
+      var $menuButton = $("#menuButton");
+      $menuButton.attr('class', 'backButton'); 
+      $menuButton.click(function() {
+        if ($menuButton.hasClass("backButton")){
+          $state.go($scope.previousState);
+          $menuButton.attr('class', 'menuButton');
+        }
+      });
+    }
 	
-	$(".loading").show();
-    $scope.number_of_likes = 0;
-	var promise = PrayerService.loadPrayer($stateParams.id);
+  $(".loading").show();
+  $scope.number_of_likes = 0;
+  var promise = PrayerService.loadPrayer($stateParams.id);
 	promise.then(function(prayer) {
 	    $(".loading").hide();
 	    $scope.prayer = prayer;

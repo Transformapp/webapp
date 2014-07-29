@@ -13,12 +13,13 @@ var UserParseObj = Parse.Object.extend("User", {
     obj.id = this.id;
     obj.name = this.get("name");
     obj.profileUrl = this.get("profileUrl");
+		obj.groups = this.get("groups");
     return obj;
   }
 });
 
 angular.module('transformAppApp')
-  .service('UserService', function Userservice($q, $state, localStorageService) {
+  .service('UserService', function Userservice($q, $state, $rootScope, localStorageService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
   	var userServiceFunctions = {
     	loadProfile: function(id) {
@@ -36,6 +37,42 @@ angular.module('transformAppApp')
     	currentLoggedInUser: function() {
       	return localStorageService.get('mainUser');
     	},
+			addUserToGroup: function(user, group_id) {
+				var deferred = $q.defer();
+				var query = new Parse.Query(UserParseObj);
+				query.get(user.id).then(function(parseUser) {
+					if (parseUser.get("groups") instanceof Array) {
+						parseUser.addUnique("groups", group_id).save().then(
+							function(parseUserObject) {
+								var updated_user = parseUserObject.toObject();
+								localStorageService.set(updated_user.id, updated_user);
+								if (userServiceFunctions.isCurrentUser(updated_user)) {
+									localStorageService.set('mainUser', updated_user);
+								}
+								deferred.resolve(updated_user);
+							}, function(error) {
+								deferred.reject(error);
+							}
+						);
+					} else {
+						// Groups didn't get initialized properly as an array.
+						parseUser.set("groups", [group_id]).then(
+							function(parseUserObject) {
+								var updated_user = parseUserObject.toObject();
+								localStorageService.set(updated_user.id, updated_user);
+								if (userServiceFunctions.isCurrentUser(updated_user)) {
+									localStorageService.set('mainUser', updated_user);
+								}
+								$rootScope.groupToJoin = null;
+								deferred.resolve(parseUserObject.toObject());
+							}, function(error) {
+								deferred.reject(error);
+							}
+						);
+					}
+				});
+				return deferred.promise;
+			},
       authenticate: function() {
         var deferred = $q.defer();
         Parse.FacebookUtils.logIn("email,public_profile", {
