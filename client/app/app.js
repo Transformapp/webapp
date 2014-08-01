@@ -66,7 +66,8 @@ angular.module('transformAppApp', [
             localStorageService.set(user.id, user);
           });
         }, function(error) {
-          alert('Failed to load all users: ' + error);
+          // We couldn't load the group right now. Don't do anything now and
+          // just load later when needed.
         });
       }
     }

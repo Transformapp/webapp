@@ -40,7 +40,6 @@ angular.module('transformAppApp')
     }
     var current_user = UserService.currentLoggedInUser();
     if (!current_user) {
-      // Set this so after auth we know what to do.
      	$state.go("auth");  // user not authenticated, re-route them to auth
     } else {
       UserService.addUserToGroup(current_user, group_id).then(function(user) {
