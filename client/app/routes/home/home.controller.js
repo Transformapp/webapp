@@ -11,4 +11,7 @@ angular.module('transformAppApp')
     else if ($rootScope.previousState == "auth") {
     	$state.go("events"); // user is either just authenticated or came here for the first time, default to /events
     }
+    $scope.invite = function(){
+      console.log('invite user button clicked!');
+    };
   });

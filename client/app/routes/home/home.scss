@@ -49,6 +49,20 @@
   /* Opera, Chrome, and Safari */
 }
 
+#inviteButton {
+  position: fixed;
+  right:0em;
+  border: none;
+  height: 2em;
+  width: 2em;
+  padding: 2em;
+  margin: 0em;
+  margin-left: 0em;
+  background-size: 2em 2em;
+}
+.inviteButton {
+  background: url(../assets/images/compose2.png) center no-repeat;
+}
 #navbar {
   height: 4em;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;

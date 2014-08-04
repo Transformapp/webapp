@@ -80,5 +80,12 @@ angular.module('transformAppApp', [
             disable: 'none'
         };
       }
+      if(toState.name == "events" || toState.name == "groups"){
+        // display button to send group invite
+        $('.inviteButton').css( "display", "initial");
+      }
+      else{
+        $('.inviteButton').css( "display", "none");
+      }
     });
   });
