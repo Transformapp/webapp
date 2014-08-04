@@ -19,7 +19,9 @@ var UserParseObj = Parse.Object.extend("User", {
 });
 
 angular.module('transformAppApp')
-  .service('UserService', function Userservice($q, $state, $rootScope, localStorageService) {
+  .service('UserService', function Userservice($q, $state, $rootScope,
+																							 localStorageService,
+																							 GroupService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var userServiceFunctions = {
       loadProfile: function(id) {
@@ -50,21 +52,6 @@ angular.module('transformAppApp')
                   localStorageService.set('mainUser', updated_user);
                 }
                 deferred.resolve(updated_user);
-              }, function(error) {
-                deferred.reject(error);
-              }
-            );
-          } else {
-            // Groups didn't get initialized properly as an array.
-            parseUser.set("groups", [group_id]).then(
-              function(parseUserObject) {
-                var updated_user = parseUserObject.toObject();
-                localStorageService.set(updated_user.id, updated_user);
-                if (userServiceFunctions.isCurrentUser(updated_user)) {
-                  localStorageService.set('mainUser', updated_user);
-                }
-                $rootScope.groupToJoin = null;
-                deferred.resolve(parseUserObject.toObject());
               }, function(error) {
                 deferred.reject(error);
               }
@@ -108,6 +95,34 @@ angular.module('transformAppApp')
       },
       isCurrentUser: function(user) {
           return user && (user.id == userServiceFunctions.currentLoggedInUser().id);
+      },
+      loadUserGroupAndMembers: function() {
+        var deferred = $q.defer();
+				var current_group = localStorageService.get("currentGroup");
+				if (current_group) {
+					deferred.resolve(true);
+				} else {
+					var current_user = userServiceFunctions.currentLoggedInUser();
+					if (current_user) {
+						if (current_user.groups instanceof Array && current_user.groups.length >= 1) {
+							// Currently we only support a single group.
+							var current_group_id = current_user.groups[0];
+							GroupService.loadGroup(current_group_id).then(function(group) {
+								localStorageService.set("currentGroup", group);
+								localStorageService.set(current_group_id, group);
+								group.users.forEach(function(user) {
+									localStorageService.set(user.id, user);
+								});
+								deferred.resolve(true);
+							}, function(error) {
+								deferred.reject(error);
+							});
+						}
+					} else {
+						deferred.reject("No user is logged in.");
+					}
+				}
+				return deferred.promise;
       },
     };
     return userServiceFunctions;

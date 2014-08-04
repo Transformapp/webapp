@@ -57,6 +57,9 @@ angular.module('transformAppApp')
         });
         return deferred.promise;
       },
+      currentGroup: function() {
+        return localStorageService.get('currentGroup');
+      },
       updateGroup: function(id, newGroup){
         var deferred = $q.defer();
         var queryForGroup = new Parse.Query(GroupParseObj);

@@ -2,11 +2,8 @@
 
 angular.module('transformAppApp')
   .controller('GroupsCtrl', function ($scope, localStorageService, UserService, GroupService) {
-    var current_user = UserService.currentLoggedInUser();
-    var group_id = null;
-    if (current_user.groups instanceof Array && current_user.groups.length >= 1) {
-      group_id = current_user.groups[0];
-      var group = localStorageService.get(group_id);
+    UserService.loadUserGroupAndMembers().then(function() {
+      var group = GroupService.currentGroup();
       $scope.group = group;
       $scope.isAdmin = GroupService.isAdmin(current_user, group);
   
@@ -23,9 +20,9 @@ angular.module('transformAppApp')
         $scope.groupDetails.groupName = '';
         $scope.groupDetails.groupDescription = '';
       };
-    } else {
-      alert('User does not belong to any group');
-    }
+    }, function(error) {
+      alert(error);
+    });
   })
   .controller('GroupJoinCtrl', function ($scope, $rootScope, UserService, GroupService, $stateParams, $state) {
     var group_id = null;

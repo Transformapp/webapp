@@ -54,24 +54,6 @@ angular.module('transformAppApp', [
       }
     });
 
-    // optimistically load and cache group information on load
-    var current_user = UserService.currentLoggedInUser();
-    if (current_user) {
-      if (current_user.groups instanceof Array && current_user.groups.length >= 1) {
-        // Currently we only support a single group.
-        var current_group_id = current_user.groups[0];
-        GroupService.loadGroup(current_group_id).then(function(group) {
-          localStorageService.set(current_group_id, group);
-          group.users.forEach(function(user) {
-            localStorageService.set(user.id, user);
-          });
-        }, function(error) {
-          // We couldn't load the group right now. Don't do anything now and
-          // just load later when needed.
-        });
-      }
-    }
-
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
       if(toState.name == "prayer" || toState.name == "prayersAdd"){
         $rootScope.snapOptions = {
