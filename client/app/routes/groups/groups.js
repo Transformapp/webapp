@@ -8,5 +8,10 @@ angular.module('transformAppApp')
         templateUrl: 'app/routes/groups/groups.html',
         controller: 'GroupsCtrl', 
         parent: 'home'
+      })
+      .state('groupJoin', {
+        url: '^/groups/join/:id',
+        templateUrl: 'app/routes/groups/groups.html',
+        controller: 'GroupJoinCtrl'
       });
   });

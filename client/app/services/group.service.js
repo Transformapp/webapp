@@ -57,6 +57,9 @@ angular.module('transformAppApp')
         });
         return deferred.promise;
       },
+      currentGroup: function() {
+        return localStorageService.get('currentGroup');
+      },
       updateGroup: function(id, newGroup){
         var deferred = $q.defer();
         var queryForGroup = new Parse.Query(GroupParseObj);
@@ -82,8 +85,26 @@ angular.module('transformAppApp')
           }
         }
         return false;
+      },
+      addUserToGroup: function(user_id, group_id) {
+        var deferred = $q.defer();
+        var queryForGroup = new Parse.Query(GroupParseObj);
+        queryForGroup.get(group_id).then(function(groupParseObj) {
+          var user_pointer = {
+            __type:"Pointer",
+            className: "_User",
+            objectId: user_id
+          };
+          groupParseObj.addUnique("users", user_pointer).save().then(function(groupParseObj) {
+            deferred.resolve(groupParseObj.toObject());
+          }, function(error){
+            deferred.reject(error);
+          });
+        }, function(error) {
+          deferred.reject(error);
+        });
+        return deferred.promise;
       }
-
     };
     return groupServiceFunctions;
   });

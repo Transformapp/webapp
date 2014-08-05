@@ -26,8 +26,6 @@ function facebookInit() {
   }(document, 'script', 'facebook-jssdk'));
 }
 
-var currentGroupId = 'ONaVZYN95k';
-
 angular.module('transformAppApp', [
   'ngCookies',
   'ngResource',
@@ -55,16 +53,6 @@ angular.module('transformAppApp', [
       else {
         $rootScope.previousState = fromState.name;
       }
-    });
-
-    // optimistically load and cache group information on load
-    GroupService.loadGroup(currentGroupId).then(function(group) {
-      localStorageService.set(currentGroupId, group);
-      group.users.forEach(function(user) {
-        localStorageService.set(user.id, user);
-      });
-    }, function(error) {
-      alert('Failed to load all users: ' + error);
     });
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
