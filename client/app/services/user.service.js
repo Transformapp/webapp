@@ -20,8 +20,8 @@ var UserParseObj = Parse.Object.extend("User", {
 
 angular.module('transformAppApp')
   .service('UserService', function Userservice($q, $state, $rootScope,
-																							 localStorageService,
-																							 GroupService) {
+                                               localStorageService,
+                                               GroupService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var userServiceFunctions = {
       loadProfile: function(id) {
@@ -70,6 +70,12 @@ angular.module('transformAppApp')
                 var user = parseUserObj.toObject();
                 user.name = response.name;
                 user.profileUrl = response.picture.data.url;
+                // When a user parse object is first created automatically,
+                // the groups field is initialized to undefined, instead of an
+                // empty array. We can initialize it properly here.
+                if (!(parseUserObj.get('groups') instanceof Array)) {
+                  parseUserObj.set('groups', []);
+                }
                 parseUserObj.set('name', user.name);
                 parseUserObj.set('profileUrl', user.profileUrl).save();
                 localStorageService.set('mainUser', user);
@@ -98,31 +104,31 @@ angular.module('transformAppApp')
       },
       loadUserGroupAndMembers: function() {
         var deferred = $q.defer();
-				var current_group = localStorageService.get("currentGroup");
-				if (current_group) {
-					deferred.resolve(true);
-				} else {
-					var current_user = userServiceFunctions.currentLoggedInUser();
-					if (current_user) {
-						if (current_user.groups instanceof Array && current_user.groups.length >= 1) {
-							// Currently we only support a single group.
-							var current_group_id = current_user.groups[0];
-							GroupService.loadGroup(current_group_id).then(function(group) {
-								localStorageService.set("currentGroup", group);
-								localStorageService.set(current_group_id, group);
-								group.users.forEach(function(user) {
-									localStorageService.set(user.id, user);
-								});
-								deferred.resolve(true);
-							}, function(error) {
-								deferred.reject(error);
-							});
-						}
-					} else {
-						deferred.reject("No user is logged in.");
-					}
-				}
-				return deferred.promise;
+        var current_group = localStorageService.get("currentGroup");
+        if (current_group) {
+          deferred.resolve(true);
+        } else {
+          var current_user = userServiceFunctions.currentLoggedInUser();
+          if (current_user) {
+            if (current_user.groups instanceof Array && current_user.groups.length >= 1) {
+              // Currently we only support a single group.
+              var current_group_id = current_user.groups[0];
+              GroupService.loadGroup(current_group_id).then(function(group) {
+                localStorageService.set("currentGroup", group);
+                localStorageService.set(current_group_id, group);
+                group.users.forEach(function(user) {
+                  localStorageService.set(user.id, user);
+                });
+                deferred.resolve(true);
+              }, function(error) {
+                deferred.reject(error);
+              });
+            }
+          } else {
+            deferred.reject("No user is logged in.");
+          }
+        }
+        return deferred.promise;
       },
     };
     return userServiceFunctions;
