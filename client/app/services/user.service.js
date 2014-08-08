@@ -50,6 +50,7 @@ angular.module('transformAppApp')
                 localStorageService.set(updated_user.id, updated_user);
                 if (userServiceFunctions.isCurrentUser(updated_user)) {
                   localStorageService.set('mainUser', updated_user);
+                  localStorageService.set('currentGroup', group_id);
                 }
                 deferred.resolve(updated_user);
               }, function(error) {
