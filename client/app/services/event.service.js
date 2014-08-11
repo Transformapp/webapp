@@ -40,7 +40,10 @@ var EventParseObj = Parse.Object.extend("Event", {
     var event = new Event();
     event.id = this.id;
     event.location = this.get("location");
-    event.time = this.get("time");
+    var GMT_time = this.get("time");
+    var offset = (new Date()).getTimezoneOffset() * 60000;
+    var local_time = GMT_time.getTime() + offset;
+    event.time = new Date(local_time);
     event.duration = this.get("duration");
     event.notes = this.get("notes");
     return event;
@@ -100,11 +103,8 @@ angular.module('transformAppApp')
       loadUpcomingEvent: function(group_id) {
         var deferred = $q.defer();
         var query = new Parse.Query(EventParseObj);
-        var date = new Date();
-        var time = new Date(date.getTime());
-        // Parse Date object comparison only works if we initialize JS Date with
-        // currentDate.getTime().
-        query.greaterThan("time", new Date(date.getTime()));
+        // Parse Date object comparison works with a Date object.
+        query.greaterThanOrEqualTo("time", new Date());
         query.equalTo("group", group_id);
         query.ascending("time");
         query.include("attendees").include("leader").first({

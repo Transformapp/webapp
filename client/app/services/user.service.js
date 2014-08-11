@@ -106,7 +106,7 @@ angular.module('transformAppApp')
         var deferred = $q.defer();
         var current_group = localStorageService.get("currentGroup");
         if (current_group) {
-          deferred.resolve(true);
+          deferred.resolve(current_group);
         } else {
           var current_user = userServiceFunctions.currentLoggedInUser();
           if (current_user) {
@@ -119,7 +119,7 @@ angular.module('transformAppApp')
                 group.users.forEach(function(user) {
                   localStorageService.set(user.id, user);
                 });
-                deferred.resolve(true);
+                deferred.resolve(group);
               }, function(error) {
                 deferred.reject(error);
               });
