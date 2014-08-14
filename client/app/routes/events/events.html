@@ -3,7 +3,7 @@
       No upcoming events
   </div>
   <div class="logisticsContainer" ng-show="has_event">
-    <button ng-click="createEvent()" ng-show="is_admin"> Create New Event </button>
+		<a ui-sref="eventAdd" id="add-prayer" ng-show="is_admin">Create New Event</a>
 		<div class="attendeeBox">
 				<h2 id="attendingheader">Attending</h2>
 				<div class="scrollbox">
