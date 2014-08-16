@@ -1,8 +1,11 @@
 <div ng-controller="AddEventCtrl">
-  <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
-  <div style="display:inline-block; min-height:290px;">
-    <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" />
-    <timepicker ng-model="mytime" hour-step="hstep"
-                minute-step="mstep" show-meridian="ismeridian" />
+  <div style="display:inline-block">
+    <datepicker ng-model="date" min-date="minDate" show-weeks="true" class="well well-sm" />
   </div>
+  <timepicker ng-model="time" hour-step="hstep"
+              minute-step="mstep" show-meridian="ismeridian" />
+  Duration: <input type="number" ng-model="duration"> minutes<br>
+  Location: <input type="text" ng-model="location" required><br>
+  Notes: <input type="text" ng-model="notes" required><br>
+  <button ng-click="createEvent()">Create</button>
 </div>

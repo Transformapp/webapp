@@ -1,5 +1,9 @@
 'use strict';
 
+var getTimeOffset = function() {
+  return (new Date()).getTimezoneOffset() * 60000;
+}
+
 function Event() {
   this.id = null;
   this.leader = null;
@@ -7,6 +11,7 @@ function Event() {
   this.time = null;
   this.duration = 0;
   this.notes = "";
+  this.group = null;
   this.attendees = [];
   this.absentees = [];
 
@@ -41,11 +46,12 @@ var EventParseObj = Parse.Object.extend("Event", {
     event.id = this.id;
     event.location = this.get("location");
     var GMT_time = this.get("time");
-    var offset = (new Date()).getTimezoneOffset() * 60000;
+    var offset = getTimeOffset();
     var local_time = GMT_time.getTime() + offset;
     event.time = new Date(local_time);
     event.duration = this.get("duration");
     event.notes = this.get("notes");
+    event.group = this.get("group");
     return event;
   }
 });
@@ -53,6 +59,33 @@ var EventParseObj = Parse.Object.extend("Event", {
 angular.module('transformAppApp')
   .service('EventService', function($q, localStorageService) {
     var eventServiceFunctions = {
+      createEvent: function(event) {
+        var deferred = $q.defer();
+        var eventParseObj = new EventParseObj();
+        var user_pointer = {
+          __type:"Pointer",
+          className: "_User",
+          objectId: event.leader.id
+        };
+        eventParseObj.set("group", event.group);
+        eventParseObj.set("leader", user_pointer);
+        eventParseObj.set("location", event.location); 
+        eventParseObj.set("time", event.time);
+        eventParseObj.set("durationMins", event.duration);
+        eventParseObj.set("notes", event.notes);
+        eventParseObj.set("attendees", event.absentees);
+        eventParseObj.set("absentees", event.absentees);
+        eventParseObj.save(null, {
+          success: function(eventParseObj) {
+            event = eventParseObj.toObject();
+            deferred.resolve(event);
+          },
+          error: function(eventParseObj, error) {
+            deferred.reject(error);
+          }
+        });
+        return deferred.promise;
+      },
       rsvp: function(user_id, event_id, response) {
         var deferred = $q.defer();
         var queue_to_add = null;
@@ -103,8 +136,11 @@ angular.module('transformAppApp')
       loadUpcomingEvent: function(group_id) {
         var deferred = $q.defer();
         var query = new Parse.Query(EventParseObj);
+        var current_time = new Date();
+        var offset = getTimeOffset();
+        current_time.setTime(current_time.getTime() - offset);
         // Parse Date object comparison works with a Date object.
-        query.greaterThanOrEqualTo("time", new Date());
+        query.greaterThanOrEqualTo("time", current_time);
         query.equalTo("group", group_id);
         query.ascending("time");
         query.include("attendees").include("leader").first({

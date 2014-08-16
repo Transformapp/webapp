@@ -44,10 +44,6 @@ angular.module('transformAppApp')
       alert(error);
     });
   
-    $scope.createEvent = function() {
-      
-    };
-  
     $scope.rsvp = function(response) {
       EventService.rsvp(current_user.id, $scope.event.id, response).then(function(event) {
           $scope.event.attendees = event.attendees;
@@ -67,17 +63,45 @@ angular.module('transformAppApp')
   })
   .controller('AddEventCtrl', function($scope, $state, EventService, UserService) {
     // Set up date picker
-    $scope.dt = new Date();
+    $scope.date = new Date();
     $scope.minDate = new Date();
     
     // Set up time picker
-    $scope.mytime = new Date();
-    var min = $scope.mytime.getMinutes();
+    $scope.time = new Date();
+    var min = $scope.time.getMinutes();
     // We want the initial min to be a integer multiple of 15.
     min = Math.floor(min/15)*15;
-    $scope.mytime.setMinutes(min);
+    $scope.time.setMinutes(min);
 
     $scope.hstep = 1;
     $scope.mstep = 15;
     $scope.ismeridian = true;
+
+    $scope.createEvent = function() {
+      UserService.loadUserGroupAndMembers().then(function(group) {
+        var time = $scope.time;
+        var date = $scope.date;
+        var offset = (new Date()).getTimezoneOffset() * 60000;
+        date.setHours(time.getHours());
+        date.setMinutes(time.getMinutes());
+        date.setSeconds(0);
+        date.setTime(date.getTime() - offset);
+        var event = new Event();
+        event.time = date;
+        event.group = group.id;
+        event.duration = $scope.duration ? $scope.duration : null;
+        event.leader = UserService.currentLoggedInUser();
+        event.location = $scope.location;
+        event.attendees = [];
+        event.absentees = [];
+        event.notes = $scope.notes;
+        EventService.createEvent(event).then(function(event) {
+          $state.go("events");
+        }, function(error) {
+          alert("Error saving the event: " + error);
+        })
+      }), function(error) {
+        alert("Error saving the event: " + error);
+      }
+    };
   });
