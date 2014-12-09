@@ -5,6 +5,8 @@ Here is the stack that we are using:
   	- jquery 
   	- bootstrap
 * server: parse
+    - Username: code4tk@gmail.com
+    - Password: parsepassword
 
 Here is what you need to install to setup your environment:
 * brew (mac package manager): http://brew.sh/

@@ -46,7 +46,8 @@ angular.module('transformAppApp')
         var comment = new Comment(); 
         comment.user = UserService.currentLoggedInUser();
         comment.text = $scope.new_comment;
-        var prayer = new Prayer($stateParams.prayer_id);
+        var prayer = new Prayer();
+        prayer.id = $stateParams.id
         var promise = PrayerService.addCommentToPrayer(prayer, comment);
         promise.then(function(newly_added_comment) {
           $scope.prayer.comments.push(newly_added_comment);
@@ -76,10 +77,10 @@ angular.module('transformAppApp')
         }
       });
     }
-		// save prayer
-		$scope.title = "Add A New Prayer/Praise";
-		$scope.master = {};
-		$scope.save = function(p) {
+    // save prayer
+    $scope.title = "Add A New Prayer/Praise";
+    $scope.master = {};
+    $scope.save = function(p) {
       $scope.master = angular.copy(p);
       var newprayer = new Prayer(); 
       newprayer.user = UserService.currentLoggedInUser(); 
@@ -94,5 +95,5 @@ angular.module('transformAppApp')
       }, function (error) {
         alert('Failed to load prayer: ' + error);
       });
-		};
+    };
   });
