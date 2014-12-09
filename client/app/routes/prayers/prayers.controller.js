@@ -85,7 +85,7 @@ angular.module('transformAppApp')
       var newprayer = new Prayer(); 
       newprayer.user = UserService.currentLoggedInUser(); 
       newprayer.title = p.title;
-      newprayer.description = p.description;
+      newprayer.content = p.description;
       newprayer.type = p.type;
       // save prayer in backend
       var promise = PrayerService.addPrayer(newprayer);
