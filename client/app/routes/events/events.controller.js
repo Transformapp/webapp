@@ -61,7 +61,7 @@ angular.module('transformAppApp')
   
     $scope.title = "My group";
   })
-  .controller('AddEventCtrl', function($scope, $state, EventService, UserService) {
+  .controller('SaveEventCtrl', function($scope, $state, $stateParams, EventService, UserService) {
     // Set up date picker
     $scope.date = new Date();
     $scope.minDate = new Date();
@@ -77,7 +77,7 @@ angular.module('transformAppApp')
     $scope.mstep = 15;
     $scope.ismeridian = true;
 
-    $scope.createEvent = function() {
+    $scope.saveEvent = function() {
       UserService.loadUserGroupAndMembers().then(function(group) {
         var time = $scope.time;
         var date = $scope.date;
@@ -87,6 +87,7 @@ angular.module('transformAppApp')
         date.setSeconds(0);
         date.setTime(date.getTime() - offset);
         var event = new Event();
+        event.id = $stateParams.id == null ? null : $stateParams.id;
         event.time = date;
         event.group = group.id;
         event.duration = $scope.duration ? $scope.duration : null;
@@ -95,7 +96,7 @@ angular.module('transformAppApp')
         event.attendees = [];
         event.absentees = [];
         event.notes = $scope.notes;
-        EventService.createEvent(event).then(function(event) {
+        EventService.saveEvent(event).then(function(event) {
           $state.go("events");
         }, function(error) {
           alert("Error saving the event: " + error);

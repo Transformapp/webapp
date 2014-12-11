@@ -11,14 +11,14 @@ angular.module('transformAppApp')
       })
       .state('eventAdd', {
         url: '^/event/add',
-        templateUrl: 'app/routes/events/addEvent.html',
-        controller: 'AddEventCtrl',
+        templateUrl: 'app/routes/events/saveEvent.html',
+        controller: 'SaveEventCtrl',
         parent: 'home'
       })
       .state('eventEdit', {
         url: '^/event/edit/:id',
-        templateUrl: 'app/routes/events/editEvent.html',
-        controller: 'EditEventCtrl',
+        templateUrl: 'app/routes/events/saveEvent.html',
+        controller: 'SaveEventCtrl',
         parent: 'home'
       });
   });

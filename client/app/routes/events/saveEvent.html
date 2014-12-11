@@ -1,4 +1,4 @@
-<div ng-controller="AddEventCtrl">
+<div ng-controller="SaveEventCtrl">
   <div style="display:inline-block">
     <datepicker ng-model="date" min-date="minDate" show-weeks="true" class="well well-sm" />
   </div>
@@ -7,5 +7,5 @@
   Duration: <input type="number" ng-model="duration"> minutes<br>
   Location: <input type="text" ng-model="location" required><br>
   Notes: <input type="text" ng-model="notes" required><br>
-  <button ng-click="createEvent()">Create</button>
+  <button ng-click="saveEvent()">Save</button>
 </div>

@@ -59,6 +59,13 @@ var EventParseObj = Parse.Object.extend("Event", {
 angular.module('transformAppApp')
   .service('EventService', function($q, localStorageService) {
     var eventServiceFunctions = {
+      saveEvent: function(event) {
+        if (event.id == null) {
+          return eventServiceFunctions.createEvent(event);
+        } else {
+          return eventServiceFunctions.updateEvent(event);
+        }
+      },
       createEvent: function(event) {
         var deferred = $q.defer();
         var eventParseObj = new EventParseObj();
@@ -83,6 +90,50 @@ angular.module('transformAppApp')
           error: function(eventParseObj, error) {
             deferred.reject(error);
           }
+        });
+        return deferred.promise;
+      },
+      deleteEvent: function(event) {
+        var deferred = $q.defer();
+        if (event.id == null) {
+          deffered.reject("No event ID specified.");
+          return deferred.promise;
+        }
+        var query = new Parse.Query(EventParseObj);
+        query.get(event.id).then(function(eventParseObj) {
+          eventParseObj.destroy({
+            success: function(myObject) {
+              deferred.resolve(true);
+            },
+            error: function(myObject, error) {
+              deferred.reject(error);
+            }
+          });
+        });
+        return deferred.promise;
+      },
+      updateEvent: function(event) {
+        var deferred = $q.defer();
+        if (event.id == null) {
+          deffered.reject("No event ID specified.");
+          return deferred.promise;
+        }
+        var query = new Parse.Query(EventParseObj);
+        query.get(event.id).then(function(eventParseObj) {
+          // These are the only fields that can be edited right now.
+          eventParseObj.set("location", event.location); 
+          eventParseObj.set("time", event.time);
+          eventParseObj.set("durationMins", event.duration);
+          eventParseObj.set("notes", event.notes);
+          eventParseObj.save(null,{
+            success: function(obj) {
+              event = obj.toObject();
+              deferred.resolve(event);
+            },
+            error: function(obj, error) {
+              deferred.reject(error);
+            }
+          });
         });
         return deferred.promise;
       },

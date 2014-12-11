@@ -3,7 +3,8 @@
       No upcoming events
   </div>
   <div class="logisticsContainer" ng-show="has_event">
-    <a ui-sref="eventAdd" id="add-edit-event" ng-show="is_admin">Create New Event</a>
+    <a ui-sref="eventAdd" id="edit-event" ng-show="is_admin">Create New Event</a>
+    <a ui-sref="eventEdit({id : event.id})" id="edit-event" ng-show="is_admin">Edit This Event</a>
     <div class="attendeeBox">
         <h2 id="attendingheader">Attending</h2>
         <div class="scrollbox">
