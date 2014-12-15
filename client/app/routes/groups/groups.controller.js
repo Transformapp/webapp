@@ -5,8 +5,9 @@ angular.module('transformAppApp')
     UserService.loadUserGroupAndMembers().then(function() {
       var group = GroupService.currentGroup();
       $scope.group = group;
+      var current_user = UserService.currentLoggedInUser();
       $scope.isAdmin = GroupService.isAdmin(current_user, group);
-  
+      
       $scope.updateGroup = function() {
         group['description'] = $scope.groupDetails.groupDescription;
         group['name'] = $scope.groupDetails.groupName;
@@ -37,7 +38,7 @@ angular.module('transformAppApp')
     }
     var current_user = UserService.currentLoggedInUser();
     if (!current_user) {
-     	$state.go("auth");  // user not authenticated, re-route them to auth
+      $state.go("auth");  // user not authenticated, re-route them to auth
     } else {
       UserService.addUserToGroup(current_user, group_id).then(function(user) {
         GroupService.addUserToGroup(user.id, group_id).then(function(group) {
