@@ -1,19 +1,27 @@
 'use strict';
 
 angular.module('transformAppApp')
-  .controller('EventsCtrl', function ($scope, localStorageService, UserService, EventService) {
+  .controller('EventsCtrl', function (
+    $scope, localStorageService, UserService, EventService, GroupService) {
     $(".loading").show();
   
     var current_user = UserService.currentLoggedInUser();
-    // Check if current user is admin of group.
-    $scope.is_admin = true;
   
     UserService.loadUserGroupAndMembers().then(function(group) {
       var current_group_id = group.id;
+      // Check if current user is admin of group. This determins if the user
+      // can create a new event.
+      $scope.is_admin = GroupService.isAdmin(current_user, group);
       if (current_group_id) {
         EventService.loadUpcomingEvent(current_group_id).then(function(event) {
           $scope.has_event = (event != null);
           $scope.event = event;
+          // We only allow the group leader to edit an event.
+          if (event.leader.id == current_user.id) {
+            $scope.can_edit = $scope.is_admin;
+          } else {
+            $scope.can_edit = false;
+          }
           $scope.user_is_attending = null;
           for (var i = 0; i < event.attendees.length; i ++) {
             var user = event.attendees[i];
