@@ -84,6 +84,20 @@ angular.module('transformAppApp')
     $scope.hstep = 1;
     $scope.mstep = 15;
     $scope.ismeridian = true;
+    
+    if ($stateParams.id != null) {
+      $scope.can_delete = true;
+      $scope.deleteEvent = function() {
+        EventService.deleteEvent($stateParams.id).then(function() {
+          $state.go("events");
+        }, function(error) {
+          alert("Error deleting the event: " + error);
+        });
+      }
+    } else {
+      $scope.can_delete = false;
+      $scope.deleteEvent = null;
+    }
 
     $scope.saveEvent = function() {
       UserService.loadUserGroupAndMembers().then(function(group) {
@@ -108,7 +122,7 @@ angular.module('transformAppApp')
           $state.go("events");
         }, function(error) {
           alert("Error saving the event: " + error);
-        })
+        });
       }), function(error) {
         alert("Error saving the event: " + error);
       }

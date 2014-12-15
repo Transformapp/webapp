@@ -1,4 +1,7 @@
 <div ng-controller="SaveEventCtrl">
+  <div>
+    <button ng-click="deleteEvent()" ng-show="can_delete">Delete this event</button>
+  </div>
   <div style="display:inline-block">
     <datepicker ng-model="date" min-date="minDate" show-weeks="true" class="well well-sm" />
   </div>

@@ -93,14 +93,10 @@ angular.module('transformAppApp')
         });
         return deferred.promise;
       },
-      deleteEvent: function(event) {
+      deleteEvent: function(event_id) {
         var deferred = $q.defer();
-        if (event.id == null) {
-          deffered.reject("No event ID specified.");
-          return deferred.promise;
-        }
         var query = new Parse.Query(EventParseObj);
-        query.get(event.id).then(function(eventParseObj) {
+        query.get(event_id).then(function(eventParseObj) {
           eventParseObj.destroy({
             success: function(myObject) {
               deferred.resolve(true);
