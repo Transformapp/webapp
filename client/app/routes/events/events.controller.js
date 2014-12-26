@@ -70,22 +70,28 @@ angular.module('transformAppApp')
     $scope.title = "My group";
   })
   .controller('SaveEventCtrl', function($scope, $state, $stateParams, EventService, UserService) {
-    // Set up date picker
-    $scope.date = new Date();
-    $scope.minDate = new Date();
-    
-    // Set up time picker
-    $scope.time = new Date();
-    var min = $scope.time.getMinutes();
-    // We want the initial min to be a integer multiple of 15.
-    min = Math.floor(min/15)*15;
-    $scope.time.setMinutes(min);
-
     $scope.hstep = 1;
     $scope.mstep = 15;
     $scope.ismeridian = true;
     
     if ($stateParams.id != null) {
+      EventService.loadEvent($stateParams.id).then(function(event) {
+        $scope.duration = event.duration;
+        $scope.notes = event.notes;
+        $scope.location = event.location;
+        var localTime = event.time.getTime();
+        $scope.date = new Date();
+        $scope.minDate = new Date();
+        $scope.time = new Date();
+        $scope.minDate.setTime(localTime);
+        $scope.time.setTime(localTime);
+        var dateOnly = new Date(localTime);
+        dateOnly.setHours(0);
+        dateOnly.setMinutes(0);
+        $scope.date.setTime(dateOnly);
+      }, function(error) {
+        alert("Error loading event: " + error);
+      });
       $scope.can_delete = true;
       $scope.deleteEvent = function() {
         EventService.deleteEvent($stateParams.id).then(function() {
@@ -95,17 +101,27 @@ angular.module('transformAppApp')
         });
       }
     } else {
+      // Set up date picker
+      $scope.date = new Date();
+      $scope.minDate = new Date();
+      
+      // Set up time picker
+      $scope.time = new Date();
+      var min = $scope.time.getMinutes();
+      // We want the initial min to be a integer multiple of 15.
+      min = Math.floor(min/15)*15;
+      $scope.time.setMinutes(min);
+
       $scope.can_delete = false;
       $scope.deleteEvent = null;
     }
 
     $scope.saveEvent = function() {
       UserService.loadUserGroupAndMembers().then(function(group) {
-        var time = $scope.time;
         var date = $scope.date;
         var offset = (new Date()).getTimezoneOffset() * 60000;
-        date.setHours(time.getHours());
-        date.setMinutes(time.getMinutes());
+        date.setHours($scope.time.getHours());
+        date.setMinutes($scope.time.getMinutes());
         date.setSeconds(0);
         date.setTime(date.getTime() - offset);
         var event = new Event();

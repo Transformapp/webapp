@@ -179,6 +179,20 @@ angular.module('transformAppApp')
         });
         return deferred.promise;
       },
+      
+      loadEvent: function(event_id) {
+        var deferred = $q.defer();
+        var query = new Parse.Query(EventParseObj);
+        query.include('attendees').include("leader").get(event_id).then(function(eventParseObj) {
+          var event = eventParseObj.toObject();
+          event.setAttendees(eventParseObj.get("attendees"));
+          event.setLeader(eventParseObj.get("leader"));
+          deferred.resolve(event);
+        }, function(error) {
+          deferred.reject(error);
+        });
+        return deferred.promise;
+      },
 
       loadUpcomingEvent: function(group_id) {
         var deferred = $q.defer();
@@ -195,10 +209,10 @@ angular.module('transformAppApp')
             if (!parseEvent) {
               deferred.resolve(null);
             } else {
-                var currentEvent = parseEvent.toObject();
-                currentEvent.setAttendees(parseEvent.get("attendees"));   
-                currentEvent.setLeader(parseEvent.get("leader"));             
-                deferred.resolve(currentEvent);
+              var currentEvent = parseEvent.toObject();
+              currentEvent.setAttendees(parseEvent.get("attendees"));
+              currentEvent.setLeader(parseEvent.get("leader"));
+              deferred.resolve(currentEvent);
             }
           },
           error: function(error) {
